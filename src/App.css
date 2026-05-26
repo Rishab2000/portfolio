@@ -1,0 +1,623 @@
+/* ── LAYOUT ── */
+
+.portfolio {
+  background: #f9f8f6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.layout-grid {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  width: 100%;
+}
+
+/* ── SIDEBAR ── */
+
+.sidebar {
+  grid-column: 1 / span 4;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: flex-start;
+  padding: 48px 24px;
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: fit-content;
+}
+
+.sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.sidebar-name-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.name {
+  font-family: 'Sentient', sans-serif;
+  font-weight: 400;
+  font-size: 36px;
+  color: black;
+  line-height: normal;
+  word-break: break-word;
+  font-style: normal;
+  width: 100%;
+}
+
+.subtitle {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.subtitle-prev {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: black;
+  line-height: normal;
+  white-space: nowrap;
+  font-style: normal;
+}
+
+.subtitle-at {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.32);
+  line-height: normal;
+  white-space: nowrap;
+  font-style: normal;
+}
+
+.ibm-logo {
+  height: 18px;
+  width: 42px;
+  object-fit: cover;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.sidebar-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.divider-e0 {
+  width: 100%;
+  height: 1px;
+  background: #e0e0e0;
+  flex-shrink: 0;
+}
+
+.bio {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: black;
+  line-height: 0;
+  font-style: normal;
+  word-break: break-word;
+  white-space: pre-wrap;
+  width: 100%;
+}
+
+.bio p {
+  line-height: normal;
+  margin: 0;
+}
+
+.sidebar-info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 14px;
+  font-style: normal;
+  color: black;
+  white-space: nowrap;
+}
+
+.info-label {
+  font-family: 'Sentient', sans-serif;
+  font-weight: 700;
+  line-height: normal;
+  font-size: 14px;
+}
+
+.info-values {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.coord-dim {
+  color: #a8a8a8;
+  line-height: normal;
+}
+
+.coord-main {
+  color: black;
+  line-height: normal;
+}
+
+.link-underline {
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  line-height: normal;
+  cursor: pointer;
+}
+
+/* ── MAIN CONTENT ── */
+
+.main-content {
+  grid-column: 6 / span 11;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  align-items: center;
+  justify-self: stretch;
+  padding-top: 24px;
+  position: relative;
+}
+
+/* ── APPROACH + PROJECTS ── */
+
+.section-approach-projects {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.approach-row {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 24px;
+  width: 100%;
+  color: black;
+  font-style: normal;
+  line-height: normal;
+  word-break: break-word;
+}
+
+.approach-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.approach-heading {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: normal;
+  width: 100%;
+}
+
+.approach-body {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: normal;
+  min-width: 100%;
+  width: min-content;
+}
+
+.project-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+  align-content: flex-start;
+  padding: 48px 24px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.project-card {
+  width: 320px;
+  height: 320px;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.card-homepage {
+  background: linear-gradient(180deg, rgb(120, 169, 255) 6.37%, rgb(15, 98, 254) 100%);
+  box-shadow: 2px 5px 4px 0px rgba(0, 0, 0, 0.08);
+}
+
+.card-ai {
+  background: #161616;
+}
+
+.card-security {
+  background: #d4bbff;
+}
+
+.card-sdplus {
+  background: #99e3ad;
+}
+
+.card-img-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  aspect-ratio: 1;
+}
+
+.card-img-wrapper img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.card-img-wrapper-homepage {
+  position: absolute;
+  left: calc(50% - 0.5px);
+  transform: translateX(-50%);
+  top: 26.96%;
+  bottom: -23.52%;
+  aspect-ratio: 960 / 801;
+}
+
+.card-img-wrapper-homepage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* ── EXTENDED CUT ── */
+
+.section-extended {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  height: 921px;
+  align-items: center;
+  padding: 0 24px;
+  width: 100%;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.extended-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: normal;
+  color: black;
+  font-style: normal;
+  word-break: break-word;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.extended-title {
+  font-family: 'Sentient', sans-serif;
+  font-weight: 400;
+  font-size: 36px;
+  white-space: nowrap;
+}
+
+.extended-desc {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  text-align: center;
+  width: 622px;
+}
+
+.extended-media {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.media-frame-tall {
+  width: 327px;
+  height: 690px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #c8c8c8;
+}
+
+.media-stacked {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  width: 313px;
+  flex-shrink: 0;
+}
+
+.media-placeholder-top {
+  width: 100%;
+  aspect-ratio: 327 / 317;
+  border-radius: 6px;
+  background: #c8c8c8;
+  flex-shrink: 0;
+}
+
+.media-placeholder-bottom {
+  width: 100%;
+  aspect-ratio: 327 / 387;
+  border-radius: 6px;
+  background: #b8b8b8;
+  flex-shrink: 0;
+}
+
+/* ── TESTIMONIALS + FOOTER ── */
+
+.section-testimonials-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.testimonials-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.testimonials-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.testimonials-heading {
+  font-size: 36px;
+  line-height: 0;
+  color: black;
+  font-style: normal;
+  text-align: center;
+  flex: 1 0 0;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.testimonials-heading span {
+  line-height: normal;
+}
+
+.t-extralight {
+  font-family: 'Sentient', sans-serif;
+  font-weight: 300;
+}
+
+.t-regular {
+  font-family: 'Sentient', sans-serif;
+  font-weight: 400;
+}
+
+.testimonials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 0 24px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.t-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.fade-in-top {
+  background: linear-gradient(to bottom, rgba(236, 230, 230, 0) 0%, #ece6e6 100%);
+  height: 124px;
+  border-radius: 8px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.fade-in-bottom {
+  background: linear-gradient(to bottom, #ece6e6 0%, rgba(236, 230, 230, 0) 100%);
+  height: 68px;
+  border-radius: 8px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.card-testimonial {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  padding: 16px;
+  background: #f4f4f4;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.card-quote {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: black;
+  line-height: normal;
+  font-style: normal;
+  min-width: 100%;
+  width: min-content;
+  word-break: break-word;
+}
+
+.card-rule {
+  width: 59px;
+  height: 1px;
+  background: #e0e0e0;
+  flex-shrink: 0;
+}
+
+.card-attr {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 14px;
+  line-height: normal;
+  font-style: normal;
+  width: 100%;
+  word-break: break-word;
+}
+
+.attr-name {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  color: black;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.attr-role {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+  color: #6f6f6f;
+  min-width: 100%;
+  width: min-content;
+}
+
+/* ── FOOTER ── */
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 1024px;
+  padding: 160px 64px 72px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  align-items: flex-start;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.footer-rule {
+  width: 100%;
+  height: 1px;
+  background: #c6c6c6;
+  flex-shrink: 0;
+}
+
+.footer-body {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.footer-heading {
+  font-family: 'Sentient', sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  color: #262626;
+  line-height: normal;
+  font-style: normal;
+  white-space: pre;
+}
+
+.footer-contact-row {
+  display: flex;
+  gap: 160px;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  font-size: 14px;
+  color: #262626;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.contact-label {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+  line-height: 0;
+}
+
+.contact-links a,
+.contact-links p {
+  line-height: normal;
+}

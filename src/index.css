@@ -1,0 +1,27 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+p {
+  margin: 0;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  text-align: left;
+  border-inline: none;
+  max-width: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
