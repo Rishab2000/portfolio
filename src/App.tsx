@@ -1,10 +1,11 @@
 import './App.css'
 
-const imgSdplus1 = "http://localhost:3845/assets/0a90aff006fa139a2dc229f706f2a1d9f4e2ee89.png";
-const imgHomepageTile1 = "http://localhost:3845/assets/62efb099f904f9a8e1b51d39180b8509422c1fc8.png";
-const imgWebMockupV2Front1 = "http://localhost:3845/assets/20da8b177c8cd7ceb01086b943ad41b72f9126c1.png";
-const imgIbmLogoPngPhoto1 = "http://localhost:3845/assets/95a3806928544ce36b3aa60e06db18a330dbeb5c.png";
-const imgFrame373951 = "http://localhost:3845/assets/79f50483a4ab8db0aa866319629c4978bac31fb6.png";
+const imgIbmLogoPngPhoto1 = "/ibm-logo.png";
+
+const imgHomepage = "/homepage.png";
+const imgAi       = "/ai.png";
+const imgSecurity = "/security.png";
+const imgSdplus   = "/sdplus.png";
 
 function TestimonialCard({ quote, name, role }: { quote: string; name: string; role: string }) {
   return (
@@ -22,11 +23,12 @@ function TestimonialCard({ quote, name, role }: { quote: string; name: string; r
 export default function App() {
   return (
     <div className="portfolio">
-      <div className="layout-grid">
+      <div className="layout-inner">
 
         {/* ── SIDEBAR ── */}
         <aside className="sidebar">
           <div className="sidebar-inner">
+
             <div className="sidebar-name-block">
               <p className="name">Rishab Sachidanand</p>
               <div className="subtitle">
@@ -68,13 +70,14 @@ export default function App() {
                 </div>
               </div>
             </div>
+
           </div>
         </aside>
 
         {/* ── MAIN CONTENT ── */}
         <main className="main-content">
 
-          {/* Approach + Projects */}
+          {/* 1. Approach + Projects */}
           <section className="section-approach-projects">
             <div className="approach-row">
               <div className="approach-col">
@@ -92,53 +95,63 @@ export default function App() {
             </div>
 
             <div className="project-cards">
-              {/* Homepage — blue gradient */}
-              <div className="project-card card-homepage">
-                <div className="card-img-wrapper-homepage">
-                  <img src={imgFrame373951} alt="" />
-                </div>
+              <div className="project-card">
+                <img src={imgHomepage} alt="Homepage project" className="card-cover-img" />
               </div>
-
-              {/* AI — dark */}
-              <div className="project-card card-ai">
-                <div className="card-img-wrapper">
-                  <img src={imgWebMockupV2Front1} alt="" />
-                </div>
+              <div className="project-card">
+                <img src={imgAi} alt="AI project" className="card-cover-img" />
               </div>
-
-              {/* Security — purple */}
-              <div className="project-card card-security">
-                <div className="card-img-wrapper">
-                  <img src={imgHomepageTile1} alt="" />
-                </div>
+              <div className="project-card">
+                <img src={imgSecurity} alt="Security project" className="card-cover-img" />
               </div>
-
-              {/* SD+ — green */}
-              <div className="project-card card-sdplus">
-                <div className="card-img-wrapper">
-                  <img src={imgSdplus1} alt="" />
-                </div>
+              <div className="project-card">
+                <img src={imgSdplus} alt="SD+ project" className="card-cover-img" />
               </div>
             </div>
           </section>
 
-          {/* Extended Cut */}
+          {/* 2. Extended Cut */}
           <section className="section-extended">
             <div className="extended-header">
               <p className="extended-title">Extended cut</p>
               <p className="extended-desc">Experiments and explorations with different mediums. A collection of work showcasing my range from Photography, motion design to coding mobile apps.</p>
             </div>
             <div className="extended-media">
-              <div className="media-frame-tall" />
+              {/* Left — tall hiking video */}
+              <video
+                className="media-frame-tall"
+                src="/hiking.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
               <div className="media-stacked">
-                <div className="media-placeholder-top" />
-                <div className="media-placeholder-bottom" />
+                {/* Top — motion design */}
+                <video
+                  className="media-video-top"
+                  src="/motion.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
+                {/* Bottom — coding */}
+                <video
+                  className="media-video-bottom"
+                  src="/coding.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
               </div>
             </div>
           </section>
 
-          {/* Testimonials + Footer */}
+          {/* 3. Testimonials + Footer */}
           <div className="section-testimonials-footer">
+
             <div className="testimonials-inner">
               <div className="testimonials-title-row">
                 <p className="testimonials-heading">
@@ -147,16 +160,23 @@ export default function App() {
                 </p>
               </div>
 
-              <div className="testimonials-list">
-                <div className="t-group">
-                  <div className="fade-in-top" />
+              {/* Two columns */}
+              <div className="testimonials-cols">
+
+                {/* Left col — Vishal, sandwiched by fades */}
+                <div className="t-col">
+                  <div className="fade-col1-top" />
                   <TestimonialCard
                     quote="What also distinguished Rishab was his curiosity and drive to learn beyond the boundaries of design itself. He consistently sought to understand the broader product ecosystem and was proactive in building cross‑functional collaboration."
                     name="Vishal Kamat"
                     role="Vice President @ IBM"
                   />
+                  <div className="fade-col1-bottom" />
                 </div>
-                <div className="t-group">
+
+                {/* Right col — Rajshree + Rishabh, top flex fade, short bottom fade */}
+                <div className="t-col t-col-right">
+                  <div className="fade-col2-top" />
                   <TestimonialCard
                     quote="Throughout this time, he demonstrated good design thinking, and communicated + presented his work very nicely to the stakeholders; which made stakeholders interested in prioritising the development and rollout of new designs."
                     name="Rajshree Deshmukh"
@@ -167,8 +187,9 @@ export default function App() {
                     name="Rishabh Arora"
                     role="Dev Lead @ Smarter Dharma"
                   />
-                  <div className="fade-in-bottom" />
+                  <div className="fade-col2-bottom" />
                 </div>
+
               </div>
             </div>
 
@@ -189,6 +210,7 @@ export default function App() {
                 </div>
               </div>
             </footer>
+
           </div>
 
         </main>

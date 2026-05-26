@@ -1,4 +1,9 @@
-/* ── LAYOUT ── */
+/* ═══════════════════════════════════════════
+   PORTFOLIO — Desktop layout (node 79:701)
+   max-width: 1280px | sidebar: 320px fixed
+   ═══════════════════════════════════════════ */
+
+/* ── PAGE SHELL ── */
 
 .portfolio {
   background: #f9f8f6;
@@ -8,31 +13,34 @@
   align-items: center;
 }
 
-.layout-grid {
-  display: grid;
-  grid-template-columns: repeat(16, minmax(0, 1fr));
+/* Constrains everything to 1280px, rows sidebar + main */
+.layout-inner {
+  display: flex;
+  align-items: flex-start;
+  max-width: 1280px;
   width: 100%;
 }
 
 /* ── SIDEBAR ── */
 
 .sidebar {
-  grid-column: 1 / span 4;
+  width: 320px;
+  flex-shrink: 0;
+  padding: 48px;          /* desktop: equal on all sides */
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
   display: flex;
   flex-direction: column;
   gap: 32px;
   align-items: flex-start;
-  padding: 48px 24px;
-  position: sticky;
-  top: 0;
-  align-self: start;
-  height: fit-content;
 }
 
+/* Inner stack: name block + sections, gap 57px (desktop) */
 .sidebar-inner {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 57px;
   align-items: flex-start;
   width: 100%;
 }
@@ -70,7 +78,6 @@
   color: black;
   line-height: normal;
   white-space: nowrap;
-  font-style: normal;
 }
 
 .subtitle-at {
@@ -80,7 +87,6 @@
   color: rgba(0, 0, 0, 0.32);
   line-height: normal;
   white-space: nowrap;
-  font-style: normal;
 }
 
 .ibm-logo {
@@ -91,6 +97,7 @@
   flex-shrink: 0;
 }
 
+/* Sections: divider / bio / divider / coords / addresses */
 .sidebar-sections {
   display: flex;
   flex-direction: column;
@@ -106,6 +113,7 @@
   flex-shrink: 0;
 }
 
+/* Bio — leading-[0] container, each <p> gets leading-[normal] */
 .bio {
   font-family: 'Quicksand', sans-serif;
   font-weight: 400;
@@ -137,8 +145,8 @@
 .info-label {
   font-family: 'Sentient', sans-serif;
   font-weight: 700;
-  line-height: normal;
   font-size: 14px;
+  line-height: normal;
 }
 
 .info-values {
@@ -151,15 +159,8 @@
   font-size: 14px;
 }
 
-.coord-dim {
-  color: #a8a8a8;
-  line-height: normal;
-}
-
-.coord-main {
-  color: black;
-  line-height: normal;
-}
+.coord-dim  { color: #a8a8a8; line-height: normal; }
+.coord-main { color: black;   line-height: normal; }
 
 .link-underline {
   text-decoration: underline;
@@ -173,17 +174,16 @@
 /* ── MAIN CONTENT ── */
 
 .main-content {
-  grid-column: 6 / span 11;
+  flex: 1 0 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 160px;           /* desktop: 160px between sections */
   align-items: center;
-  justify-self: stretch;
   padding-top: 24px;
-  position: relative;
 }
 
-/* ── APPROACH + PROJECTS ── */
+/* ── 1. APPROACH ROW + PROJECT CARDS ── */
 
 .section-approach-projects {
   display: flex;
@@ -194,12 +194,13 @@
   flex-shrink: 0;
 }
 
+/* Three-column info row, bottom border */
 .approach-row {
   display: flex;
   gap: 24px;
   align-items: flex-start;
   border-bottom: 1px solid #e0e0e0;
-  padding: 24px;
+  padding: 24px 48px;   /* desktop: 48px horizontal */
   width: 100%;
   color: black;
   font-style: normal;
@@ -219,7 +220,7 @@
 .approach-heading {
   font-family: 'Quicksand', sans-serif;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 14px;       /* same for desktop */
   line-height: normal;
   width: 100%;
 }
@@ -227,107 +228,65 @@
 .approach-body {
   font-family: 'Quicksand', sans-serif;
   font-weight: 400;
-  font-size: 13px;
+  font-size: 14px;       /* desktop: 14px (tablet was 13px) */
   line-height: normal;
   min-width: 100%;
   width: min-content;
 }
 
+/* 2×2 project card grid */
 .project-cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 32px;             /* desktop: 32px (tablet was 16px) */
   align-items: flex-start;
   align-content: flex-start;
-  padding: 48px 24px;
+  padding: 48px;         /* desktop: 48px all sides */
   width: 100%;
   flex-shrink: 0;
 }
 
 .project-card {
-  width: 320px;
-  height: 320px;
+  width: 416px;
+  height: 416px;
   border-radius: 6px;
   overflow: hidden;
   position: relative;
   flex-shrink: 0;
+  background: #f0f0f0; /* fallback while image loads */
 }
 
-.card-homepage {
-  background: linear-gradient(180deg, rgb(120, 169, 255) 6.37%, rgb(15, 98, 254) 100%);
-  box-shadow: 2px 5px 4px 0px rgba(0, 0, 0, 0.08);
-}
-
-.card-ai {
-  background: #161616;
-}
-
-.card-security {
-  background: #d4bbff;
-}
-
-.card-sdplus {
-  background: #99e3ad;
-}
-
-.card-img-wrapper {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  aspect-ratio: 1;
-}
-
-.card-img-wrapper img {
+/* Full-cover image fill — the mockup shots include their own backgrounds */
+.card-cover-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   pointer-events: none;
+  display: block;
 }
 
-.card-img-wrapper-homepage {
-  position: absolute;
-  left: calc(50% - 0.5px);
-  transform: translateX(-50%);
-  top: 26.96%;
-  bottom: -23.52%;
-  aspect-ratio: 960 / 801;
-}
-
-.card-img-wrapper-homepage img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  pointer-events: none;
-}
-
-/* ── EXTENDED CUT ── */
+/* ── 2. EXTENDED CUT ── */
 
 .section-extended {
   display: flex;
   flex-direction: column;
-  gap: 40px;
   height: 921px;
   align-items: center;
-  padding: 0 24px;
+  justify-content: space-between;  /* header top, media bottom */
+  padding: 0 48px;
   width: 100%;
   flex-shrink: 0;
-  position: relative;
 }
 
 .extended-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  line-height: normal;
+  word-break: break-word;
   color: black;
   font-style: normal;
-  word-break: break-word;
   width: 100%;
   flex-shrink: 0;
 }
@@ -335,61 +294,67 @@
 .extended-title {
   font-family: 'Sentient', sans-serif;
   font-weight: 400;
-  font-size: 36px;
+  font-size: 40px;       /* desktop: 40px (tablet was 36px) */
+  line-height: normal;
   white-space: nowrap;
 }
 
 .extended-desc {
   font-family: 'Quicksand', sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 20px;       /* desktop: 20px (tablet was 16px) */
   text-align: center;
   width: 622px;
+  line-height: normal;
 }
 
+/* Media row: left frame + right stacked, space-between */
 .extended-media {
   display: flex;
-  gap: 16px;
   align-items: flex-start;
+  justify-content: space-between;
   width: 100%;
   flex-shrink: 0;
 }
 
 .media-frame-tall {
-  width: 327px;
-  height: 690px;
+  width: 416px;
+  height: 732px;
   border-radius: 6px;
   overflow: hidden;
   flex-shrink: 0;
-  background: #c8c8c8;
+  object-fit: cover;     /* video: cover the frame */
+  display: block;
 }
 
 .media-stacked {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 32px;
   align-items: flex-start;
-  width: 313px;
+  width: 416px;
   flex-shrink: 0;
 }
 
-.media-placeholder-top {
+.media-video-top {
   width: 100%;
-  aspect-ratio: 327 / 317;
+  height: 317px;
   border-radius: 6px;
-  background: #c8c8c8;
+  object-fit: cover;
+  display: block;
   flex-shrink: 0;
 }
 
-.media-placeholder-bottom {
+.media-video-bottom {
   width: 100%;
-  aspect-ratio: 327 / 387;
+  height: 387px;
   border-radius: 6px;
-  background: #b8b8b8;
+  object-fit: cover;
+  display: block;
   flex-shrink: 0;
 }
 
-/* ── TESTIMONIALS + FOOTER ── */
+/* ── 3. TESTIMONIALS + FOOTER ── */
 
 .section-testimonials-footer {
   display: flex;
@@ -412,19 +377,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 24px;
+  padding: 0 48px;       /* desktop: 48px horizontal */
   width: 100%;
   flex-shrink: 0;
 }
 
+/* Title: fixed 680px, centered */
 .testimonials-heading {
-  font-size: 36px;
+  font-size: 40px;       /* desktop: 40px (tablet was 36px) */
   line-height: 0;
   color: black;
   font-style: normal;
   text-align: center;
-  flex: 1 0 0;
-  min-width: 0;
+  width: 680px;          /* desktop: fixed 680px */
   word-break: break-word;
 }
 
@@ -442,42 +407,70 @@
   font-weight: 400;
 }
 
-.testimonials-list {
+/* ── TWO-COLUMN TESTIMONIALS ── */
+
+.testimonials-cols {
   display: flex;
-  flex-direction: column;
   gap: 8px;
   align-items: flex-start;
-  padding: 0 24px;
+  padding: 0 48px;       /* desktop: 48px horizontal */
   width: 100%;
   flex-shrink: 0;
 }
 
-.t-group {
+/* Each column: flex: 1 0 0, stacks cards vertically */
+.t-col {
+  flex: 1 0 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
   align-items: flex-start;
   justify-content: center;
-  width: 100%;
-  flex-shrink: 0;
 }
 
-.fade-in-top {
+/* Right column stretches to match left column height */
+.t-col-right {
+  align-self: stretch;
+}
+
+/* Col 1 top fade: 238px, transparent → #ece6e6 */
+.fade-col1-top {
+  height: 238px;
+  width: 100%;
+  flex-shrink: 0;
+  border-radius: 8px;
   background: linear-gradient(to bottom, rgba(236, 230, 230, 0) 0%, #ece6e6 100%);
-  height: 124px;
-  border-radius: 8px;
-  width: 100%;
-  flex-shrink: 0;
 }
 
-.fade-in-bottom {
-  background: linear-gradient(to bottom, #ece6e6 0%, rgba(236, 230, 230, 0) 100%);
+/* Col 1 bottom fade: 238px, #ece6e6 → transparent (stops at 83.654%) */
+.fade-col1-bottom {
+  height: 238px;
+  width: 100%;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #ece6e6 0%, rgba(236, 230, 230, 0) 83.654%);
+}
+
+/* Col 2 top fade: flex (fills remaining space), gradient starts at 7.692% */
+.fade-col2-top {
+  flex: 1 0 0;
+  min-height: 1px;
+  width: 100%;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, rgba(236, 230, 230, 0) 7.692%, #ece6e6 100%);
+}
+
+/* Col 2 bottom fade: 68px, #ece6e6 → transparent */
+.fade-col2-bottom {
   height: 68px;
-  border-radius: 8px;
   width: 100%;
   flex-shrink: 0;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #ece6e6 0%, rgba(236, 230, 230, 0) 100%);
 }
 
+/* Testimonial card */
 .card-testimonial {
   display: flex;
   flex-direction: column;
