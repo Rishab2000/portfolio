@@ -97,6 +97,11 @@
   flex-shrink: 0;
 }
 
+/* Desktop: bottom rule is tablet-only */
+.header-bottom-rule {
+  display: none;
+}
+
 /* Sections: divider / bio / divider / coords / addresses */
 .sidebar-sections {
   display: flex;
@@ -254,6 +259,21 @@
   position: relative;
   flex-shrink: 0;
   background: #f0f0f0; /* fallback while image loads */
+}
+
+.project-card-link {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card-link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.project-card-link:focus-visible {
+  outline: 2px solid #0f62fe;
+  outline-offset: 3px;
 }
 
 /* Full-cover image fill — the mockup shots include their own backgrounds */
@@ -613,4 +633,362 @@
 .contact-links a,
 .contact-links p {
   line-height: normal;
+}
+
+/* ═══════════════════════════════════════════
+   TABLET PORTRAIT  ≤ 1023px  (node 164:1786)
+   Header spans full width, cards stack single
+   column, testimonials single column
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 1023px) {
+
+  /* ── PAGE SHELL ── */
+
+  .layout-inner {
+    flex-direction: column;  /* stack header above content */
+  }
+
+  /* ── HEADER (was sidebar) ── */
+
+  .sidebar {
+    width: 100%;
+    position: static;
+    padding: 48px 24px 0;   /* pt-48px px-24px no bottom-pad — gap handles it */
+    gap: 32px;              /* gap between sidebar-inner and bottom rule */
+  }
+
+  .sidebar-inner {
+    gap: 24px;              /* tablet: 24px between name block and info row */
+    flex-direction: column;
+  }
+
+  /* Info section → horizontal 3-column row */
+  .sidebar-sections {
+    flex-direction: row;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  /* Hide the two vertical dividers within the info row */
+  .sidebar-top-divider,
+  .sidebar-mid-divider {
+    display: none;
+  }
+
+  /* Bio and info blocks each take an equal column */
+  .bio,
+  .sidebar-info-block {
+    flex: 1 0 0;
+    min-width: 0;
+    white-space: normal;    /* allow wrapping in narrow columns */
+  }
+
+  /* Bottom divider: hidden at desktop, shown here */
+  .header-bottom-rule {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  /* ── MAIN CONTENT ── */
+
+  .main-content {
+    width: 100%;
+    gap: 160px;
+    padding: 24px 0 0;
+  }
+
+  /* ── APPROACH ROW ── */
+
+  .approach-row {
+    padding: 24px;          /* tablet-hori: 24px all sides (not 48px horiz) */
+  }
+
+  .approach-body {
+    font-size: 13px;        /* tablet: 13px (desktop was 14px) */
+  }
+
+  /* ── PROJECT CARDS — single vertical column ── */
+
+  .project-cards {
+    flex-direction: column;
+    gap: 16px;              /* tablet: 16px (desktop was 32px) */
+    padding: 0 24px 48px;  /* px-24px pb-48px, no top pad (gap from section handles it) */
+    flex-wrap: nowrap;
+  }
+
+  .project-card {
+    width: 100%;            /* full width */
+    height: auto;
+    aspect-ratio: 1;        /* 1:1 square */
+  }
+
+  /* ── EXTENDED CUT ── */
+
+  .section-extended {
+    padding: 0 24px;        /* tablet: 24px (desktop was 48px) */
+  }
+
+  .extended-title {
+    font-size: 36px;        /* tablet: 36px (desktop was 40px) */
+  }
+
+  .extended-desc {
+    font-size: 16px;        /* tablet: 16px (desktop was 20px) */
+    width: 486px;
+    max-width: 100%;
+  }
+
+  .extended-media {
+    gap: 16px;              /* tablet: 16px (desktop was space-between) */
+    justify-content: flex-start;
+  }
+
+  /* Left frame — flex: 1, takes remaining width */
+  .media-frame-tall {
+    flex: 1 0 0;
+    min-width: 0;
+    width: auto;
+    height: 732px;
+  }
+
+  /* Right stacked column — fixed 374px */
+  .media-stacked {
+    width: 374px;
+    gap: 16px;              /* tablet: 16px (desktop was 32px) */
+    flex-shrink: 0;
+  }
+
+  .media-video-top {
+    height: 324px;          /* tablet: 324px (desktop was 317px) */
+  }
+
+  .media-video-bottom {
+    height: 396px;          /* tablet: 396px (desktop was 387px) */
+  }
+
+  /* ── TESTIMONIALS — single column ── */
+
+  .testimonials-title-row {
+    padding: 0 24px;        /* tablet: 24px (desktop was 48px) */
+  }
+
+  .testimonials-heading {
+    font-size: 36px;        /* tablet: 36px (desktop was 40px) */
+    width: auto;            /* tablet: flex-1 (desktop was fixed 680px) */
+    flex: 1 0 0;
+    min-width: 0;
+  }
+
+  .testimonials-cols {
+    flex-direction: column; /* stack the two columns vertically */
+    padding: 0 24px;        /* tablet: 24px (desktop was 48px) */
+  }
+
+  /* Each former "column" now takes full width */
+  .t-col,
+  .t-col-right {
+    flex: none;
+    width: 100%;
+    align-self: auto;
+    justify-content: flex-start;
+  }
+
+  /* Col 1 top fade: 82px (desktop was 238px) */
+  .fade-col1-top {
+    height: 82px;
+  }
+
+  /* Col 1 bottom fade: hidden in single-column layout
+     (col 2 bottom fade handles the closing fade) */
+  .fade-col1-bottom {
+    display: none;
+  }
+
+  /* Col 2 top fade: hidden (col 1 top fade handles opening) */
+  .fade-col2-top {
+    display: none;
+  }
+
+  /* Col 2 bottom fade: 68px — stays the same */
+  .fade-col2-bottom {
+    height: 68px;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   MOBILE  ≤ 767px  (node 164:1879)
+   Single column, reduced sizes throughout
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+
+  /* ── HEADER ── */
+
+  .sidebar {
+    padding: 48px 16px 0;   /* mobile: px-16px */
+  }
+
+  .sidebar-inner {
+    gap: 16px;               /* mobile: tighter stack */
+  }
+
+  .name {
+    font-size: 32px;         /* mobile: 32px (desktop was 36px) */
+  }
+
+  .sidebar-name-block {
+    gap: 3px;                /* mobile: 3px (desktop was 4px) */
+  }
+
+  /* Info sections revert to single column */
+  .sidebar-sections {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* Show the mid-divider (bio ↔ coords/addresses) */
+  .sidebar-mid-divider {
+    display: block;
+  }
+
+  /* Undo tablet stretch overrides */
+  .bio,
+  .sidebar-info-block {
+    flex: none;
+    width: 100%;
+  }
+
+  /* Coords/addresses labels + values: 12px */
+  .sidebar-info-block {
+    font-size: 12px;
+  }
+
+  .info-label {
+    font-size: 12px;
+  }
+
+  .info-values {
+    font-size: 12px;
+  }
+
+  /* ── MAIN CONTENT ── */
+
+  .main-content {
+    gap: 56px;               /* mobile: 56px (desktop was 160px) */
+  }
+
+  /* ── APPROACH ROW ── */
+
+  .approach-row {
+    flex-direction: column;  /* stack the 3 approach columns */
+    padding: 24px;           /* mobile: 24px all sides (matches Figma p-[24px]) */
+    gap: 24px;               /* mobile: 24px (matches Figma gap-[24px]) */
+  }
+
+  /* Each col must be full-width in column-flex — flex: 1 0 0 only sizes by height */
+  .approach-col {
+    flex: none;
+    width: 100%;
+  }
+
+  .approach-body {
+    font-size: 12px;         /* mobile: 12px (desktop was 14px) */
+  }
+
+  /* ── PROJECT CARDS ── */
+
+  .project-cards {
+    padding: 24px 16px 48px; /* mobile: 16px horizontal */
+  }
+
+  /* ── EXTENDED CUT ── */
+
+  .section-extended {
+    height: auto;            /* remove fixed height for stacked layout */
+    padding: 0 16px;
+    gap: 24px;               /* space between header and media */
+    justify-content: flex-start;
+  }
+
+  .extended-title {
+    font-size: 20px;         /* mobile: 20px (tablet was 36px) */
+  }
+
+  .extended-desc {
+    font-size: 12px;         /* mobile: 12px (tablet was 16px) */
+    width: auto;
+    max-width: 100%;
+  }
+
+  /* Stack media vertically */
+  .extended-media {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  /* Left (tall) frame — full width */
+  .media-frame-tall {
+    flex: none;
+    width: 100%;
+    height: 607px;           /* mobile: 607px */
+  }
+
+  /* Right stacked group — full width */
+  .media-stacked {
+    width: 100%;
+  }
+
+  /* ── TESTIMONIALS ── */
+
+  .testimonials-inner {
+    gap: 16px;               /* mobile: 16px (desktop was 32px) */
+  }
+
+  .testimonials-title-row {
+    padding: 0 16px;         /* mobile: 16px (tablet was 24px) */
+  }
+
+  .testimonials-heading {
+    font-size: 20px;         /* mobile: 20px (tablet was 36px) */
+  }
+
+  .testimonials-cols {
+    padding: 0 16px;         /* mobile: 16px (tablet was 24px) */
+  }
+
+  /* Col 1 top fade: 87px (tablet was 82px) */
+  .fade-col1-top {
+    height: 87px;
+  }
+
+  /* Col 2 bottom fade: 111px (tablet was 68px) */
+  .fade-col2-bottom {
+    height: 111px;
+  }
+
+  /* ── FOOTER ── */
+
+  .footer {
+    padding: 40px 16px 72px; /* mobile: compact top, 16px horizontal */
+  }
+
+  .footer-inner {
+    gap: 40px;               /* mobile: 40px (desktop was 56px) */
+  }
+
+  .footer-body {
+    gap: 40px;               /* mobile: 40px (desktop was 80px) */
+  }
+
+  .footer-heading {
+    font-size: 20px;         /* mobile: 20px (desktop was 32px) */
+    white-space: pre-wrap;   /* allow wrapping at explicit line breaks */
+  }
+
+  .footer-contact {
+    gap: 4px;                /* mobile: 4px (desktop was 16px) */
+  }
+
 }
