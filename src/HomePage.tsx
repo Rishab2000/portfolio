@@ -1,12 +1,12 @@
 import './App.css'
-import { navigate } from './nav'
+import { navigate, asset } from './nav'
 
-const imgIbmLogoPngPhoto1 = "/ibm-logo.png";
+const imgIbmLogoPngPhoto1 = asset("/ibm-logo.png");
 
-const imgHomepage = "/homepage.png";
-const imgAi       = "/ai.png";
-const imgSecurity = "/security.png";
-const imgSdplus   = "/sdplus.png";
+const imgHomepage = asset("/homepage.png");
+const imgAi       = asset("/ai.png");
+const imgSecurity = asset("/security.png");
+const imgSdplus   = asset("/sdplus.png");
 
 function TestimonialCard({ quote, name, role }: { quote: string; name: string; role: string }) {
   return (
@@ -135,7 +135,7 @@ export default function HomePage() {
               {/* Left — tall hiking video */}
               <video
                 className="media-frame-tall"
-                src="/hiking.mp4"
+                src={asset("/hiking.mp4")}
                 autoPlay
                 muted
                 loop
@@ -145,7 +145,7 @@ export default function HomePage() {
                 {/* Top — motion design */}
                 <video
                   className="media-video-top"
-                  src="/motion.mp4"
+                  src={asset("/motion.mp4")}
                   autoPlay
                   muted
                   loop
@@ -154,7 +154,7 @@ export default function HomePage() {
                 {/* Bottom — coding */}
                 <video
                   className="media-video-bottom"
-                  src="/coding.mp4"
+                  src={asset("/coding.mp4")}
                   autoPlay
                   muted
                   loop

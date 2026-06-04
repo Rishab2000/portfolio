@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react'
 import HomePage from './HomePage'
 import CaseStudyHomepage from './CaseStudyHomepage'
 import CaseStudyHumanAI from './CaseStudyHumanAI'
+import { currentRoute } from './nav'
 
 export default function App() {
-  const [path, setPath] = useState(window.location.pathname)
+  const [path, setPath] = useState(currentRoute())
 
   useEffect(() => {
-    const onPop = () => setPath(window.location.pathname)
+    const onPop = () => setPath(currentRoute())
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   }, [])
