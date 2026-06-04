@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import HomePage from './HomePage'
 import CaseStudyHomepage from './CaseStudyHomepage'
 import CaseStudyHumanAI from './CaseStudyHumanAI'
+import CaseStudyUXRoadmap from './CaseStudyUXRoadmap'
 import { currentRoute } from './nav'
 
 export default function App() {
@@ -19,5 +20,6 @@ export default function App() {
 
   if (path === '/homepage-modernization') return <CaseStudyHomepage />
   if (path === '/human-ai-maas360') return <CaseStudyHumanAI />
+  if (path === '/ux-roadmap-sdplus') return <CaseStudyUXRoadmap />
   return <HomePage />
 }

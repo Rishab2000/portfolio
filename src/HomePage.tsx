@@ -119,7 +119,13 @@ export default function HomePage() {
               <div className="project-card">
                 <img src={imgSecurity} alt="Security project" className="card-cover-img" />
               </div>
-              <div className="project-card">
+              <div
+                className="project-card project-card-link"
+                onClick={() => navigate('/ux-roadmap-sdplus')}
+                role="link"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter') navigate('/ux-roadmap-sdplus') }}
+              >
                 <img src={imgSdplus} alt="SD+ project" className="card-cover-img" />
               </div>
             </div>
