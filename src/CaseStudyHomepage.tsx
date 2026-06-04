@@ -1,22 +1,22 @@
 import './CaseStudyHomepage.css'
-import { navigate } from './nav'
+import { navigate, asset } from './nav'
 
 /* image assets (Figma node 187:434) */
-const imgHero = '/cs/hero.png'
-const imgArtMain = '/cs/art-main.png'
-const imgArtR1 = '/cs/art-r1.png'
-const imgArtR2 = '/cs/art-r2.png'
-const imgOldHome = '/cs/old-homepage.png'
-const imgWCompliance = '/cs/w-compliance.png'
-const imgWGroup85 = '/cs/w-group85.png'
-const imgWDevices = '/cs/w-devices.png'
-const imgWGroup37042 = '/cs/w-group37042.png'
-const imgWGroup87 = '/cs/w-group87.png'
-const imgWWatson = '/cs/w-watson.png'
-const imgFlexibility = '/cs/flexibility.png'
-const imgCustomization = '/cs/customization.png'
-const imgLinkedin = '/cs/linkedin.svg'
-const imgMedium = '/cs/medium.svg'
+const imgHero = asset('/cs/hero.png')
+const imgArtMain = asset('/cs/art-main.png')
+const imgArtR1 = asset('/cs/art-r1.png')
+const imgArtR2 = asset('/cs/art-r2.png')
+const imgOldHome = asset('/cs/old-homepage.png')
+const imgWCompliance = asset('/cs/w-compliance.png')
+const imgWGroup85 = asset('/cs/w-group85.png')
+const imgWDevices = asset('/cs/w-devices.png')
+const imgWGroup37042 = asset('/cs/w-group37042.png')
+const imgWGroup87 = asset('/cs/w-group87.png')
+const imgWWatson = asset('/cs/w-watson.png')
+const imgFlexibility = asset('/cs/flexibility.png')
+const imgCustomization = asset('/cs/customization.png')
+const imgLinkedin = asset('/cs/linkedin.svg')
+const imgMedium = asset('/cs/medium.svg')
 
 function ArrowDown() {
   return (

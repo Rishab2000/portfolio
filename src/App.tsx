@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react'
 import HomePage from './HomePage'
 import CaseStudyHomepage from './CaseStudyHomepage'
 import CaseStudyHumanAI from './CaseStudyHumanAI'
+import CaseStudyUXRoadmap from './CaseStudyUXRoadmap'
+import { currentRoute } from './nav'
 
 export default function App() {
-  const [path, setPath] = useState(window.location.pathname)
+  const [path, setPath] = useState(currentRoute())
 
   useEffect(() => {
-    const onPop = () => setPath(window.location.pathname)
+    const onPop = () => setPath(currentRoute())
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   }, [])
@@ -18,5 +20,6 @@ export default function App() {
 
   if (path === '/homepage-modernization') return <CaseStudyHomepage />
   if (path === '/human-ai-maas360') return <CaseStudyHumanAI />
+  if (path === '/ux-roadmap-sdplus') return <CaseStudyUXRoadmap />
   return <HomePage />
 }

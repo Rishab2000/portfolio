@@ -1,21 +1,21 @@
 import './CaseStudyHumanAI.css'
-import { navigate } from './nav'
+import { navigate, asset } from './nav'
 
 /* image assets (Figma node 40:3904) */
-const imgHeroMockup = '/ai/hero-mockup.png'
-const imgCtxPolicy1 = '/ai/ctx-policy1.png'
-const imgCtxFrame1 = '/ai/ctx-frame1.png'
-const imgCtxFrame2 = '/ai/ctx-frame2.png'
-const imgCtxPolicy2 = '/ai/ctx-policy2.png'
-const imgProbMacbook = '/ai/prob-macbook.png'
-const imgSolMacbook1 = '/ai/sol-macbook1.png'
-const imgSolMacbook2 = '/ai/sol-macbook2.png'
-const imgSolFeedback1 = '/ai/sol-feedback1.png'
-const imgSolFeedback2 = '/ai/sol-feedback2.png'
-const imgSolFeedback3 = '/ai/sol-feedback3.png'
+const imgHeroMockup = asset('/ai/hero-mockup.png')
+const imgCtxPolicy1 = asset('/ai/ctx-policy1.png')
+const imgCtxFrame1 = asset('/ai/ctx-frame1.png')
+const imgCtxFrame2 = asset('/ai/ctx-frame2.png')
+const imgCtxPolicy2 = asset('/ai/ctx-policy2.png')
+const imgProbMacbook = asset('/ai/prob-macbook.png')
+const imgSolMacbook1 = asset('/ai/sol-macbook1.png')
+const imgSolMacbook2 = asset('/ai/sol-macbook2.png')
+const imgSolFeedback1 = asset('/ai/sol-feedback1.png')
+const imgSolFeedback2 = asset('/ai/sol-feedback2.png')
+const imgSolFeedback3 = asset('/ai/sol-feedback3.png')
 
-const imgLinkedin = '/cs/linkedin.svg'
-const imgMedium = '/cs/medium.svg'
+const imgLinkedin = asset('/cs/linkedin.svg')
+const imgMedium = asset('/cs/medium.svg')
 
 export default function CaseStudyHumanAI() {
   return (
