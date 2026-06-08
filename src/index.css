@@ -1,3 +1,60 @@
+/* ── FONTS ──
+   Self-hosted Medway (headings) + Medway Schoolbook (body). Relative url()
+   so Vite fingerprints them and rewrites paths for the '/portfolio/' base. */
+
+/* Medway — headings */
+@font-face {
+  font-family: 'Medway';
+  src: url('./assets/fonts/Medway-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Medway';
+  src: url('./assets/fonts/Medway-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Medway';
+  src: url('./assets/fonts/Medway-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Medway';
+  src: url('./assets/fonts/Medway-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Medway Schoolbook — body */
+@font-face {
+  font-family: 'Medway Schoolbook';
+  src: url('./assets/fonts/Medway-Schoolbook-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Medway Schoolbook';
+  src: url('./assets/fonts/Medway-Schoolbook-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Medway Schoolbook';
+  src: url('./assets/fonts/Medway-Schoolbook-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }

@@ -61,7 +61,7 @@
 }
 
 .ai-hero-title {
-  font-family: 'Sentient', sans-serif;
+  font-family: 'Medway', sans-serif;
   font-weight: 400;
   font-size: 48px;
   line-height: 50px;
@@ -72,7 +72,7 @@
 }
 
 .ai-hero-desc {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: normal;
@@ -116,7 +116,7 @@
 }
 
 .ai-label p {
-  font-family: 'Sentient', sans-serif;
+  font-family: 'Medway', sans-serif;
   font-weight: 700;
   font-size: 20px;
   line-height: normal;
@@ -147,7 +147,7 @@
 
 .ai-metric-num p,
 .ai-metric-num span {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 700;
   font-size: 50.2px;
   line-height: normal;
@@ -159,7 +159,7 @@
 .ai-metric-num .sb { font-weight: 600; }
 
 .ai-metric-label {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
@@ -202,7 +202,7 @@
 }
 
 .ai-facts-label p {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 700;
   font-size: 50.2px;
   line-height: normal;
@@ -244,7 +244,7 @@
 }
 
 .ai-quote-text {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 24px;
   line-height: normal;
@@ -254,7 +254,7 @@
 }
 
 .ai-quote-attr {
-  font-family: 'Sentient', sans-serif;
+  font-family: 'Medway', sans-serif;
   font-weight: 300;
   font-size: 16px;
   line-height: normal;
@@ -296,7 +296,7 @@
 }
 
 .ai-context-text p {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 24px;
   line-height: normal;
@@ -413,7 +413,7 @@
 }
 
 .ai-problem-card .ttl {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 600;
   font-size: 16px;
   line-height: normal;
@@ -423,7 +423,7 @@
 }
 
 .ai-problem-card .body {
-  font-family: 'General Sans', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 18.47px;
   line-height: normal;
@@ -478,7 +478,7 @@
 }
 
 .ai-align-num p {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 700;
   font-size: 16px;
   line-height: normal;
@@ -487,7 +487,7 @@
 }
 
 .ai-align-left .goal {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 700;
   font-size: 24px;
   line-height: normal;
@@ -511,7 +511,7 @@
 .ai-align-right.pb32 { padding-bottom: 32px; }
 
 .ai-align-heading {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 77px;
   line-height: normal;
@@ -521,7 +521,7 @@
 }
 
 .ai-align-body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 48px;
   color: #262626;
@@ -570,7 +570,7 @@
 }
 
 .ai-sol-greencard .ttl {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 36px;
   line-height: normal;
@@ -580,7 +580,7 @@
 }
 
 .ai-sol-greencard .body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 18.47px;
   line-height: normal;
@@ -605,7 +605,7 @@
 }
 
 .ai-sol-bordered p {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 18.47px;
   line-height: normal;
@@ -689,7 +689,7 @@
 }
 
 .ai-sol-reduced .ttl {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 36px;
   line-height: normal;
@@ -699,7 +699,7 @@
 }
 
 .ai-sol-reduced .sub {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 18.47px;
   line-height: normal;
@@ -725,7 +725,7 @@
 }
 
 .ai-sol-banner .inner p {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 36px;
   line-height: normal;
