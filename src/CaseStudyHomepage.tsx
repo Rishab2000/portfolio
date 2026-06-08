@@ -18,13 +18,13 @@ const imgCustomization = asset('/cs/customization.png')
 const imgLinkedin = asset('/cs/linkedin.svg')
 const imgMedium = asset('/cs/medium.svg')
 
-function ArrowDown() {
-  return (
-    <svg className="cs-metric-arrow" viewBox="0 0 25 29" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M12.5 1.5V27M12.5 27L2.5 17M12.5 27L22.5 17" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
+// function ArrowDown() {
+//   return (
+//     <svg className="cs-metric-arrow" viewBox="0 0 25 29" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+//       <path d="M12.5 1.5V27M12.5 27L2.5 17M12.5 27L22.5 17" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+//     </svg>
+//   )
+// }
 
 export default function CaseStudyHomepage() {
   return (
