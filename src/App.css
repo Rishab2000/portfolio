@@ -58,7 +58,7 @@
   font-weight: 400;
   font-size: 36px;
   color: black;
-  line-height: normal;
+  line-height: 1.14;
   word-break: break-word;
   font-style: normal;
   width: 100%;
@@ -76,7 +76,7 @@
   font-weight: 400;
   font-size: 14px;
   color: black;
-  line-height: normal;
+  line-height: 1.14;
   white-space: nowrap;
 }
 
@@ -85,7 +85,7 @@
   font-weight: 400;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.32);
-  line-height: normal;
+  line-height: 1.14;
   white-space: nowrap;
 }
 
@@ -132,7 +132,7 @@
 }
 
 .bio p {
-  line-height: normal;
+  line-height: 1.14;
   margin: 0;
 }
 
@@ -151,7 +151,7 @@
   font-family: 'Medway', sans-serif;
   font-weight: 700;
   font-size: 14px;
-  line-height: normal;
+  line-height: 1.14;
 }
 
 .info-values {
@@ -164,15 +164,15 @@
   font-size: 14px;
 }
 
-.coord-dim  { color: #a8a8a8; line-height: normal; }
-.coord-main { color: black;   line-height: normal; }
+.coord-dim  { color: #a8a8a8; line-height: 1.14; }
+.coord-main { color: black;   line-height: 1.14; }
 
 .link-underline {
   text-decoration: underline;
   text-decoration-style: solid;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-  line-height: normal;
+  line-height: 1.14;
   cursor: pointer;
 }
 
@@ -209,7 +209,7 @@
   width: 100%;
   color: black;
   font-style: normal;
-  line-height: normal;
+  line-height: 1.14;
   word-break: break-word;
 }
 
@@ -226,7 +226,7 @@
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 700;
   font-size: 14px;       /* same for desktop */
-  line-height: normal;
+  line-height: 1.14;
   width: 100%;
 }
 
@@ -234,7 +234,7 @@
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 14px;       /* desktop: 14px (tablet was 13px) */
-  line-height: normal;
+  line-height: 1.14;
   min-width: 100%;
   width: min-content;
 }
@@ -315,7 +315,7 @@
   font-family: 'Medway', sans-serif;
   font-weight: 400;
   font-size: 40px;       /* desktop: 40px (tablet was 36px) */
-  line-height: normal;
+  line-height: 1.14;
   white-space: nowrap;
 }
 
@@ -325,7 +325,7 @@
   font-size: 20px;       /* desktop: 20px (tablet was 16px) */
   text-align: center;
   width: 622px;
-  line-height: normal;
+  line-height: 1.14;
 }
 
 /* Media row: left frame + right stacked, space-between */
@@ -414,7 +414,7 @@
 }
 
 .testimonials-heading span {
-  line-height: normal;
+  line-height: 1.14;
 }
 
 .t-extralight {
@@ -509,7 +509,7 @@
   font-weight: 500;
   font-size: 14px;
   color: black;
-  line-height: normal;
+  line-height: 1.14;
   font-style: normal;
   min-width: 100%;
   width: min-content;
@@ -528,7 +528,7 @@
   flex-direction: column;
   align-items: flex-start;
   font-size: 14px;
-  line-height: normal;
+  line-height: 1.14;
   font-style: normal;
   width: 100%;
   word-break: break-word;
@@ -591,7 +591,7 @@
   font-weight: 400;
   font-size: 32px;
   color: #262626;
-  line-height: normal;
+  line-height: 1.14;
   font-style: normal;
   white-space: pre;
 }
@@ -617,7 +617,7 @@
 .contact-label {
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 700;
-  line-height: normal;
+  line-height: 1.14;
 }
 
 .contact-links {
@@ -632,7 +632,7 @@
 
 .contact-links a,
 .contact-links p {
-  line-height: normal;
+  line-height: 1.14;
 }
 
 /* ═══════════════════════════════════════════

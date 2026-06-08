@@ -64,7 +64,7 @@
   font-family: 'Medway', sans-serif;
   font-weight: 400;
   font-size: 40px;
-  line-height: normal;
+  line-height: 1.14;
   color: #101013;
   margin: 0;
   width: 100%;
@@ -74,15 +74,15 @@
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 16px;
-  line-height: normal;
+  line-height: 1.14;
   color: #101013;
   width: 439px;
   max-width: 100%;
 }
 
-.sd-hero-desc p { margin: 0; line-height: normal; }
+.sd-hero-desc p { margin: 0; line-height: 1.14; }
 .sd-hero-desc ul { margin: 0; padding-left: 24px; list-style: disc; }
-.sd-hero-desc li { margin: 0; line-height: normal; }
+.sd-hero-desc li { margin: 0; line-height: 1.14; }
 
 .sd-hero-tile {
   width: 522px;
@@ -123,7 +123,7 @@
   font-family: 'Medway', sans-serif;
   font-weight: 700;
   font-size: 20px;
-  line-height: normal;
+  line-height: 1.14;
   color: #262626;
   margin: 0;
   white-space: nowrap;
@@ -169,7 +169,7 @@
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 24px;
-  line-height: normal;
+  line-height: 1.14;
   color: #f9f8f6;
   width: 100%;
   margin: 0;
@@ -222,7 +222,7 @@
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 77px;
-  line-height: normal;
+  line-height: 1.14;
   color: #fff;
   margin: 0;
   flex: 1 0 0;
@@ -248,12 +248,12 @@
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 16px;
-  line-height: normal;
+  line-height: 1.14;
   color: #fff;
   width: 287px;
   flex-shrink: 0;
 }
-.sd-banner-desc p { margin: 0; line-height: normal; }
+.sd-banner-desc p { margin: 0; line-height: 1.14; }
 
 /* ── VISION (purple-bordered, numbered rows) ── */
 
@@ -302,7 +302,7 @@
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 16px;
-  line-height: normal;
+  line-height: 1.14;
   color: #262626;
   margin: 0;
 }
@@ -311,7 +311,7 @@
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 700;
   font-size: 24px;
-  line-height: normal;
+  line-height: 1.14;
   color: #262626;
   margin: 0;
   white-space: nowrap;
@@ -338,7 +338,7 @@
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 77px;
-  line-height: normal;
+  line-height: 1.14;
   color: #262626;
   margin: 0;
   white-space: nowrap;
@@ -396,7 +396,7 @@
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 24px;
-  line-height: normal;
+  line-height: 1.14;
   color: #161616;
   flex: 1 0 0;
   min-width: 0;
@@ -441,7 +441,7 @@
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 24.62px;
-  line-height: normal;
+  line-height: 1.14;
   color: #0d0d0d;
   margin: 0;
   width: 100%;
@@ -451,7 +451,7 @@
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 18.47px;
-  line-height: normal;
+  line-height: 1.14;
   color: #000;
   margin: 0;
   width: 100%;
@@ -495,7 +495,7 @@
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 24px;
-  line-height: normal;
+  line-height: 1.14;
   margin: 0;
   white-space: nowrap;
 }
@@ -545,7 +545,7 @@
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 16px;
-  line-height: normal;
+  line-height: 1.14;
   color: #fff;
   width: 100%;
   margin: 0;
@@ -577,7 +577,7 @@
   color: #000;
 }
 
-.sd-card-bullets li { margin-left: 21px; line-height: normal; }
+.sd-card-bullets li { margin-left: 21px; line-height: 1.14; }
 
 .sd-card-img {
   width: 820px;
