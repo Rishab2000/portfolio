@@ -61,7 +61,7 @@
 }
 
 .sd-hero-title {
-  font-family: 'Sentient', sans-serif;
+  font-family: 'Medway', sans-serif;
   font-weight: 400;
   font-size: 40px;
   line-height: normal;
@@ -71,7 +71,7 @@
 }
 
 .sd-hero-desc {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: normal;
@@ -120,7 +120,7 @@
 }
 
 .sd-label p {
-  font-family: 'Sentient', sans-serif;
+  font-family: 'Medway', sans-serif;
   font-weight: 700;
   font-size: 20px;
   line-height: normal;
@@ -166,7 +166,7 @@
 }
 
 .sd-context-text p {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 24px;
   line-height: normal;
@@ -219,7 +219,7 @@
 }
 
 .sd-banner-line p {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 77px;
   line-height: normal;
@@ -245,7 +245,7 @@
 .sd-banner-line.faced p { flex: none; white-space: nowrap; }
 
 .sd-banner-desc {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: normal;
@@ -299,7 +299,7 @@
 }
 
 .sd-vision-num p {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: normal;
@@ -308,7 +308,7 @@
 }
 
 .sd-vision-left .goal {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 700;
   font-size: 24px;
   line-height: normal;
@@ -335,7 +335,7 @@
 .sd-vision-right.head { justify-content: center; }
 
 .sd-vision-heading {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 77px;
   line-height: normal;
@@ -345,7 +345,7 @@
 }
 
 .sd-vision-body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 48px;
   line-height: 55px;
@@ -393,7 +393,7 @@
 }
 
 .sd-opps-callout-text {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 24px;
   line-height: normal;
@@ -438,7 +438,7 @@
 }
 
 .sd-opps-card .ttl {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 24.62px;
   line-height: normal;
@@ -448,7 +448,7 @@
 }
 
 .sd-opps-card .body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 18.47px;
   line-height: normal;
@@ -492,7 +492,7 @@
 }
 
 .sd-tab p {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 24px;
   line-height: normal;
@@ -542,7 +542,7 @@
 }
 
 .sd-card-greenlabel p {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: normal;
@@ -572,7 +572,7 @@
   list-style: disc;
   margin: 0;
   width: 220px;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   color: #000;
 }

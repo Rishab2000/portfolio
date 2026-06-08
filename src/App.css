@@ -54,7 +54,7 @@
 }
 
 .name {
-  font-family: 'Sentient', sans-serif;
+  font-family: 'Medway', sans-serif;
   font-weight: 400;
   font-size: 36px;
   color: black;
@@ -72,7 +72,7 @@
 }
 
 .subtitle-prev {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 14px;
   color: black;
@@ -81,7 +81,7 @@
 }
 
 .subtitle-at {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.32);
@@ -120,7 +120,7 @@
 
 /* Bio — leading-[0] container, each <p> gets leading-[normal] */
 .bio {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 14px;
   color: black;
@@ -148,7 +148,7 @@
 }
 
 .info-label {
-  font-family: 'Sentient', sans-serif;
+  font-family: 'Medway', sans-serif;
   font-weight: 700;
   font-size: 14px;
   line-height: normal;
@@ -159,7 +159,7 @@
   flex-direction: column;
   gap: 4px;
   align-items: flex-start;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 14px;
 }
@@ -223,7 +223,7 @@
 }
 
 .approach-heading {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 700;
   font-size: 14px;       /* same for desktop */
   line-height: normal;
@@ -231,7 +231,7 @@
 }
 
 .approach-body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 14px;       /* desktop: 14px (tablet was 13px) */
   line-height: normal;
@@ -312,7 +312,7 @@
 }
 
 .extended-title {
-  font-family: 'Sentient', sans-serif;
+  font-family: 'Medway', sans-serif;
   font-weight: 400;
   font-size: 40px;       /* desktop: 40px (tablet was 36px) */
   line-height: normal;
@@ -320,7 +320,7 @@
 }
 
 .extended-desc {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: 20px;       /* desktop: 20px (tablet was 16px) */
   text-align: center;
@@ -418,12 +418,12 @@
 }
 
 .t-extralight {
-  font-family: 'Sentient', sans-serif;
+  font-family: 'Medway', sans-serif;
   font-weight: 300;
 }
 
 .t-regular {
-  font-family: 'Sentient', sans-serif;
+  font-family: 'Medway', sans-serif;
   font-weight: 400;
 }
 
@@ -505,7 +505,7 @@
 }
 
 .card-quote {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
   font-size: 14px;
   color: black;
@@ -535,7 +535,7 @@
 }
 
 .attr-name {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 700;
   color: black;
   text-align: center;
@@ -543,7 +543,7 @@
 }
 
 .attr-role {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   color: #6f6f6f;
   min-width: 100%;
@@ -587,7 +587,7 @@
 }
 
 .footer-heading {
-  font-family: 'Sentient', sans-serif;
+  font-family: 'Medway', sans-serif;
   font-weight: 400;
   font-size: 32px;
   color: #262626;
@@ -615,7 +615,7 @@
 }
 
 .contact-label {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 700;
   line-height: normal;
 }
@@ -625,7 +625,7 @@
   flex-direction: column;
   gap: 6px;
   align-items: flex-start;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   line-height: 0;
 }
