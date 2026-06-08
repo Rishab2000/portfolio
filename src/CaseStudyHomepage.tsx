@@ -89,13 +89,13 @@ export default function CaseStudyHomepage() {
               </div>
               <div className="cs-metric">
                 <div className="cs-metric-num">
-                  <ArrowDown /><span>72</span><span>%</span>
+                  <span>↓ 72</span><span>%</span>
                 </div>
                 <p className="cs-metric-label">No:of clicks for key workflows</p>
               </div>
               <div className="cs-metric">
                 <div className="cs-metric-num">
-                  <ArrowDown /><span>27</span><span>%</span>
+                  <span>↓ 27</span><span>%</span>
                 </div>
                 <p className="cs-metric-label">Time to complete key workflows</p>
               </div>
