@@ -1,0 +1,22 @@
+/* src/pages/ScrollStackTest/ScrollStackTest.css */
+
+.scroll-stack-test {
+  width: 100%;
+  min-height: 100vh;
+  background: #0a0a0a;
+  color: #f2f2f2;
+  font-family: inherit;
+}
+
+.sst-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding: var(--space-1);
+  background: #0a0a0a;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.sst-placeholder {
+  padding: var(--space-1);
+}
