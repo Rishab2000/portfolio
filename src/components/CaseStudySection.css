@@ -1,0 +1,46 @@
+/* ═══════════════════════════════════════════
+   CaseStudySection — reusable 3-column grid
+   (rail / content / media), Figma node 159:163
+   ═══════════════════════════════════════════ */
+
+.cs-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.70fr) minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr); 
+  padding-bottom: var(--space-4);
+  width: 100%;
+  flex: 1 1 0%;
+  min-height: 0;
+  background: var(--cs-grid-bg);
+  color: var(--cs-grid-text);
+  overflow: visible;
+}
+
+.cs-grid-rail {
+  align-self: start;
+  padding: var(--space-1) var(--space-1);
+  position: sticky;
+  /* top is computed and injected inline by useStackingSections */
+}
+
+.cs-grid-content {
+  align-self: start;
+  padding: var(--space-1) var(--space-1);
+}
+
+.cs-grid-media {
+  align-self: start;
+  display: flex;
+  /* flex-start so the columns keep their natural (full) height and top-align
+     inside the capped panel — otherwise the default `stretch` squeezes them to
+     the max-height and distorts the images. Combined with overflow: hidden this
+     clips only the bottom overflow; images keep their original size. */
+  align-items: flex-start;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  position: sticky;
+  /* top + max-height are computed and injected inline by useStackingSections.
+     overflow: hidden clips the capped sticky panel so images past the cap don't
+     spill over the content below. */
+  overflow: hidden;
+}

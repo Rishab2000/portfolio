@@ -55,6 +55,192 @@
   font-display: swap;
 }
 
+/* ═══════════════════════════════════════════
+   TYPESCALE — single source of truth
+   Ratio: 1.333 (Perfect Fourth), base 16px/1rem
+   ═══════════════════════════════════════════ */
+
+:root {
+  --fs-caption2: 0.5625rem; /* 9px */
+  --fs-caption1: 0.75rem;  /* 12px */
+  --fs-body: 1rem;        /* 16px */
+  --fs-body1: 1.333rem;   /* 21px */
+  --fs-heading1: 1.778rem; /* 28px */
+  --fs-heading2: 2.370rem; /* 38px */
+  --fs-heading3: 3.161rem; /* 51px */
+  --fs-heading4: 4.214rem; /* 67px */
+  --fs-heading5: 5.617rem; /* 90px */
+  --fs-heading6: 7.491rem; /* 120px */
+  --fs-heading7: 9.989rem; /* 160px */
+}
+
+/* ═══════════════════════════════════════════
+   TYPE TOKENS — one class per typescale step
+   Font-family / weight / size / line-height /
+   letter-spacing only. Color, margin, and layout
+   stay at the usage site — apply alongside a
+   component class, e.g.:
+     <p className="cs-banner-desc type-body">
+
+   Every text style in the Figma source trims each line box to the font's
+   cap-height/alphabetic-baseline (text-box-trim/text-box-edge) instead of
+   leaving the font's default ascent/descent leading above and below the
+   glyphs. That leading is only a couple px at body sizes, but at heading
+   sizes it reads as a large, unexplained gap above the text that `margin`
+   can't touch (it's font-metric leading, not box-model spacing). Applied
+   once here so every .type-* class matches the source, instead of patching
+   it per usage site.
+   ═══════════════════════════════════════════ */
+
+.type-heading7,
+.type-heading6,
+.type-heading5,
+.type-heading4,
+.type-heading3,
+.type-heading2,
+.type-heading2-bold,
+.type-stat1,
+.type-heading1,
+.type-label1,
+.type-body,
+.type-body1,
+.type-caption1,
+.type-caption2 {
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
+}
+
+.type-heading7 {
+  font-family: 'Medway', sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-heading7);
+  line-height: 100%;
+  letter-spacing: -0.035em;
+}
+
+.type-heading6 {
+  font-family: 'Medway', sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-heading6);
+  line-height: 100%;
+  letter-spacing: -0.03em;
+}
+
+.type-heading5 {
+  font-family: 'Medway', sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-heading5);
+  line-height: 100%;
+  letter-spacing: -0.03em;
+}
+
+.type-heading4 {
+  font-family: 'Medway', sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-heading4);
+  line-height: 105%;
+  letter-spacing: -0.025em;
+}
+
+.type-heading3 {
+  font-family: 'Medway', sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-heading3);
+  line-height: 105%;
+  letter-spacing: -0.02em;
+}
+
+.type-heading2 {
+  font-family: 'Medway', sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-heading2);
+  line-height: 108%;
+  letter-spacing: -0.02em;
+}
+
+.type-heading2-bold {
+  font-family: 'Medway', sans-serif;
+  font-weight: 700;
+  font-size: var(--fs-heading2);
+  line-height: 105%;
+  letter-spacing: -0.02em;
+}
+
+.type-stat1 {
+  font-family: 'Medway Schoolbook', sans-serif;
+  font-weight: 700;
+  font-size: var(--fs-heading3);
+  line-height: 110%;
+  letter-spacing: -0.02em;
+}
+
+.type-heading1 {
+  font-family: 'Medway', sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-heading1);
+  line-height: 105%;
+  letter-spacing: -0.02em;
+}
+
+.type-label1 {
+  font-family: 'Medway', sans-serif;
+  font-weight: 700;
+  font-size: var(--fs-body1);
+  line-height: 110%;
+  letter-spacing: -0.009em;
+}
+
+.type-body {
+  font-family: 'Medway', sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-body);
+  line-height: 116%;
+  letter-spacing: -0.009em;
+}
+
+.type-body1 {
+  font-family: 'Medway', sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-body1);
+  line-height: 100%;
+  letter-spacing: -0.009em;
+}
+
+.type-caption1 {
+  font-family: 'Medway Schoolbook', sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-caption1);
+  line-height: 109%;
+  letter-spacing: normal;
+}
+
+.type-caption2 {
+  font-family: 'Medway Schoolbook', sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-caption2);
+  line-height: 109%;
+  letter-spacing: normal;
+}
+
+/* ═══════════════════════════════════════════
+   SPACING — vertical rhythm
+   Base unit = one line of body text: 16px body
+   copy at line-height 1.14 renders an 18px line.
+   Every larger value is a whole multiple of it.
+   ═══════════════════════════════════════════ */
+
+:root {
+  --space-0-5: 9px;  /* half line */
+  --space-1: 18px;  /* 1 line */
+  --space-2: 36px;  /* 2 lines */
+  --space-3: 54px;
+  --space-4: 72px;
+  --space-5: 90px;
+  --space-6: 108px;
+  --space-7: 126px;
+  --space-8: 144px;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }

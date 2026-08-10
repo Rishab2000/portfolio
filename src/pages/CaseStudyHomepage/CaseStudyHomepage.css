@@ -1,0 +1,451 @@
+/* ═══════════════════════════════════════════
+   CASE STUDY — Modernizing MaaS360's dashboard
+   Figma node 187:434 (Desktop, 1280 wide)
+   Fonts: Medway (headings) · Medway Schoolbook (body)
+   ═══════════════════════════════════════════ */
+
+.cs {
+  background: var(--cs-bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #101013;
+}
+
+.cs-page {
+  width: 100%;
+  max-width: 3024px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Generic section: 64px side padding, inner content capped at 1152 */
+.cs-section {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding-left: var(--space-2);;
+  padding-right: var(--space-2);
+  width: 100%;
+}
+
+.cs-inner {
+  width: 100%;
+  max-width: 1152px;
+}
+
+/* Page header (sticky "Home" backlink + title) lives in ProjectHeader.css —
+   see src/components/ProjectHeader.tsx (Figma node 226:349). */
+
+/* Stacked section headers (StackedSection.css) use `background: page color`
+   here since every section on this page shares the same background —
+   see CLAUDE.md → "Component architecture: integrating the stacking pattern
+   into case study pages". Colours come from --cs-bg/--cs-fg, set inline on
+   .cs from the PAGE_BG/PAGE_FG constants in CaseStudyHomepage.tsx. */
+.cs-page .stack-head {
+  background: var(--cs-bg);
+  color: var(--cs-fg);
+}
+
+/* ── SECTION LABEL CHIP (border + centered text) ── */
+
+.cs-label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 16px;
+  border-radius: 8px;
+  border: 3px solid #42be65;
+  width: 100%;
+}
+
+.cs-label.is-centered { justify-content: center; }
+.cs-label.is-red { border-color: #fa4d56; }
+
+.cs-label p {
+  font-family: 'Medway', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.14;
+  color: #42be65;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.cs-label.is-red p { color: #fa4d56; }
+
+/* ── GENERIC labeled section (gap-8 wrapper) ── */
+
+.cs-section.gap8 { gap: 8px; padding-top: 24px; padding-bottom: 24px; }
+.cs-section.pad24 { padding-top: 24px; padding-bottom: 24px; }
+
+/* ── CHALLENGES (225:147) ── */
+ 
+.cs-challenge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-7);
+  padding-bottom: var(--space-7);
+  color: var(--cs-fg);
+}
+
+.cs-challenge-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.cs-challenge-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.cs-challenge-eyebrow {
+
+  text-transform: uppercase;
+  margin: 0;
+  width: 100%;
+}
+
+.cs-challenge-quote {
+  margin: 0;
+  width: 100%;
+}
+
+.cs-challenge-artifact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-0-5);
+  width: 85%;
+}
+
+.cs-challenge-caption {
+  text-indent: var(--space-0-5);
+  opacity: 0.72;
+  margin: 0;
+}
+
+.cs-challenge-issues {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.cs-challenge-grid {
+  display: flex;
+  gap: var(--space-7);
+  width: 100%;
+  padding: 0 0;
+}
+
+.cs-challenge-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.cs-challenge-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.cs-challenge-item-ttl {
+  margin: 0;
+}
+
+.cs-challenge-item-desc {
+  margin: 0;
+  max-width: 436px;
+}
+
+.cs-challenge-axis-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.cs-challenge-axis-rule {
+  height: 40px;
+  width: 100%;
+  border: 1px solid var(--cs-fg);
+  border-top: none;
+  box-sizing: border-box;
+}
+
+.cs-challenge-axis-label {
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.cs-oldhome {
+  aspect-ratio: 1098 / 573.57;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.cs-oldhome img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── APPROACH (246:373) ── */
+
+.approach-para{
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-0-5);
+  margin: -9px;
+}
+
+.approach-para.active {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.cs-approach-paras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  height: 140vh;
+}
+
+.approach-para-heading {
+  text-transform: uppercase;
+  margin: 0;
+  text-indent: var(--space-2);
+}
+
+.approach-para-body {
+  margin: 0;
+  max-width: 610px;
+  white-space: pre-wrap;
+}
+
+.cs-approach-diagrams {
+  width: 100%;
+}
+
+.cs-approach-diagram-item {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.cs-approach-diagram-item.active {
+  display: flex;
+}
+
+.cs-approach-diagram-item img {
+  width: 70%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.cs-approach-caption-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 325px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-approach-caption-item {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.cs-approach-caption-num {
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.cs-approach-caption-text {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+/* ── DESIGN OUTCOMES (264:159) ── */
+
+.cs-outcomes-paras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  height: 150vh;
+}
+
+.cs-outcomes-para {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-0-5);
+}
+
+.cs-outcomes-para.active {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.cs-outcomes-label {
+  text-transform: uppercase;
+  margin: 0;
+  text-indent: var(--space-2);
+}
+
+.cs-outcomes-heading {
+  margin: 0;
+  max-width: 472px;
+}
+
+.cs-outcomes-body {
+  margin: 0;
+  max-width: 472px;
+  white-space: pre-wrap;
+}
+
+.cs-outcomes-diagrams {
+  width: 100%;
+}
+
+.cs-outcomes-diagram-item {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.cs-outcomes-diagram-item.active {
+  display: flex;
+}
+
+.cs-outcomes-image-stack {
+  position: relative;
+  width: 100%;
+}
+
+.cs-outcomes-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.cs-outcomes-image-variant {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+}
+
+/* invisible hover hit-zone, positioned over a numbered circle baked into
+   the base image — see hotspots data in CaseStudyHomepage.tsx */
+.cs-outcomes-hotspot {
+  position: absolute;
+  width: 5.5%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.cs-outcomes-diagram-item:has(.cs-outcomes-hotspot[data-hotspot="1"]:hover) .cs-outcomes-image-variant[data-variant="1"] {
+  opacity: 1;
+}
+
+.cs-outcomes-diagram-item:has(.cs-outcomes-hotspot[data-hotspot="1"]:hover) .cs-outcomes-caption-item[data-caption="1"] {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.cs-outcomes-diagram-item:has(.cs-outcomes-hotspot[data-hotspot="2"]:hover) .cs-outcomes-image-variant[data-variant="2"] {
+  opacity: 1;
+}
+
+.cs-outcomes-diagram-item:has(.cs-outcomes-hotspot[data-hotspot="2"]:hover) .cs-outcomes-caption-item[data-caption="2"] {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.cs-outcomes-caption-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+  padding: 0;
+  margin: 0 0 0 -9px;
+  max-width: 325px;
+  list-style: none;
+}
+
+.cs-outcomes-caption-item {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-0-5);
+  align-items: flex-start;
+}
+
+.cs-outcomes-caption-num {
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.cs-outcomes-caption-text {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+/* ═══════════════════════════════════════════
+   TABLET HORIZONTAL  ≤ 1024px  (node 40:771)
+   px-64 · inner 896 · hero stacks · fonts shrink
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+
+  .cs-inner {
+    max-width: 896px;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   TABLET VERTICAL  ≤ 768px  (node 40:2325)
+   px-32 · inner 704 · fonts shrink further
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  .cs-section {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .cs-inner {
+    max-width: 704px;
+  }
+}

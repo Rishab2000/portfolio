@@ -1,0 +1,48 @@
+/* src/pages/ScrollStackTest/ScrollStackTest.css */
+
+.scroll-stack-test {
+  width: 100%;
+  min-height: 100vh;
+  background: #0a0a0a;
+  color: #f2f2f2;
+  font-family: inherit;
+}
+
+.sst-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding: var(--space-1);
+  background: #0a0a0a;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.sst-placeholder {
+  padding: var(--space-1);
+}
+
+.sst-rail-item {
+  margin-bottom: var(--space-0-5);
+}
+
+.sst-content p {
+  margin-bottom: var(--space-1);
+}
+
+.sst-media-block {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0a0a0a;
+  opacity: 0.85;
+}
+
+/* position: sticky / z-index / isolation for .stack-head and .stack now live
+   in StackedSection.css (generic, page-agnostic). The overflow/sticky fix
+   for .cs-grid / .cs-grid-rail / .cs-grid-media is now permanent in
+   CaseStudySection.css. Only this page's visual background stays here. */
+.scroll-stack-test .stack-head {
+  background: #0a0a0a;
+}

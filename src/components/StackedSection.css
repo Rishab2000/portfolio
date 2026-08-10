@@ -1,0 +1,35 @@
+/* ═══════════════════════════════════════════
+   StackedSection — mechanical stacking behavior. All headers share one
+   uniform (closed) height; useStackingSections stacks them at that height,
+   so no separate open/active state is needed (Figma node 204:487 scrolled).
+   Background/text color are page-specific — see e.g. CaseStudyHomepage.css's
+   `.cs-page .stack-head` override.
+   ═══════════════════════════════════════════ */
+
+.stack-head {
+  width: 100%;
+  position: sticky;
+  z-index: 2;
+  /* Overlap the 1px border of the element above (page header / previous
+     section) so the two borders read as one line — matches the −1px the
+     pinned position uses in useStackingSections, keeping rest and pinned
+     positions identical (no snap on first scroll). */
+  margin-top: -1px;
+  /* top/bottom are computed and injected inline by useStackingSections */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  padding: var(--space-0-5) var(--space-2) var(--space-1) var(--space-1);
+  font-family: 'Medway', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.05;
+  letter-spacing: -0.144px;
+}
+
+.stack {
+  width: 100%;
+  isolation: isolate;
+}

@@ -1,0 +1,257 @@
+/* ═══════════════════════════════════════════
+   HOMEPAGE — Desktop layout (node 79:701)
+   max-width: 3024px
+   ═══════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════
+   BREAKPOINTS — single source of truth
+   Desktop-first (max-width). Base styles above
+   are the desktop (≥1024px) default — no query.
+
+     Desktop (base)   ≥1024px            no @media, default styles
+     Tablet           768px – 1023px     @media (max-width: 1023px)
+     Mobile           480px – 767px      @media (max-width: 767px)
+     Small mobile      ≤479px            @media (max-width: 479px)
+
+   Use these exact values for any new @media rule
+   so every component shares the same tiers.
+   ═══════════════════════════════════════════ */
+
+
+/* ═══════════════════════════════════════════
+   HOMEPAGE REVAMP — type styles (node 96:148)
+   Font-size / weight / line-height / letter-spacing only.
+   Color and font-family are set at the usage site.
+   ═══════════════════════════════════════════ */
+
+.hero-heading {
+  font-size: var(--fs-heading3);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.9px;
+}
+
+.project-row-title {
+  font-size: var(--fs-heading3); /* 51px, standing in for design's 48px */
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -1.392px;
+}
+
+/* ── HERO HEADING (node 96:147/148) ── */
+
+.hero-heading-block {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 40px 70px;
+  width: 100%;
+}
+
+.hero-heading-text {
+  font-family: 'Medway', sans-serif;
+  font-style: normal;
+  word-break: break-word;
+}
+
+.hero-heading-name {
+  color: #292929;
+}
+
+.hero-heading-desc {
+  color: #e3e3e3;
+}
+
+.hero-description {
+  font-family: 'Medway Schoolbook', sans-serif;
+  font-size: var(--fs-body); /* 21px, standing in for design's 20px */
+  font-weight: 400;
+  line-height: 1.14;
+  letter-spacing: -0.1px;
+  color: #292929;
+  width: 496px;
+  flex-shrink: 0;
+}
+
+/* ── PROJECT LIST (node 96:150) ── */
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.project-row {
+  --row-hover-transition: none; /* single knob for this row's hover animation */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 40px 60px;
+  width: 100%;
+  transition: background-color var(--row-hover-transition), border-color var(--row-hover-transition), box-shadow var(--row-hover-transition);
+}
+
+.project-row-link {
+  position: relative;
+  cursor: pointer;
+}
+
+.project-row-link:hover {
+  z-index: 1;
+  background-color: var(--row-hover-bg, #292929);
+  border-color: var(--row-hover-text, #ffffff);
+  box-shadow: 0 0 0 10px var(--row-hover-bg, #292929);
+}
+
+.project-row-link:hover .project-row-text {
+  color: var(--row-hover-text, #ffffff);
+}
+
+.project-row-link:focus-visible {
+  outline: 2px solid #0f62fe;
+  outline-offset: -2px;
+}
+
+.project-row-text {
+  font-family: 'Medway', sans-serif;
+  font-style: normal;
+  color: #292929;
+  width: 100%;
+  word-break: break-word;
+  transition: color var(--row-hover-transition);
+}
+
+/* ── PAGE SHELL ── */
+
+.portfolio {
+  background: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Constrains everything to 3024px */
+.layout-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 160px;           /* desktop: matches .main-content's section rhythm */
+  max-width: 3024px;
+  width: 100%;
+}
+
+/* ── MAIN CONTENT ── */
+
+.main-content {
+  flex: 1 0 0;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 160px;           /* desktop: 160px between sections */
+  align-items: center;
+  padding-top: 24px;
+}
+
+/* ── 1. HERO + PROJECT LIST ── */
+
+.section-approach-projects {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════
+   TABLET PORTRAIT  ≤ 1023px  (node 164:1786)
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 1023px) {
+
+  /* ── MAIN CONTENT ── */
+
+  .main-content {
+    width: 100%;
+    gap: 160px;
+    padding: 24px 0 0;
+  }
+
+  /* ── HERO HEADING ── */
+
+  .hero-heading-block {
+    padding: 24px;          /* tablet: 24px (desktop was 40px/60px) */
+  }
+
+  .hero-heading {
+    font-size: var(--fs-heading4); /* 67px (desktop was 90px) */
+    letter-spacing: -0.67px;
+  }
+
+  /* ── PROJECT LIST ── */
+
+  .project-row {
+    padding: 24px;          /* tablet: 24px (desktop was 40px/60px) */
+  }
+
+  .project-row-title {
+    font-size: var(--fs-heading2); /* 38px (desktop was 51px) */
+    letter-spacing: -1.038px;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   MOBILE  ≤ 767px  (node 164:1879)
+   Single column, reduced sizes throughout
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+
+  /* ── MAIN CONTENT ── */
+
+  .main-content {
+    gap: 56px;               /* mobile: 56px (desktop was 160px) */
+  }
+
+  .layout-inner {
+    gap: 56px;                /* mobile: 56px (desktop was 160px) */
+  }
+
+  /* ── HERO HEADING ── */
+
+  .hero-heading-block {
+    padding: 16px;          /* mobile: 16px (tablet was 24px) */
+  }
+
+  .hero-heading {
+    font-size: var(--fs-heading3); /* 51px (tablet was 67px) */
+    letter-spacing: -0.51px;
+  }
+
+  /* ── PROJECT LIST ── */
+
+  .project-row {
+    padding: 16px;          /* mobile: 16px (tablet was 24px) */
+  }
+
+  .project-row-title {
+    font-size: var(--fs-heading1); /* 28px (tablet was 38px) */
+    letter-spacing: -0.764px;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   SMALL MOBILE  ≤ 479px
+   Reserved for the revamp — no rules yet.
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 479px) {
+
+}
