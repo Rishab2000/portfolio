@@ -1,358 +1,459 @@
 import './CaseStudyHomepage.css'
-import { navigate, asset } from './nav'
+import { useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
+import { asset } from '../../lib/nav'
+import CaseStudyIntro from '../../components/CaseStudyIntro'
+import CaseStudySection from '../../components/CaseStudySection'
+import Footer from '../../components/Footer'
+import ProjectHeader from '../../components/ProjectHeader'
+import StackedSection from '../../components/StackedSection'
+import RetrospectiveSection, { RetroRevealToggle } from '../../components/RetrospectiveSection'
+import type { RetroSegment } from '../../components/RetrospectiveSection'
+import { useStackingSections } from '../../hooks/useStackingSections'
+import { useActiveDiagramIndex } from '../../hooks/useActiveDiagramIndex'
+
+/* Whole-page colour scheme — change these two to retheme the entire page.
+   Consumed as CSS custom properties (--cs-bg/--cs-fg/--cs-hover) set inline
+   on the page root below, and passed as bgColor/textColor to every themed
+   component (ProjectHeader, CaseStudyIntro, CaseStudySection). */
+const PAGE_BG = '#802626'
+const PAGE_FG = '#f5ecc2'
+const PAGE_HOVER = '#E0DEF2'
+
+interface ApproachParagraph {
+  heading: string
+  body: string
+  diagram: string
+  captionItems?: string[]
+}
+
+interface OutcomeHotspot {
+  xPct: number
+  yPct: number
+}
+
+interface OutcomeDiagram {
+  /** default image, path relative to /homepage-modernization/outcomes/ */
+  src: string
+  /** optional hover-state image per hotspot, same order/length as hotspots */
+  hovers?: string[]
+  /** optional hit-zone position (% of image width/height) per hotspot, same order as hovers */
+  hotspots?: OutcomeHotspot[]
+}
+
+interface OutcomeParagraph {
+  label: string
+  heading: string
+  body: string
+  diagram?: OutcomeDiagram
+  captionItems?: string[]
+}
+
+/* copy (Figma node 287:1738 no-hover / 264:209 hover, file VQlMKH4DWH87cZ0JASPuyO) */
+const retroSegments: RetroSegment[] = [
+  {
+    label: 'Designing',
+    percent: '~30%',
+    items: [
+      'Detailing workflows',
+      'Exploring, ideating and designing the framework',
+      'Designing mockups and prototypes',
+    ],
+  },
+  {
+    label: 'User research and customer interaction',
+    percent: '~25%',
+    items: [
+      'Customer interviews',
+      'NPS surveys & feedback documents',
+      'User testing & co-creation meetings',
+    ],
+  },
+  {
+    label: 'Stakeholder management',
+    percent: '~15%',
+    items: [
+      'Feedback sessions & collaborative brainstorming',
+      'Vision alignment',
+      'Approvals and red tapes',
+    ],
+    narrow: true,
+  },
+  {
+    label: 'Dev support and productisation',
+    percent: '~35%',
+    items: [
+      'Design documentation for dev team',
+      'Aligning with technical limitation',
+      'Ensuring the shipped product showcased the desired experience',
+      'Adapting design for phase wise implementation',
+    ],
+  },
+]
+
+/* copy + diagram pairing (Figma node 246:373, file VQlMKH4DWH87cZ0JASPuyO) */
+const approachParagraphs: ApproachParagraph[] = [
+  {
+    heading: 'Articulating the business value',
+    body: 'Through studying the product roadmap, strategy documents, speaking with the leadership, senior technical staff, observing competitor I was able to build a working understanding of the market and our business strategy.\n \n This helped me able to articulate benefits in a way that resonated with the stakeholders’ priorities.',
+    diagram: 'articulating_the_business_value.svg',
+    captionItems: [
+      'It will reduce future maintenance cost',
+      'Designing a simpler and intelligible homepage will make it easier target SMBs our core market',
+      'It can help amplify our security strategy',
+    ],
+  },
+  {
+    heading: 'Identifying product issues the modernisation can target',
+    body: 'The homepage is the starting point and should help IT admins begin their day easily. This simple understanding guided the research, I focused on understanding the challenges IT admins faced with daily workflows with the complete product.',
+    diagram: 'indentifying_product_issues.svg',
+  },
+  {
+    heading: 'Co-creating with stakeholders',
+    body: "Without stakeholder support, customer benefits may remain unrealised. For this, I co-created the solution to ensure the project resonated with the stakeholders’ priorities.",
+    diagram: 'cocreating_with_stakeholders.svg',
+    captionItems: [
+      'Involved key stakeholders from the beginning so that there was a feeling of ownership across the board.',
+      'Communicated across multiple verticals to ensure the design approach covers all bases.',
+      'Co-creating through multiple iterations until we arrived at a solution that we all believed in - one that would benefit users.',
+    ],
+  },
+  {
+    heading: 'Designing a framework',
+    body: 'Without formal guidelines, I was responsible for designing a framework for the homepage. One ensured it can scale elegantly for any future changes or additions.',
+    diagram: 'designing_a_framework.svg',
+    captionItems: [
+      'Designed a scalable framework that can help future teams expand the homepage’s capabilities.',
+      'Defined design principles that was guidelines for a good homepage experience.',
+      'Clear and explicit documentation so people could understand even without me in the room.',
+    ],
+  },
+  {
+    heading: 'Phase-wise deconstruction',
+    body: 'Since this was a mammoth that had no official funding, I transformed the design into smaller, logical phases. These could then be picked up along with existing projects. \n \n Through this we reached a solid foundation, that was used as proof of concept to obtain formal development resources.',
+    diagram: 'phasewise_deconstruction.svg',
+    captionItems: [
+      'Distilled the homepage into its core capabilities, ones that can be developed individually.',
+      'Detailed design specs so that developers could pick it up asynchronously.',
+      'Tested capabilities as they went out to continuously iterate through user feedback.',
+    ],
+  },
+]
+
+/* copy + diagram pairing (Figma node 264:159, file VQlMKH4DWH87cZ0JASPuyO) */
+const outcomeParagraphs: OutcomeParagraph[] = [
+  {
+    label: 'Flexible architecture',
+    heading: 'Maintains composure when faced with different use cases',
+    body: 'The layout allows flexibility for customisation, fluidity for different data types and easy scalability and maintenance.',
+    diagram: {
+      src: 'flexibility/no_hover.png',
+      hovers: ['flexibility/one_hover.png', 'flexibility/two_hover.png'],
+      hotspots: [
+        { xPct: 21.8, yPct: 29.7 },
+        { xPct: 73.3, yPct: 75.2 },
+      ],
+    },
+    captionItems: [
+      'The fixed-width widgets with content hugging height affords a page structure to accommodate information of varying natures.',
+      'Widgets can be moved around the dashboard without dirupting spacing and harmony',
+    ],
+  },
+  {
+    label: 'Data widgets',
+    heading: 'Reduced no:of clicks by 72%',
+    body: 'Through user research, surfaced key KPIs that resulted in quicker decisions and more efficient workflows.',
+    diagram: {
+      src: 'widgets.png',
+    },
+    captionItems: [
+      'Designed a micro layout systems to ensure consistency with future widgets',
+      'The widgets provide an overview for which admins previously had to navigate deep within the product to access.',
+    ],
+  },
+  {
+    label: 'Personalisation',
+    heading: 'Homepage caters to the usecases of 35k plus users',
+    body: 'The homepage is completely customisable to the user’s needs, research informed that cookie cutter approach would only cause increase user friction and engineering overhead.',
+    diagram: {
+      src: 'customisation/no_hover.png',
+      hovers: ['customisation/one_hover.png', 'customisation/two_hover.png'],
+      hotspots: [
+        { xPct: 69.6, yPct: 39.7 },
+        { xPct: 89.2, yPct: 88.9 },
+      ],
+    },
+    captionItems: [
+      'User’s can make customise their homepage with the widgets that align workflows or usecases.',
+      'Designed a catalogue of widgets that will grow and scale as the product evolves.',
+    ],
+  },
+  {
+    label: 'Beyond this',
+    heading: 'More details over a conversation ;)',
+    body: 'If you’re interested I’d love to  walk you through my process and share more design examples for this project.',
+  },
+]
 
 /* image assets (Figma node 187:434) */
-const imgHero = asset('/cs/hero.png')
-const imgArtMain = asset('/cs/art-main.png')
-const imgArtR1 = asset('/cs/art-r1.png')
-const imgArtR2 = asset('/cs/art-r2.png')
-const imgOldHome = asset('/cs/old-homepage.png')
-const imgWCompliance = asset('/cs/w-compliance.png')
-const imgWGroup85 = asset('/cs/w-group85.png')
-const imgWDevices = asset('/cs/w-devices.png')
-const imgWGroup37042 = asset('/cs/w-group37042.png')
-const imgWGroup87 = asset('/cs/w-group87.png')
-const imgWWatson = asset('/cs/w-watson.png')
-const imgFlexibility = asset('/cs/flexibility.png')
-const imgCustomization = asset('/cs/customization.png')
-const imgLinkedin = asset('/cs/linkedin.svg')
-const imgMedium = asset('/cs/medium.svg')
+const imgOldHome = asset('/homepage-modernization/old-homepage.png')
 
-// function ArrowDown() {
-//   return (
-//     <svg className="cs-metric-arrow" viewBox="0 0 25 29" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-//       <path d="M12.5 1.5V27M12.5 27L2.5 17M12.5 27L22.5 17" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-//     </svg>
-//   )
-// }
+/* image assets (Figma node 159:147 — CaseStudyIntro) */
+const imgIntro = asset('/homepage-modernization/intro_image.png')
 
 export default function CaseStudyHomepage() {
+  const pageRef = useRef<HTMLDivElement>(null)
+  useStackingSections(pageRef, { fixedHeaderSelector: '.project-header' })
+
+  const [retroRevealMode, setRetroRevealMode] = useState<'stay' | 'disappear'>('stay')
+
+  const approachContentRef = useRef<HTMLDivElement>(null)
+  const activeDiagramIndex = useActiveDiagramIndex(approachContentRef, {
+    paragraphSelector: '.approach-para',
+    fixedHeaderSelector: '.project-header',
+    offsetPx: 130,
+  })
+
+  const outcomesContentRef = useRef<HTMLDivElement>(null)
+  const activeOutcomeIndex = useActiveDiagramIndex(outcomesContentRef, {
+    paragraphSelector: '.cs-outcomes-para',
+    fixedHeaderSelector: '.project-header',
+    offsetPx: 130,
+  })
+
+  const pageStyle = {
+    '--cs-bg': PAGE_BG,
+    '--cs-fg': PAGE_FG,
+    '--cs-hover': PAGE_HOVER,
+  } as CSSProperties
+
   return (
-    <div className="cs">
-      <div className="cs-page">
+    <div className="cs" style={pageStyle}>
+      <div className="cs-page" ref={pageRef}>
 
-        {/* ── HEADER ── */}
-        <header className="cs-header">
-          <nav className="cs-nav">
-            <button className="cs-nav-home" onClick={() => navigate('/')}>Home</button>
-            <div className="cs-nav-icons">
-              <a href="https://www.linkedin.com/in/rishbs/" target="_self" aria-label="LinkedIn">
-                <img src={imgLinkedin} alt="LinkedIn" />
-              </a>
-              <a href="https://substack.com/@rishabsachidanand" target="_blank" rel="noopener noreferrer" aria-label="Medium">
-                <img src={imgMedium} alt="Medium" />
-              </a>
-            </div>
-          </nav>
-        </header>
+        {/* ── PAGE HEADER (sticky, always visible) ── */}
+        <ProjectHeader
+          title="Modernizing IBM MaaS360’s dashboard"
+          bgColor={PAGE_BG}
+          textColor={PAGE_FG}
+        />
 
-        {/* ── HERO ── */}
-        <section className="cs-hero">
-          <div className="cs-hero-inner">
-            <div className="cs-hero-left">
-              <h1 className="cs-hero-title">Modernizing MaaS360&rsquo;s dashboard</h1>
-              <div className="cs-hero-desc">
-                <div className="cs-hero-desc-col1">
-                  <p>Led and owned the design process - </p>
-                  <p>&#8203;</p>
-                  <ul>
-                    <li>Defined <span className="u">business value</span> </li>
-                    <li>Conducted <span className="u">user research</span> </li>
-                    <li>Created <span className="u">design framework</span> </li>
-                  </ul>
-                </div>
-                <ul className="cs-hero-desc-col2">
-                  <li>Delivered <span className="u">dev ready mockups</span> </li>
-                  <li>Facilitated <span className="u">user feedback sessions</span> </li>
-                  <li>Drove <span className="u">C-suite consensus</span> to push to production</li>
-                </ul>
-              </div>
-            </div>
-            <div className="cs-hero-tile">
-              <img src={imgHero} alt="MaaS360 dashboard" />
-            </div>
-          </div>
-        </section>
+        {/* ── OVERVIEW (CaseStudyIntro) ── */}
+        <StackedSection title="Overview">
+          <CaseStudyIntro
+            bgColor={PAGE_BG}
+            textColor={PAGE_FG}
+            hoverColor={PAGE_HOVER}
+            description="Starting out as an incubator project this moved to create the face of the product. This involved complete re-architecting and re-designing MaaS360’s homepage dashboard, building a scalable design framework that will sustain any future additions."
+            responsibilities={[
+              { prefix: 'Defined', link: 'business value', description: 'Simpler management flows makes it an attractive purchase for smaller businesses, expanding our market scope' },
+              { prefix: 'Conducted', link: 'user research', description: 'Initiated MaaS360’s first ever user interviews to initiate a customer focused approach and process' },
+              { prefix: 'Drove', link: 'C-suite consensus', description: 'Advocated the business and user value of modernisation to leadership to ensure development prioritisation.' },
+              { prefix: 'Created', link: 'design framework', description: 'Designed a scalable UI framework that ensured consistency to future developments to the homepage' },
+              { prefix: 'Delivered', link: 'dev ready mockups', description: 'Seamlessly transitioned from design to development, supported the dev team in shipping a design accurate output' },
+              { prefix: 'Facilitated', link: 'user feedback sessions', description: 'Regularly reviewed designs with customers to ensure quality and alignment with expectations and requirements.' },
+            ]}
+            results={[
+              { label: 'Adoption rate during beta testing', stat: '~ 60%' },
+              { label: 'No:of clicks for key workflows', stat: '↓ 72%' },
+              { label: 'Time to complete key workflows', stat: '↓ 27%' },
+            ]}
+            media={{ src: imgIntro, alt: 'IBM MaaS360 product overview collage', aspect: '1024 / 1626' }}
+          />
+        </StackedSection>
 
-        {/* ── METRICS — The facts ── */}
-        <section className="cs-section cs-metrics">
-          <div className="cs-label is-centered">
-            <p>The facts</p>
-          </div>
-          <div className="cs-metrics-box">
-            <div className="cs-metrics-row">
-              <div className="cs-metric">
-                <div className="cs-metric-num">
-                  <span>~</span><span>60</span><span>%</span>
-                </div>
-                <p className="cs-metric-label">Adoption rate during beta testing</p>
-              </div>
-              <div className="cs-metric">
-                <div className="cs-metric-num">
-                  <span>↓ 72</span><span>%</span>
-                </div>
-                <p className="cs-metric-label">No:of clicks for key workflows</p>
-              </div>
-              <div className="cs-metric">
-                <div className="cs-metric-num">
-                  <span>↓ 27</span><span>%</span>
-                </div>
-                <p className="cs-metric-label">Time to complete key workflows</p>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* ── RETROSPECTIVE ── */}
+        <StackedSection
+          title="Retrospective"
+          headerRight={
+            <RetroRevealToggle
+              checked={retroRevealMode === 'stay'}
+              onToggle={() => setRetroRevealMode((m) => (m === 'stay' ? 'disappear' : 'stay'))}
+            />
+          }
+        >
+          <RetrospectiveSection segments={retroSegments} revealMode={retroRevealMode} />
+        </StackedSection>
 
-        {/* ── THE ART ── */}
-        <section className="cs-section gap8">
-          <div className="cs-label is-centered">
-            <p>The art</p>
-          </div>
-          <div className="cs-art-row">
-            <div className="cs-art-left">
-              <div className="cs-imgwrap">
-                <img src={imgArtMain} alt="New MaaS360 homepage design" />
-              </div>
-            </div>
-            <div className="cs-art-right">
-              <div className="cs-art-tile t1">
-                <div className="cs-imgwrap">
-                  <img src={imgArtR1} alt="Homepage widget detail" />
+        {/* ── CHALLENGES ── */}
+        <StackedSection title="Challenges">
+          <div className="cs-section pad24">
+            <div className="cs-inner cs-challenge">
+              <div className="cs-challenge-top">
+                <div className="cs-challenge-intro">
+                  <p className="cs-challenge-eyebrow type-body">Problem given to me</p>
+                  <p className="cs-challenge-quote type-heading2">Modernise our 12 year old homepage to align with our product&rsquo;s current design.</p>
+                </div>
+                <div className="cs-challenge-artifact">
+                  <div className="cs-oldhome">
+                    <img src={imgOldHome} alt="Old MaaS360 homepage" />
+                  </div>
+                  {/* <p className="cs-challenge-caption type-caption1">The homepage, unchanged since 2012</p> */}
                 </div>
               </div>
-              <div className="cs-art-tile t2">
-                <div className="cs-imgwrap">
-                  <img src={imgArtR2} alt="Homepage widget detail" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        {/* ── PROBLEMS ── */}
-        <section className="cs-section pad24">
-          <div className="cs-problems-inner">
-            <div className="cs-label is-red">
-              <p>Problems with the existing homepage</p>
-            </div>
-            <div className="cs-problems-box">
-              <div className="cs-oldhome">
-                <img src={imgOldHome} alt="Old MaaS360 homepage" />
-              </div>
-              <div className="cs-problem-cards">
-                <div className="cs-problem-card">
-                  <p className="ttl">Lack of a summarized system status </p>
-                  <p className="body">IT admins are required to view multiple pages to gather information, to later piece it together from memory to form a complete understanding.</p>
-                </div>
-                <div className="cs-problem-card">
-                  <p className="ttl">Deep and lengthy navigation paths</p>
-                  <p className="body">Our product offers a rich amount of information, however users need to follow lengthy workflows to find the details they need.</p>
-                </div>
-                <div className="cs-problem-card">
-                  <p className="ttl">Lack of flexibility</p>
-                  <p className="body">Existing capabilities lack contextualization, adding unnecessary noise/information to customers with specific needs.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── BANNER: The homepage should help IT admins begin with their day ── */}
-        <section className="cs-section pad24">
-          <div className="cs-banner-box blue">
-            <div className="cs-banner-line w1027">
-              <p>The homepage&nbsp;</p>
-            </div>
-            <div className="cs-banner-line w1027 indent">
-              <p>should help IT admins&nbsp;&nbsp;</p>
-            </div>
-            <div className="cs-banner-row3">
-              <div className="cs-banner-line nowrap">
-                <p>begin with their day</p>
-              </div>
-              <p className="cs-banner-desc">The older homepage, designed in 2012, lacks tools for quick monitoring, support data-driven decisions, and efficient management of their deployment. Admins were forced to navigate deep into the product to find relevant data.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* ── ESTABLISH CALLOUT ── */}
-        <section className="cs-section pad24">
-          <div className="cs-callout">
-            <p>
-              It was important to establish the ( <span className="accent">Need</span> ) for modernising and ( <span className="accent">Ensure</span> ) all&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;( <span className="accent">Stakeholders</span> ) were aligned.&nbsp;
-            </p>
-          </div>
-        </section>
-
-        {/* ── BANNER: Gaining Stakeholder Buy in ── */}
-        <section className="cs-section pad24">
-          <div className="cs-banner-box purple">
-            <div className="cs-banner-line w1027">
-              <p>Gaining</p>
-            </div>
-            <div className="cs-banner-line w1027 indent">
-              <p>Stakeholder</p>
-            </div>
-            <div className="cs-banner-row3">
-              <div className="cs-banner-line nowrap">
-                <p>Buy in</p>
-              </div>
-              <div className="cs-banner-desc">
-                <p>To create customer benefit and bring this to life complete stakeholder support was required.</p>
-                <p>&#8203;</p>
-                <p>I focused on articulating the problem in a way that resonated with the stakeholders&rsquo; priorities and needs.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── PRIORITISATION ── */}
-        <section className="cs-section cs-prio-section">
-          <div className="cs-prio-inner">
-            <div className="cs-prio-pills">
-              <div className="cs-prio-pill left">
-                <p>Prioritisation</p>
-              </div>
-              <div className="cs-prio-circle" />
-              <div className="cs-prio-pill right">
-                <p>Partyyyyyyyyyy 🎉</p>
-              </div>
-            </div>
-            <div className="cs-prio-bigbox">
-              <div className="cs-prio-bigrow">
-                <div className="cs-prio-letsship">
-                  <p>Let&rsquo;s ship</p>
-                </div>
-                <div className="cs-prio-para">
-                  <div>
-                    <p>After multiple rounds of collaborative workshops, this project received executive support. The long journey from an internship concept to productisation was a happy moment.&nbsp;&nbsp;</p>
-                    <p>&#8203;</p>
-                    <p>With the gears set in motion, it was time to flesh out the user experience!</p>
+              <div className="cs-challenge-issues">
+                <p className="cs-challenge-eyebrow type-body">Problems that I uncovered</p>
+                <div className="cs-challenge-grid">
+                  <div className="cs-challenge-col">
+                    <div className="cs-challenge-item">
+                      <p className="cs-challenge-item-ttl type-heading1">No summarized system status</p>
+                      <p className="cs-challenge-item-desc type-body">IT admins are required to view multiple pages to gather information, to later piece it together from memory to form a complete understanding.</p>
+                    </div>
+                    <div className="cs-challenge-item">
+                      <p className="cs-challenge-item-ttl type-heading1">Lengthy navigation paths</p>
+                      <p className="cs-challenge-item-desc type-body">Our product offers a rich amount of information, however users need to follow lengthy workflows to find the details they need.</p>
+                    </div>
+                    <div className="cs-challenge-item">
+                      <p className="cs-challenge-item-ttl type-heading1">Lack of flexibility</p>
+                      <p className="cs-challenge-item-desc type-body">Existing capabilities lack contextualization, adding unnecessary noise/information to customers with specific needs.</p>
+                    </div>
+                    <div className="cs-challenge-axis-col">
+                      <div className="cs-challenge-axis-rule" />
+                      <p className="cs-challenge-axis-label type-caption1">Design problems</p>
+                    </div>
+                  </div>
+                  <div className="cs-challenge-col">
+                    <div className="cs-challenge-item">
+                      <p className="cs-challenge-item-ttl type-heading1">No business requirements</p>
+                      <p className="cs-challenge-item-desc type-body">Product team was not involved, this was an incubator project run by the engineering and design team, as a result there was no guidance on business direction</p>
+                    </div>
+                    <div className="cs-challenge-item">
+                      <p className="cs-challenge-item-ttl type-heading1">Unclear design patterns</p>
+                      <p className="cs-challenge-item-desc type-body">IBM design patterns for analytical homepages was still in its nascent stages, the carbon design team was working on a scaleable framework for homepages</p>
+                    </div>
+                    <div className="cs-challenge-item">
+                      <p className="cs-challenge-item-ttl type-heading1">No funding to productise</p>
+                      <p className="cs-challenge-item-desc type-body">As this was an incubator project, means to productise was through volunteers, there was no formal pipeline to deliver the feature to customers.</p>
+                    </div>
+                    <div className="cs-challenge-axis-col">
+                      <div className="cs-challenge-axis-rule" />
+                      <p className="cs-challenge-axis-label type-caption1">Systemic challenges</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </StackedSection>
 
-        {/* ── DATA WIDGETS ── */}
-        <section className="cs-section pad24 cs-dw-section">
-          <div className="cs-dw-row">
-            <div className="cs-dw-left">
-              <div className="cs-dw-greenlabel">
-                <p>Data widgets reduced no:of clicks by 72%</p>
+        {/* ── APPROACH ── */}
+        <StackedSection title="Approach">
+          <CaseStudySection
+            bgColor={PAGE_BG}
+            textColor={PAGE_FG}
+            content={
+              <div className="cs-approach-paras" ref={approachContentRef}>
+                {approachParagraphs.map((p, i) => (
+                  <div
+                    className={`approach-para${i === activeDiagramIndex ? ' active' : ''}`}
+                    key={p.heading}
+                  >
+                    <p className="type-body approach-para-heading">{p.heading}</p>
+                    <p className="type-body approach-para-body">{p.body}</p>
+                  </div>
+                ))}
               </div>
-              <div className="cs-dw-textbox">
-                <p className="lead">Designed micro layout systems to ensure consistency and scalability with future widgets </p>
-                <div className="grp">
-                  <p className="a">Displays KPIs from critical segments of the product. The homepage provides an overview of key statuses for which admins previously had to navigate deep within the product to access.</p>
-                  <p className="b">I can provide more details about the widgets over a conversation 😁</p>
-                </div>
+            }
+            media={
+              <div className="cs-approach-diagrams">
+                {approachParagraphs.map((p, i) => (
+                  <div
+                    key={p.heading}
+                    className={`cs-approach-diagram-item${i === activeDiagramIndex ? ' active' : ''}`}
+                  >
+                    <img
+                      src={asset(`/homepage-modernization/diagrams/svgs/${encodeURIComponent(p.diagram)}`)}
+                      alt={p.heading}
+                    />
+                    {p.captionItems && (
+                      <ol className="cs-approach-caption-list">
+                        {p.captionItems.map((item, idx) => (
+                          <li className="cs-approach-caption-item" key={idx}>
+                            <span className="type-caption1 cs-approach-caption-num">{idx + 1}</span>
+                            <span className="type-caption1 cs-approach-caption-text">{item}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    )}
+                  </div>
+                ))}
               </div>
-            </div>
-            <div className="cs-dw-grid">
-              <div className="cs-dw-col">
-                <div className="cs-dw-img" style={{ aspectRatio: '912 / 1065' }}>
-                  <img src={imgWCompliance} alt="Compliance status widget" />
-                </div>
-                <div className="cs-dw-img" style={{ aspectRatio: '264 / 354' }}>
-                  <img src={imgWGroup85} alt="Activity feed widget" />
-                </div>
-              </div>
-              <div className="cs-dw-col center">
-                <div className="cs-dw-img" style={{ aspectRatio: '362 / 248' }}>
-                  <img src={imgWDevices} alt="Devices last reported widget" />
-                </div>
-                <div className="cs-dw-img" style={{ aspectRatio: '266 / 584' }}>
-                  <img src={imgWGroup37042} alt="Notifications widget" />
-                </div>
-              </div>
-              <div className="cs-dw-col">
-                <div className="cs-dw-img" style={{ aspectRatio: '912 / 1236' }}>
-                  <img src={imgWGroup87} alt="Watchlist widget" />
-                </div>
-                <div className="cs-dw-img" style={{ aspectRatio: '912 / 1377' }}>
-                  <img src={imgWWatson} alt="Watson advisor widget" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+            }
+          />
+        </StackedSection>
 
-        {/* ── FLEXIBLE ARCHITECTURE ── */}
-        <div className="cs-flex">
-          <div className="cs-flex-inner">
-            <img className="cs-flex-img" src={imgFlexibility} alt="Flexible homepage layout structure" />
-            <div className="cs-flex-card">
-              <p className="ttl">Flexible architecture</p>
-              <p className="body">Maintains page structure and accommodates a range of data types</p>
-            </div>
-          </div>
-        </div>
+        {/* ── DESIGN OUTCOMES (264:159) ── */}
+        <StackedSection title="Design outcomes">
+          <CaseStudySection
+            bgColor={PAGE_BG}
+            textColor={PAGE_FG}
+            content={
+              <div className="cs-outcomes-paras" ref={outcomesContentRef}>
+                {outcomeParagraphs.map((p, i) => (
+                  <div
+                    className={`cs-outcomes-para${i === activeOutcomeIndex ? ' active' : ''}`}
+                    key={p.label}
+                  >
+                    <p className="type-body cs-outcomes-label">{p.label}</p>
+                    <p className="type-heading1 cs-outcomes-heading">{p.heading}</p>
+                    <p className="type-body cs-outcomes-body">{p.body}</p>
+                  </div>
+                ))}
+              </div>
+            }
+            media={
+              <div className="cs-outcomes-diagrams">
+                {outcomeParagraphs.map((p, i) => (
+                  <div
+                    key={p.label}
+                    className={`cs-outcomes-diagram-item${i === activeOutcomeIndex ? ' active' : ''}`}
+                  >
+                    {p.diagram && (
+                      <div className="cs-outcomes-image-stack">
+                        <img
+                          className="cs-outcomes-image cs-outcomes-image-base"
+                          src={asset(`/homepage-modernization/outcomes/${p.diagram.src}`)}
+                          alt={p.heading}
+                        />
+                        {p.diagram.hovers?.map((hover, idx) => (
+                          <img
+                            key={hover}
+                            className="cs-outcomes-image cs-outcomes-image-variant"
+                            data-variant={idx + 1}
+                            src={asset(`/homepage-modernization/outcomes/${hover}`)}
+                            alt=""
+                            aria-hidden="true"
+                          />
+                        ))}
+                        {p.diagram.hotspots?.map((spot, idx) => (
+                          <div
+                            key={idx}
+                            className="cs-outcomes-hotspot"
+                            data-hotspot={idx + 1}
+                            style={{ left: `${spot.xPct}%`, top: `${spot.yPct}%` }}
+                          />
+                        ))}
+                      </div>
+                    )}
+                    {p.captionItems && (
+                      <ol className="cs-outcomes-caption-list">
+                        {p.captionItems.map((item, idx) => (
+                          <li className="cs-outcomes-caption-item" data-caption={idx + 1} key={idx}>
+                            <span className="type-caption1 cs-outcomes-caption-num">{idx + 1}</span>
+                            <span className="type-caption1 cs-outcomes-caption-text">{item}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    )}
+                  </div>
+                ))}
+              </div>
+            }
+          />
+        </StackedSection>
 
-        {/* ── PERSONALISATION ── */}
-        <div className="cs-pers">
-          <div className="cs-pers-row">
-            <div className="cs-pers-green">
-              <p className="ttl">Personalisation</p>
-              <p className="body">Offering complete customisation for their use case.</p>
-            </div>
-            <div className="cs-pers-bordered">
-              <p>Flexible architecture allows for complete customisation. IT admins can easily change the default setup&nbsp; by dragging and dropping widgets from a (growing) library.</p>
-            </div>
-          </div>
-          <img className="cs-pers-img" src={imgCustomization} alt="Customization — drag and drop widgets" />
-        </div>
-
-        {/* ── WRAPPING IT UP ── */}
-        <section className="cs-wrap cs-section">
-          <div className="cs-wrap-inner">
-            <p className="cs-wrap-title">Wrapping it up 🎁</p>
-            <div className="cs-wrap-cards">
-              <div className="cs-wrap-card">
-                <p className="ttl">Defining Objectives and Key Results (OKRs)</p>
-                <div className="body">
-                  <p>Without a product manager, the initiative had to be taken to research, and define metrics for success. </p>
-                  <p>&#8203;</p>
-                  <p>This involved gaining a deep understanding of the business, market and product; <span className="u">collaborated with the director to define OKRs</span></p>
-                </div>
-              </div>
-              <div className="cs-wrap-card">
-                <p className="ttl">Systems thinking</p>
-                <div className="body">
-                  <p>Revamping the homepage required unifying the entire product, a design that will stay central for the next 7-8 yrs. </p>
-                  <p>&#8203;</p>
-                  <p>To deliver, I mapped a deep understanding various dependencies and its interrelationships, ensuring each decision aligns with the product&rsquo;s long-term direction. </p>
-                </div>
-              </div>
-              <div className="cs-wrap-card">
-                <p className="ttl">Stakeholder management</p>
-                <div className="body">
-                  <p>Aligning stakeholders and the leadership was crucial to ensure value realisation.</p>
-                  <p>&#8203;</p>
-                  <p>The process honed my communication and management skills, collaborating closely with technical leaders and executives. </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── FOOTER ── */}
-        <footer className="cs-footer">
-          <div className="cs-footer-inner">
-            <div className="cs-footer-rule" />
-            <div className="cs-footer-body">
-              <p className="cs-footer-heading">{`It doesn't need end here.  🌼`}</p>
-              <div className="cs-footer-contact">
-                <p className="label">Contact:</p>
-                <div className="cs-footer-links">
-                  <a href="tel:+41772896224">+41 772896224</a>
-                  <p>Rishabsachidanand@gmail.com</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <Footer textColor={PAGE_FG} />
 
       </div>
     </div>

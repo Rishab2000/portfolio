@@ -1,7 +1,9 @@
 /* ═══════════════════════════════════════════
    CASE STUDY — Human + AI at IBM MaaS360
    Figma node 40:3904 (Desktop, 1280 wide)
-   Reuses .cs-header / .cs-footer; .ai-* for the rest
+   Header/Overview/Retrospective use the shared ProjectHeader/StackedSection/
+   CaseStudyIntro/RetrospectiveSection components (themed via --cs-bg/--cs-fg/
+   --cs-hover, see CaseStudyHumanAI.tsx); .ai-* for the rest
    ═══════════════════════════════════════════ */
 
 .ai {
@@ -15,7 +17,7 @@
 
 .ai-page {
   width: 100%;
-  max-width: 1280px;
+  max-width: 3024px;
   display: flex;
   flex-direction: column;
 }
@@ -29,78 +31,20 @@
   width: 100%;
 }
 
-.ai-inner {
-  width: 100%;
-  max-width: 1152px;
-}
-
-/* ── HERO ── */
-
-.ai-hero {
-  display: flex;
-  justify-content: center;
-  padding: 144px 64px;
-  width: 100%;
-}
-
-.ai-hero-inner {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-  width: 100%;
-  max-width: 1152px;
-}
-
-.ai-hero-left {
-  flex: 1 0 0;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-self: stretch;
-}
-
-.ai-hero-title {
-  font-family: 'Medway', sans-serif;
-  font-weight: 400;
-  font-size: 48px;
-  line-height: 50px;
-  letter-spacing: -0.96px;
-  color: #101013;
-  margin: 0;
-  width: 100%;
-}
-
-.ai-hero-desc {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.14;
-  color: #101013;
-  width: 439px;
-  max-width: 100%;
-  margin: 0;
-}
-
-.ai-hero-tile {
-  width: 522px;
-  height: 523px;
-  flex-shrink: 0;
-  border-radius: 24px;
-  overflow: hidden;
-  position: relative;
-}
-
-.ai-hero-tile img {
-  position: absolute;
-  width: 697px;
-  height: 523px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  max-width: none;
-  display: block;
-  pointer-events: none;
+/* ── OVERVIEW/RETROSPECTIVE theming (Figma node 363:586 — navy/orange) ──
+   `.ai` (the whole-page canvas) stays hardcoded white for the untouched
+   sections below, so unlike CaseStudyHomepage's single-toned `.cs`, nothing
+   here paints the page-wide background navy. Section content that doesn't
+   set its own opaque background (RetrospectiveSection has none — it only
+   sets border/text color, relying on an ambient page bg that doesn't exist
+   here) needs it painted explicitly. Scoped to `.ai-page .stack` rather than
+   `.ai-page` itself since only StackedSection-wrapped sections (currently
+   Overview, Retrospective) should get it — the untouched plain sections
+   below aren't `.stack`, so they're unaffected. */
+.ai-page .stack-head,
+.ai-page .stack {
+  background: var(--cs-bg);
+  color: var(--cs-fg);
 }
 
 /* ── SECTION LABEL CHIP (reused look) ── */
@@ -116,19 +60,10 @@
 }
 
 .ai-label p {
-  font-family: 'Medway', sans-serif;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 1.14;
   color: #42be65;
   margin: 0;
   white-space: nowrap;
 }
-
-.ai-label.is-red { border-color: #fa4d56; }
-.ai-label.is-red p { color: #fa4d56; }
-.ai-label.is-blue { border-color: #4589ff; }
-.ai-label.is-blue p { color: #4589ff; }
 
 /* ── SHARED METRIC ATOMS ── */
 
@@ -147,10 +82,6 @@
 
 .ai-metric-num p,
 .ai-metric-num span {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 700;
-  font-size: 50.2px;
-  line-height: 1.14;
   color: #fff;
   margin: 0;
   white-space: nowrap;
@@ -159,10 +90,6 @@
 .ai-metric-num .sb { font-weight: 600; }
 
 .ai-metric-label {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
   color: #fff;
   width: 137px;
   margin: 0;
@@ -174,162 +101,70 @@
   align-self: stretch;
 }
 
-/* ── METRICS · "The facts" ── */
+/* ── CONTEXT (Figma node 363:682) ── */
 
-.ai-metrics {
-  padding-top: 4px;
-  padding-bottom: 32px;
-  gap: 8px;
-}
-
-.ai-facts-row {
+.ai-context-content {
   display: flex;
-  gap: 8px;
-  align-items: stretch;
-  width: 100%;
-  max-width: 1152px;
-}
-
-.ai-facts-label {
-  border: 3px solid #42be65;
-  border-radius: 8px;
-  flex: 1 0 0;
-  min-width: 0;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: flex-start;
   padding: 24px;
-  display: flex;
-  align-items: flex-start;
+  width: 100%;
   box-sizing: border-box;
 }
 
-.ai-facts-label p {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 700;
-  font-size: 50.2px;
-  line-height: 1.14;
-  color: #42be65;
-  margin: 0;
-  white-space: nowrap;
-}
-
-.ai-facts-green {
-  background: #42be65;
-  border-radius: 8px;
-  padding: 24px;
-  flex-shrink: 0;
+.ai-context-cols {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-}
-
-.ai-metric-row {
-  display: flex;
-  gap: 80px;
-  align-items: flex-start;
-}
-
-.ai-quote {
-  background: #42be65;
-  border: 3px solid #42be65;
-  border-radius: 8px;
-  padding: 24px 72px;
-  width: 100%;
-  max-width: 1152px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-.ai-quote-text {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 1.14;
-  color: #f9f8f6;
-  width: 100%;
-  margin: 0;
-}
-
-.ai-quote-attr {
-  font-family: 'Medway', sans-serif;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 1.14;
-  color: rgba(249, 248, 246, 0.7);
-  width: 100%;
-  margin: 0;
-}
-
-/* ── CONTEXT ── */
-
-.ai-context-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: flex-start;
-  width: 100%;
-  max-width: 1152px;
-}
-
-.ai-context-row {
-  display: flex;
-  gap: 8px;
-  align-items: stretch;
-  width: 100%;
-}
-
-.ai-context-text {
-  background: #4589ff;
-  border: 1px solid #4589ff;
-  border-radius: 8px;
-  flex: 1 0 0;
-  min-width: 0;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
+  gap: var(--space-1);
   justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
+  align-items: flex-start;
+  width: 100%;
 }
 
-.ai-context-text p {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 1.14;
-  color: #f9f8f6;
-  width: 100%;
+.ai-context-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.ai-context-label {
+  text-indent: 24px;
+  white-space: nowrap;
   margin: 0;
 }
 
-.ai-context-grid {
-  position: relative;
-  width: 586px;
-  height: 899px;
-  flex-shrink: 0;
+.ai-context-body {
+  width: 375px;
+  max-width: 100%;
+  margin: 0;
 }
 
-.ai-ctx-tile {
-  position: absolute;
-  background: #efece7;
-  border-radius: 8px;
-  padding: 16px;
-  box-sizing: border-box;
+.ai-context-media {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: var(--space-1);
+  align-items: flex-start;
+  width: 100%;
 }
 
-.ai-ctx-tile .imgwrap {
+.ai-context-images {
+  display: flex;
+  gap: var(--space-1);
+  align-items: flex-start;
+  width: 100%;
+}
+
+.ai-context-image {
   position: relative;
   flex: 1 0 0;
   min-width: 0;
-  height: 100%;
+  aspect-ratio: 1512 / 982;
+  overflow: hidden;
 }
 
-.ai-ctx-tile .imgwrap img {
+.ai-context-image img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -339,97 +174,131 @@
   pointer-events: none;
 }
 
-.ai-ctx-tile.t2 .imgwrap img { object-fit: contain; }
+/* ── ALIGNING ON THE PURPOSE (Figma node 413:151) ── */
 
-.ai-ctx-tile.t1 { left: 0; top: 0; width: 285px; height: 515px; }
-.ai-ctx-tile.t2 { left: 301px; top: 0; width: 285px; height: 368px; }
-.ai-ctx-tile.t3 { left: 0; top: 531.46px; width: 285px; height: 368px; align-items: flex-start; justify-content: center; }
-.ai-ctx-tile.t4 { left: 301px; top: 384px; width: 285px; height: 515px; }
-
-/* t3 image keeps its aspect, centered */
-.ai-ctx-tile.t3 .imgwrap {
-  flex: none;
-  height: 100%;
-  aspect-ratio: 320 / 503;
-}
-
-/* ── IDENTIFIED PROBLEMS ── */
-
-.ai-problems-inner {
+.ai-purpose-content {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-4);
+  align-items: flex-start;
+  padding: 24px 24px var(--space-5) 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ai-purpose-cols {
+  display: flex;
+  gap: var(--space-1);
+  justify-content: space-between;
   align-items: flex-start;
   width: 100%;
-  max-width: 1152px;
 }
 
-.ai-problems-box {
-  background: #fa4d56;
+.ai-purpose-col {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding: 24px;
-  border-radius: 8px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.ai-problems-img {
-  aspect-ratio: 1512 / 982;
-  width: 100%;
-  position: relative;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.ai-problems-img img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.ai-problem-cards {
-  display: flex;
-  gap: 24px;
-  height: 395px;
-  width: 100%;
-}
-
-.ai-problem-card {
-  background: #fff;
   flex: 1 0 0;
   min-width: 0;
-  height: 100%;
-  padding: 16px 24px;
-  border-radius: 8px;
+}
+
+.ai-purpose-cols > div:empty {
+  flex: 1 0 0;
+}
+
+.ai-purpose-label {
+  text-indent: 24px;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.ai-purpose-body {
+  width: 375px;
+  max-width: 100%;
+  margin: 0;
+}
+
+.ai-purpose-terminal {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.ai-purpose-terminal-row {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.ai-purpose-terminal-row p {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ai-purpose-terminal-word {
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
+.ai-purpose-northstar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.ai-purpose-northstar-heading-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.ai-purpose-heading {
+  margin: 0;
+  width: 100%;
+}
+
+.ai-purpose-reveal-row {
+  display: flex;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.ai-purpose-reveal-box {
+  flex: 1 0 0;
+  min-width: 0;
+  padding: var(--space-1);
+  margin: -18px;
   box-sizing: border-box;
+  opacity: 0;
 }
 
-.ai-problem-card .ttl {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 1.14;
-  color: #0d0d0d;
-  margin: 0;
-  width: 100%;
+.ai-purpose-reveal-box.revealed {
+  opacity: 1;
 }
 
-.ai-problem-card .body {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 400;
-  font-size: 18.47px;
-  line-height: 1.14;
-  color: #000;
-  margin: 0;
-  width: 100%;
+.ai-purpose-reveal-box.active {
+  background: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.ai-purpose-term {
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  text-underline-position: from-font;
+  cursor: pointer;
+  padding: 2px 4px;
+  margin: 0 -4px;
+}
+
+.ai-purpose-term:hover {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
 }
 
 /* ── ALIGNING DESIGN AND BUSINESS (purple) ── */
@@ -478,19 +347,11 @@
 }
 
 .ai-align-num p {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 1.14;
   color: #a56eff;
   margin: 0;
 }
 
 .ai-align-left .goal {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 1.14;
   color: #262626;
   margin: 0;
   white-space: nowrap;
@@ -511,19 +372,13 @@
 .ai-align-right.pb32 { padding-bottom: 32px; }
 
 .ai-align-heading {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 400;
-  font-size: 77px;
-  line-height: 1.14;
   color: #262626;
   margin: 0;
   width: 100%;
 }
 
 .ai-align-body {
-  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
-  font-size: 48px;
   color: #262626;
   margin: 0;
   width: 100%;
@@ -570,20 +425,12 @@
 }
 
 .ai-sol-greencard .ttl {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 500;
-  font-size: 36px;
-  line-height: 1.14;
   color: #fff;
   margin: 0;
   width: 100%;
 }
 
 .ai-sol-greencard .body {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 400;
-  font-size: 18.47px;
-  line-height: 1.14;
   color: #f9f8f6;
   width: 345px;
   max-width: 100%;
@@ -605,10 +452,6 @@
 }
 
 .ai-sol-bordered p {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 400;
-  font-size: 18.47px;
-  line-height: 1.14;
   color: #000;
   width: 345px;
   max-width: 100%;
@@ -689,20 +532,12 @@
 }
 
 .ai-sol-reduced .ttl {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 500;
-  font-size: 36px;
-  line-height: 1.14;
   color: #262626;
   margin: 0;
   width: 100%;
 }
 
 .ai-sol-reduced .sub {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 500;
-  font-size: 18.47px;
-  line-height: 1.14;
   color: #42be65;
   margin: 0;
   white-space: nowrap;
@@ -725,10 +560,6 @@
 }
 
 .ai-sol-banner .inner p {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 500;
-  font-size: 36px;
-  line-height: 1.14;
   color: #fff;
   margin: 0;
   white-space: nowrap;

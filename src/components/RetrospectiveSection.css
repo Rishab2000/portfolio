@@ -1,0 +1,155 @@
+/* ═══════════════════════════════════════════
+   RetrospectiveSection — segmented breakdown row
+   Figma node 287:1738 (no-hover) / 264:209 (hover)
+   ═══════════════════════════════════════════ */
+
+.cs-retro-section {
+  padding-top: var(--space-1);
+  padding-bottom: var(--space-1);
+  height: 60vh;
+}
+
+.cs-retro-grid {
+  display: grid;
+  grid-auto-rows: auto;
+  width: 100%;
+  color: var(--cs-fg);
+}
+ 
+/* ── SEGMENT ROW ── */
+
+.cs-retro-seg {
+  cursor: pointer;
+  min-width: 0;
+  border: 1px solid var(--cs-fg);
+  padding: var(--space-1) var(--space-1);
+} 
+
+.cs-retro-seg + .cs-retro-seg {
+  margin-left: -1px;
+}
+
+.cs-retro-seg.active {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+/* ── PANEL ROW (revealed on hover, stays revealed) ── */
+
+.cs-retro-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: var(--space-0-5) var(--space-0-5) 0 var(--space-0-5);
+  gap: var(--space-0-5);
+}
+
+.cs-retro-panel-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 100%;
+  border: 1px solid var(--cs-fg);
+  border-top: none;
+  box-sizing: border-box;
+  padding: 0 var(--space-1);
+}
+
+.cs-retro-panel-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+  margin: 0;
+  padding: 0;
+}
+
+.cs-retro-panel-list li {
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+/* ── NARROW VARIANT: dashed spacer instead of a solid rule box ──
+   (list content breaks out below the grid — added in a later step) */
+
+.cs-retro-panel--narrow {
+  align-self: stretch;
+}
+
+.cs-retro-panel--narrow .cs-retro-panel-rule {
+  flex: 1;
+  height: auto;
+  align-items: flex-start;
+  justify-content: center;
+  border: none;
+  min-height: 200px;
+  border-left: 1px dashed var(--cs-fg);
+  border-right: 1px dashed var(--cs-fg);
+  padding-top: 11px;
+}
+
+/* Breakout block: wider than its own narrow column (ratio taken from the
+   Figma export — 315px list vs. 215px column), centered on that column so
+   it spills evenly into its neighbours' space below the grid. */
+
+.cs-retro-breakout {
+  box-sizing: border-box;
+  width: 146.5%;
+  margin-left: -23.25%;
+  margin-right: -23.25%;
+  padding-top: var(--space-1);
+  border-top: 1px solid var(--cs-fg);
+  color: var(--cs-fg);
+}
+
+/* ── REVEAL-MODE TOGGLE (section header, Figma node 353:2248 checked / 353:2242 unchecked) ── */
+
+.cs-retro-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: var(--cs-fg);
+}
+
+.cs-retro-toggle-label {
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cs-retro-toggle-box {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  border: 1px solid var(--cs-fg);
+  flex-shrink: 0;
+}
+
+.cs-retro-toggle-fill {
+  position: absolute;
+  inset: 2.86px;
+  background-color: var(--cs-fg);
+  opacity: 0;
+}
+
+.cs-retro-toggle-dot {
+  position: absolute;
+  inset: 5.72px;
+  box-sizing: border-box;
+  background-color: var(--cs-bg);
+  border: 1px solid var(--cs-fg);
+  box-shadow: 0px 2px 1px 0px rgba(128, 38, 38, 0.08), 1px 1px 2px 0px rgba(128, 38, 38, 0.12);
+  opacity: 0;
+}
+
+.cs-retro-toggle[aria-pressed='true'] .cs-retro-toggle-fill,
+.cs-retro-toggle[aria-pressed='true'] .cs-retro-toggle-dot {
+  opacity: 1;
+}

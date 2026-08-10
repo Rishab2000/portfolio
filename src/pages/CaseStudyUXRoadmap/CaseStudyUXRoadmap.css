@@ -61,20 +61,12 @@
 }
 
 .sd-hero-title {
-  font-family: 'Medway', sans-serif;
-  font-weight: 400;
-  font-size: 40px;
-  line-height: 1.14;
   color: #101013;
   margin: 0;
   width: 100%;
 }
 
 .sd-hero-desc {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.14;
   color: #101013;
   width: 439px;
   max-width: 100%;
@@ -120,10 +112,6 @@
 }
 
 .sd-label p {
-  font-family: 'Medway', sans-serif;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 1.14;
   color: #262626;
   margin: 0;
   white-space: nowrap;
@@ -166,10 +154,6 @@
 }
 
 .sd-context-text p {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 1.14;
   color: #f9f8f6;
   width: 100%;
   margin: 0;
@@ -219,10 +203,6 @@
 }
 
 .sd-banner-line p {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 400;
-  font-size: 77px;
-  line-height: 1.14;
   color: #fff;
   margin: 0;
   flex: 1 0 0;
@@ -245,10 +225,6 @@
 .sd-banner-line.faced p { flex: none; white-space: nowrap; }
 
 .sd-banner-desc {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.14;
   color: #fff;
   width: 287px;
   flex-shrink: 0;
@@ -299,19 +275,11 @@
 }
 
 .sd-vision-num p {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.14;
   color: #262626;
   margin: 0;
 }
 
 .sd-vision-left .goal {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 1.14;
   color: #262626;
   margin: 0;
   white-space: nowrap;
@@ -335,19 +303,13 @@
 .sd-vision-right.head { justify-content: center; }
 
 .sd-vision-heading {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 400;
-  font-size: 77px;
-  line-height: 1.14;
   color: #262626;
   margin: 0;
   white-space: nowrap;
 }
 
 .sd-vision-body {
-  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
-  font-size: 48px;
   line-height: 55px;
   color: #262626;
   margin: 0;
@@ -393,10 +355,6 @@
 }
 
 .sd-opps-callout-text {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 1.14;
   color: #161616;
   flex: 1 0 0;
   min-width: 0;
@@ -438,20 +396,13 @@
 }
 
 .sd-opps-card .ttl {
-  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 500;
-  font-size: 24.62px;
-  line-height: 1.14;
   color: #0d0d0d;
   margin: 0;
   width: 100%;
 }
 
 .sd-opps-card .body {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 500;
-  font-size: 18.47px;
-  line-height: 1.14;
   color: #000;
   margin: 0;
   width: 100%;
@@ -492,10 +443,7 @@
 }
 
 .sd-tab p {
-  font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
-  font-size: 24px;
-  line-height: 1.14;
   margin: 0;
   white-space: nowrap;
 }
@@ -542,10 +490,6 @@
 }
 
 .sd-card-greenlabel p {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.14;
   color: #fff;
   width: 100%;
   margin: 0;
@@ -572,8 +516,6 @@
   list-style: disc;
   margin: 0;
   width: 220px;
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-weight: 400;
   color: #000;
 }
 

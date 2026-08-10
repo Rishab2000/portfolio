@@ -1,0 +1,142 @@
+/* ═══════════════════════════════════════════
+   CaseStudyIntro — single-viewport project intro
+   Figma node 159:147
+   ═══════════════════════════════════════════ */
+
+/* Height follows content (the tallest column — usually the middle text
+   column) so the page scrolls through it while the sticky rail + media
+   columns stay pinned — the "middle scrolls, sides stay" effect. No internal
+   column overflow scroll. No viewport-height floor needed: the stacking
+   engine's bottom-preview logic (useStackingSections) selects the next header
+   to preview strictly by sequence, so a section shorter than the viewport no
+   longer causes it to skip ahead and double up a header. */
+.cs-intro {
+  width: 100%;
+  background: var(--cs-intro-bg);
+  color: var(--cs-intro-text);
+}
+
+/* ── CONTENT COLUMN ── */
+
+.cs-intro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.cs-intro-desc {
+  margin: 0 0 var(--space-2) 0;
+  width: 100%;
+}
+
+.cs-intro-label {
+  text-indent: var(--space-2);
+  margin: 0 0 var(--space-1) 0;
+  width: 100%;
+}
+
+.cs-intro-resp {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  margin: 0 0 var(--space-2) 0;
+  padding: 0;
+  width: 100%;
+}
+
+.cs-intro-resp li {
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+.cs-intro-resp .u {
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  text-underline-position: from-font;
+  cursor: pointer;
+  padding: 2px 4px;
+  margin: 0 -4px;
+}
+
+.cs-intro-resp .u:hover {
+  background-color: var(--cs-intro-hover);
+  color: var(--cs-intro-bg);
+}
+
+/* ── RAIL COLUMN (responsibility descriptions) ── */
+
+.cs-intro-rail {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.cs-intro-rail-item {
+  display: flex;
+  flex-direction: column;
+  width: 253px;
+  gap: var(--space-0-5);
+  margin-bottom: var(--space-0-5);
+  padding: var(--space-0-5);
+  color: var(--cs-intro-text);
+}
+
+.cs-intro-rail-item.active {
+  background-color: var(--cs-intro-hover);
+  color: var(--cs-intro-bg);
+}
+
+.cs-intro-rail-heading {
+  text-indent: var(--space-1);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.cs-intro-rail-desc {
+  margin: 0;
+}
+
+.cs-intro-results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.cs-intro-result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.cs-intro-result-label {
+  margin: 0;
+}
+
+.cs-intro-result-stat {
+  margin: 0;
+}
+
+/* ── MEDIA ── */
+
+.cs-intro-media-img {
+  flex: 1 0 0;
+  min-width: 0;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.cs-intro-media-img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
