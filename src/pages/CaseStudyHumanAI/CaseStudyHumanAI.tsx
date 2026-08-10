@@ -49,31 +49,32 @@ const aiPrinciplesParagraphs: AIPrincipleParagraph[] = [
   { heading: 'Why?', body: 'Establish the framework for all AI experiences, that way this effort will have it’s ripples for future offerings.' },
   {
     heading: 'Proactive',
-    body: 'The experience should nudge admins when intervention is needed, without requiring them to remember or take extra steps.',
+    body: 'Anticipate, predict and intervene before the user has resolve the issue or feel friction.',
     diagram: 'proactive.png',
     captionItems: [
-      'Prioritise designing AI capabilities that help avoid issues over diagnosing them',
-      'Nudge when intervention is required',
-      'Communicate and clarify the feature’s capabilities and limitations',
+      'Prioritise designing AI capabilities that avoid deployment problems, over diagnosing them.',
+      'Nudge users only when required, do not introduce noise through false positives or superficial insights.',
+      'Clarify an AI feature’s capabilities and limitations.',
     ],
   },
   {
     heading: 'Integrated',
-    body: 'Integrated seamlessly with existing and established workflows without increasing friction, while utilizing and enhance its experience.',
+    body: 'Compound and enhance established workflows, making existing workflows cumbersome with AI will be a failure on our part.',
     diagram: 'integrate.png',
     captionItems: [
-      'Do not re-invent the wheel, “at least not right now”.',
-      'Enhance established workflows when possible, not disrupt them.',
-      'Intentional usage of the chat interface.',
+      'Do not re-invent the wheel, make it run smoother.',
+      'Minimise the separation between traditional product functionality and AI functionality.',
+      'Do not default to the chat interface, evaluate and establish the need for chat.',
     ],
   },
   {
     heading: 'Contextualized',
-    body: 'Information and functionality should align with diverse customer needs and contexts, understanding user and organizational goals to provide a relevant experience.',
+    body: 'Design mouldable experiences, the functionality should adapt to diverse customer needs and contexts.',
     diagram: 'contextualize.png',
     captionItems: [
-      'Functionality should morph and align to the organisation’s strategy',
-      'Information should always contextualise to the active workflow or page',
+      'Morph workflows and granularity proportional to the size of the organisation.',
+      'Contextualise organisation strategy for insights and recommendations, avoid generic intervention',
+      'Information shown should always relate to the active page, workflow or surrounding information.'
     ],
   },
 ]
@@ -150,7 +151,7 @@ export default function CaseStudyHumanAI() {
             results={[
               { label: 'Engagement rate', stat: '~ 72%' },
               { label: 'Users adoption', stat: '~ 52%' },
-              { label: 'Best AI infusion in Software products at IBM', stat: 'Ranked 2nd' },
+              // { label: 'Best AI infusion in Software products at IBM', stat: 'Ranked 2nd' },
               { label: 'Customer feedback', stat: 'This should be in CNN and other news channels , it is a killer idea for regulated customers like us. We use it extensively now' },
             ]}
             media={{ src: imgIntroMockup, alt: 'IBM MaaS360 policy mockup collage', aspect: '1148 / 1046' }}

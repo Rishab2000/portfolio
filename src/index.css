@@ -198,20 +198,12 @@
   letter-spacing: -0.009em;
 }
 
-.type-body1 {
-  font-family: 'Medway', sans-serif;
-  font-weight: 400;
-  font-size: var(--fs-body1);
-  line-height: 100%;
-  letter-spacing: -0.009em;
-}
-
 .type-caption1 {
   font-family: 'Medway Schoolbook', sans-serif;
   font-weight: 400;
   font-size: var(--fs-caption1);
-  line-height: 109%;
-  letter-spacing: normal;
+  line-height: 119%;
+  letter-spacing: 0.0003em;
 }
 
 .type-caption2 {
