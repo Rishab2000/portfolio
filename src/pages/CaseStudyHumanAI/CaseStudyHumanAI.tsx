@@ -3,12 +3,14 @@ import { useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { asset } from '../../lib/nav'
 import CaseStudyIntro from '../../components/CaseStudyIntro'
+import CaseStudySection from '../../components/CaseStudySection'
 import Footer from '../../components/Footer'
 import ProjectHeader from '../../components/ProjectHeader'
 import StackedSection from '../../components/StackedSection'
 import RetrospectiveSection, { RetroRevealToggle } from '../../components/RetrospectiveSection'
 import type { RetroSegment } from '../../components/RetrospectiveSection'
 import { useStackingSections } from '../../hooks/useStackingSections'
+import { useActiveDiagramIndex } from '../../hooks/useActiveDiagramIndex'
 import { useHoverReveal } from '../../hooks/useHoverReveal'
 
 /* Overview/header colour scheme (Figma node 363:586) — change these to retheme the sticky
@@ -33,6 +35,47 @@ const purposeReveals: PurposeReveal[] = [
   { key: 'SMBs', description: 'MaaS360’s strategy was to acquire the SMB market for mobile device management.' },
   { key: 'secure their devices', description: 'The global average cost of a data breach is $4.4M, security is pivotal to ensure business continuity.' },
   { key: 'minimal effort', description: "The available solutions were bloated and complex, creating an opportunity for a simpler option." },
+]
+
+interface AIPrincipleParagraph {
+  heading: string
+  body: string
+  diagram?: string
+  captionItems?: string[]
+}
+
+/* copy + diagram pairing (Figma node 427:410 / 427:843 / 427:890 / 427:916) */
+const aiPrinciplesParagraphs: AIPrincipleParagraph[] = [
+  { heading: 'Why?', body: 'Establish the framework for all AI experiences, that way this effort will have it’s ripples for future offerings.' },
+  {
+    heading: 'Proactive',
+    body: 'The experience should nudge admins when intervention is needed, without requiring them to remember or take extra steps.',
+    diagram: 'proactive.png',
+    captionItems: [
+      'Prioritise designing AI capabilities that help avoid issues over diagnosing them',
+      'Nudge when intervention is required',
+      'Communicate and clarify the feature’s capabilities and limitations',
+    ],
+  },
+  {
+    heading: 'Integrated',
+    body: 'Integrated seamlessly with existing and established workflows without increasing friction, while utilizing and enhance its experience.',
+    diagram: 'integrate.png',
+    captionItems: [
+      'Do not re-invent the wheel, “at least not right now”.',
+      'Enhance established workflows when possible, not disrupt them.',
+      'Intentional usage of the chat interface.',
+    ],
+  },
+  {
+    heading: 'Contextualized',
+    body: 'Information and functionality should align with diverse customer needs and contexts, understanding user and organizational goals to provide a relevant experience.',
+    diagram: 'contextualize.png',
+    captionItems: [
+      'Functionality should morph and align to the organisation’s strategy',
+      'Information should always contextualise to the active workflow or page',
+    ],
+  },
 ]
 
 /* Placeholder — update with this project's real time-allocation breakdown. */
@@ -65,6 +108,13 @@ export default function CaseStudyHumanAI() {
     onEnter: onPurposeEnter,
     onLeave: onPurposeLeave,
   } = useHoverReveal<string>()
+
+  const principlesContentRef = useRef<HTMLDivElement>(null)
+  const activePrincipleIndex = useActiveDiagramIndex(principlesContentRef, {
+    paragraphSelector: '.ai-principles-para',
+    fixedHeaderSelector: '.project-header',
+    offsetPx: 130,
+  })
 
   const pageStyle = {
     '--cs-bg': PAGE_BG,
@@ -196,16 +246,7 @@ export default function CaseStudyHumanAI() {
             </div>
 
             <div className="ai-purpose-northstar">
-              <div className="ai-purpose-reveal-row">
-                {purposeReveals.map((r) => (
-                  <div
-                    key={r.key}
-                    className={`ai-purpose-reveal-box${purposeRevealed.has(r.key) ? ' revealed' : ''}${r.key === purposeHovered ? ' active' : ''}`}
-                  >
-                    <p className="ai-purpose-body type-body">{r.description}</p>
-                  </div>
-                ))}
-              </div>
+              
               <div className="ai-purpose-northstar-heading-group">
                 <p className="ai-purpose-label type-body">NORTH STAR</p>
                 <p className="ai-purpose-heading type-heading2">
@@ -218,8 +259,61 @@ export default function CaseStudyHumanAI() {
                   to help redirect resources towards growing their business.
                 </p>
               </div>
+              <div className="ai-purpose-reveal-row">
+                {purposeReveals.map((r) => (
+                  <div
+                    key={r.key}
+                    className={`ai-purpose-reveal-box${purposeRevealed.has(r.key) ? ' revealed' : ''}${r.key === purposeHovered ? ' active' : ''}`}
+                  >
+                    <p className="ai-purpose-body type-body">{r.description}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+        </StackedSection>
+
+        {/* ── AI DESIGN PRINCIPLES (Figma node 427:410) ── */}
+        <StackedSection title="AI Design Principles">
+          <CaseStudySection
+            bgColor={PAGE_BG}
+            textColor={PAGE_FG}
+            content={
+              <div className="ai-principles-paras" ref={principlesContentRef}>
+                {aiPrinciplesParagraphs.map((p, i) => (
+                  <div
+                    className={`ai-principles-para${i === activePrincipleIndex ? ' active' : ''}`}
+                    key={p.heading}
+                  >
+                    <p className="type-body ai-principles-para-heading">{p.heading}</p>
+                    <p className="type-body ai-principles-para-body">{p.body}</p>
+                  </div>
+                ))}
+              </div>
+            }
+            media={
+              <div className="ai-principles-diagrams">
+                {aiPrinciplesParagraphs.map((p, i) => (
+                  <div
+                    key={p.heading}
+                    className={`ai-principles-diagram-item${i === activePrincipleIndex ? ' active' : ''}`}
+                  >
+                    {p.diagram && <img src={asset(`/human_ai_ibm/diagrams/${p.diagram}`)} alt={p.heading} />}
+                    {p.captionItems && (
+                      <ol className="ai-principles-caption-list">
+                        {p.captionItems.map((item, idx) => (
+                          <li className="ai-principles-caption-item" key={idx}>
+                            <span className="type-caption1 ai-principles-caption-num">{idx + 1}</span>
+                            <span className="type-caption1 ai-principles-caption-text">{item}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    )}
+                  </div>
+                ))}
+              </div>
+            }
+          />
         </StackedSection>
 
         {/* ── ALIGNING DESIGN AND BUSINESS ── */}

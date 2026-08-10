@@ -301,6 +301,88 @@
   color: var(--cs-bg);
 }
 
+/* ── AI DESIGN PRINCIPLES (Figma node 427:410) ── */
+
+.ai-principles-paras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  height: 140vh;
+}
+
+.ai-principles-para {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-0-5);
+  margin: -9px;
+}
+
+.ai-principles-para.active {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.ai-principles-para-heading {
+  text-transform: uppercase;
+  margin: 0;
+  text-indent: var(--space-2);
+}
+
+.ai-principles-para-body {
+  margin: 0;
+  max-width: 610px;
+  white-space: pre-wrap;
+}
+
+.ai-principles-diagrams {
+  width: 100%;
+}
+
+.ai-principles-diagram-item {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.ai-principles-diagram-item.active {
+  display: flex;
+}
+
+.ai-principles-diagram-item img {
+  width: 70%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.ai-principles-caption-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 325px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.ai-principles-caption-item {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.ai-principles-caption-num {
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.ai-principles-caption-text {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
 /* ── ALIGNING DESIGN AND BUSINESS (purple) ── */
 
 .ai-align-box {
