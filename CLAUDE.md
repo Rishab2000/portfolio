@@ -12,11 +12,35 @@ through `.type-heading7`, `.type-body`, `.type-body1`, `.type-label1`,
 
 Never declare `font-family`, `font-size`, `font-weight`, `line-height`, or
 `letter-spacing` individually in a component/page CSS file or inline style.
-Apply the matching `.type-*` class in the JSX instead. If no existing class
-matches the Figma spec closely enough, add a new `.type-*` class to
-`index.css` rather than hand-rolling font declarations locally — component
+Apply the matching `.type-*` class in the JSX instead. **Never add a new
+`.type-*` class or a new `--fs-*` token to grow the scale** — the scale is
+fixed at whatever `index.css` currently defines. If no existing class
+matches the Figma spec closely enough, pick the closest one anyway (nearest
+`font-size` wins the tie-break) rather than introducing a new step; component
 CSS should only handle layout/spacing/color for text elements, never font
 declarations.
+
+## Rule: layout spacing always comes from the global `--space-*` tokens
+
+`src/index.css` defines the spacing scale as custom properties (`--space-0-5`
+through `--space-8`: 9px, 18px, 36px, 54px, 72px, 90px, 108px, 126px, 144px —
+whole multiples of one 16px body-copy line at 1.14 line-height, i.e. 18px).
+
+Never write a fixed pixel value for `padding`, `margin`, or `gap` in a
+component/page CSS file. Use the nearest `--space-*` token instead. When a
+Figma spec's value falls between two tokens, round **up** to the next token
+rather than hand-rolling the exact pixel number — e.g. a Figma `padding:
+24px 16px` becomes `padding: var(--space-2) var(--space-1)` (36px/18px), not
+`padding: 24px 16px`.
+
+This rule covers layout spacing specifically (`padding`/`margin`/`gap`
+between elements) — it does not apply to sizes that must match a specific
+asset or Figma measurement exactly (image `max-width`, an icon's fixed
+`width`/`height`, a hand-measured hotspot position, etc.); those stay literal
+pixel values. If a spacing value genuinely can't round to an existing token
+without breaking the design, that's a signal to add a new `--space-*` step
+to `index.css`, the same escape hatch the typography rule above uses for
+`.type-*`, rather than hand-rolling the pixel number locally.
 
 ## Rule: hover states are instant, no easing, no border-radius
 
@@ -172,11 +196,10 @@ struggled specifically with that half of the behavior (see "History worth knowin
 
 ## Case study page composition
 
-Every case study page (`CaseStudyHomepage`, `CaseStudyHumanAI`, `CaseStudyUXRoadmap`) is
-built from the same small set of shared components, wired together by two scroll-driven
-hooks. **`CaseStudyHomepage.tsx` is the reference implementation** — it's the only one of
-the three converted to this system so far (see "Rollout status" below); read it before
-building similar pages.
+Every case study page (`CaseStudyHomepage`, `CaseStudyHumanAI`, `CaseStudyAutomatedCalendar`)
+is built from the same small set of shared components, wired together by two scroll-driven
+hooks. **`CaseStudyHomepage.tsx` is the reference implementation** (see "Rollout status"
+below); read it before building similar pages.
 
 ```
 <div className="cs" style={{ '--cs-bg', '--cs-fg', '--cs-hover' }}>   ← page theming, see below
@@ -203,7 +226,7 @@ building similar pages.
 
 **Decision: every section stacks.** Every `<section>` on a case study page is wrapped in
 `StackedSection` so it participates in the header-stacking/pinning system — regardless of
-whether its internal layout is the rail/content/media grid (`CaseStudySection`) or
+whether its internal layout is the content/rail/media grid (`CaseStudySection`) or
 something fully bespoke (challenge grid, retrospective breakdown, art collage, etc.). The
 stacking envelope (`StackedSection`) and a section's internal layout are independent
 concerns; `StackedSection` never inspects or constrains its `children`.
@@ -216,8 +239,12 @@ concerns; `StackedSection` never inspects or constrains its `children`.
    `'.sst-header'` explicitly.
 2. ✅ `CaseStudyHomepage` fully converted — every section (`Overview`, `Retrospective`,
    `Challenges`, `Approach`, `Design outcomes`) is a `StackedSection`.
-3. ⬜ `CaseStudyHumanAI` — not yet converted.
-4. ⬜ `CaseStudyUXRoadmap` — not yet converted.
+3. ✅ `CaseStudyHumanAI` fully converted — every section (`Overview`, `Retrospective`,
+   `Context`, `Aligning on the purpose`, `AI Design Principles`, `Transparency and trust`,
+   `Policy recommendations`) is a `StackedSection`.
+4. 🚧 `CaseStudyAutomatedCalendar` — replaces the old `CaseStudyUXRoadmap` (SD+) case
+   study, built fresh on this system from the start. Only `Overview` exists so far; more
+   sections land the same stepwise way as the other pages.
 
 Work stepwise: convert one page, pause for a visual check (done by the user, not by
 running the dev server) before moving to the next.
@@ -327,19 +354,67 @@ simple.
 
 ## Component: `CaseStudySection`
 
-`src/components/CaseStudySection.tsx` + `.css`. Generic reusable 3-column grid (rail /
-content / media) for any section that wants the "middle scrolls, sides stay pinned" intra-
-section layout:
+`src/components/CaseStudySection.tsx` + `.css`. Generic reusable 3-column grid for any
+section that wants the "middle scrolls, sides stay pinned" intra-section layout:
 
 ```tsx
 <CaseStudySection
   bgColor={PAGE_BG}
   textColor={PAGE_FG}
-  rail={<div>...</div>}      // optional, e.g. CaseStudyIntro's responsibility descriptions
-  content={<div>...</div>}   // the scrolling middle column
+  rail={<div>...</div>}      // optional, e.g. CaseStudyIntro's responsibility descriptions,
+                              // or a scroll-synced captions list — see "Scroll-linked
+                              // content/media sync" below
+  content={<div>...</div>}   // the scrolling column
   media={<div>...</div>}     // optional, e.g. diagrams/screenshots
 />
 ```
+
+**Visual column order is always content / rail / media** (`1fr / 0.60fr / 1fr`, Figma node
+264:159) regardless of the order these props are passed in JSX — `.cs-grid-content` /
+`.cs-grid-rail` / `.cs-grid-media` each carry a fixed, explicit CSS `grid-column` (1 / 2 / 3)
+in `CaseStudySection.css` so the component enforces this uniformly. This is a hard-won
+decision: an earlier version made the order configurable per-instance (rail-first to match
+some individual Figma nodes literally, rail-in-the-middle for others), but that turned into
+a `railPosition` prop being set differently per call site — a "singular", per-page fix
+instead of a component-level guarantee. Every 3-column instance across the whole app
+(`CaseStudyIntro`'s Overview on both `CaseStudyHomepage` and `CaseStudyHumanAI`, Approach,
+Design outcomes, AI Design Principles, Transparency and trust, Policy recommendations) now
+gets the same order for free from the component — don't reintroduce a per-instance order
+prop; if a future section's Figma disagrees, that's a conversation about changing the
+convention itself, not a one-off override.
+
+**Hard rule: every explicit `grid-column` on `.cs-grid`'s items must be paired with an
+explicit `grid-row: 1`.** `.cs-grid-content` / `.cs-grid-rail` / `.cs-grid-media` all set
+`grid-row: 1` for this reason — don't drop it, and give any new grid item the same
+treatment. This isn't stylistic: without it, this exact grid silently splits into two rows
+purely from CSS Grid's placement algorithm, with no visual collision to explain it.
+
+The bug (found 2026-08-18, debugging the Policy recommendations Screenshot/Video toggle):
+DOM order here is rail, then content, then media (required — see above). Auto-placement
+processes items in that order. Rail (needing column 2) gets placed first, which advances
+the placement cursor to column 3. Content (needing column 1) is processed next — but
+*sparse* packing (CSS Grid's default, and this grid never opts into `dense`) never
+backtracks to a column the cursor has already passed, even though column 1 is visually
+empty. So content gets shoved onto an invisible new row 2, despite content/rail/media
+occupying three columns that never actually overlap. Row 1 (rail alone) then sizes to
+rail's own height, and row 2 (content + media) sizes to content's — meaning content's
+position silently depends on rail's height. This went unnoticed until the Screenshot/Video
+toggle changed whether rail showed captions, which changed rail's height, which shifted
+where row 2 (and everything in it, including content) started — with `window.scrollY`
+never moving, so it looked exactly like an unexplained scroll jump.
+
+The general lesson, beyond this one grid: **once any grid item in a shared-row layout gets
+an explicit position on one axis (e.g. `grid-column`) while other items in that row rely on
+auto-placement for the other axis (`grid-row: auto`), and the items aren't placed in
+left-to-right column order in the DOM, sparse auto-placement can silently fragment the row.**
+Diagnosing it is unusually hard because nothing visually collides and no console error is
+raised — `getComputedStyle(el).gridRowStart`/`gridRowEnd` also don't help, since they report
+back the literal authored keyword `"auto"` for auto-placed items rather than the resolved
+line, in every browser. The only reliable way to see the real placement is
+`getComputedStyle(gridContainer).gridTemplateRows` (or `.gridTemplateColumns`) — the
+resolved, rendered track list, which reveals extra implicit rows/columns immediately. Reach
+for that first if a grid layout ever looks like it has a phantom row/column with no
+CSS rule that could explain it.
 
 `bgColor`/`textColor` become `--cs-grid-bg`/`--cs-grid-text`, so the same component renders
 correctly on differently-themed pages. `.cs-grid-rail` and `.cs-grid-media` are
@@ -349,11 +424,39 @@ hook. `.cs-grid-media` uses `align-items: flex-start` (not the `stretch` default
 `overflow: hidden` so images keep their natural size and only clip at the bottom of the
 capped sticky panel instead of being squeezed to fit it.
 
+**`mediaSpansRail?: boolean`** — the sanctioned way a section makes `media` widen to cover
+both its own track and rail's (e.g. a video that should span past the screenshot's normal
+width, `CaseStudyHumanAI`'s Policy recommendations section, Figma node 539:12499 /
+539:12591). When true, `media` gets `grid-column: 2 / 4` instead of its normal single
+track, via a `.cs-grid-media--wide` modifier class — `rail` keeps rendering in its own
+track underneath/beside it unchanged. Since the two can now visually overlap in the same
+row, a page that renders something at the top of `rail` (e.g. a toggle control) above its
+normal content needs `media`'s content to start below it instead of colliding — set
+`--cs-grid-toggle-h` (default `0px`, a no-op) to that content's rendered height, scoped to
+just that page's grid instance (e.g. `.cs-grid:has(.ai-policyrec-notes) { --cs-grid-toggle-h:
+var(--space-3); }`), rather than globally, so other `CaseStudySection` call sites are
+unaffected. This is a per-item concern, not per-section — compute the boolean from
+whichever paragraph/diagram is currently active (same `activeIndex` used everywhere else in
+this pattern), since only one item is ever visible in `media` at a time.
+
 `CaseStudyIntro` is a themed wrapper around one `CaseStudySection` instance (the page's
-single-viewport intro — description, responsibilities, results, two image columns).
+single-viewport intro). Its props are generalized past the original single-image/single-list
+shape so it stays the one place this pattern lives rather than forking into bespoke JSX per
+page: `description` takes a string or a string array (multiple intro paragraphs, rendered as
+one tight-spaced block); an optional `characteristics: { label, items }` renders a plain
+(non-hover) list above the hover-reveal list, e.g. `CaseStudyAutomatedCalendar`'s "PROJECT
+CHARACTERISTICS"; `listLabel` overrides the hover-list's heading (defaults to
+`'RESPONSIBILITIES'` — `CaseStudyAutomatedCalendar` passes `'LEARNINGS'`); `results` is
+optional, omit it entirely to skip rendering the "RESULTS" block (`CaseStudyAutomatedCalendar`
+has none); `media` takes one image or an array, stacked vertically (`CaseStudyAutomatedCalendar`
+renders two). Extend this component's props again the same way for a future page's intro
+rather than duplicating its hover-reveal-rail logic in bespoke page JSX — that duplication is
+exactly what generalizing it here was meant to avoid.
 `CaseStudyHomepage`'s "Approach" and "Design outcomes" sections use `CaseStudySection`
 directly with `content`/`media` built from paragraph-array data (see "Scroll-linked
-content/media sync" below).
+content/media sync" below) — that pattern is for a *scroll-synced* list where one paragraph is
+active at a time, a different shape from `CaseStudyIntro`'s hover-reveal list where every
+revealed item stays visible at once; don't conflate the two when deciding which to reach for.
 
 ## Component: `ProjectHeader`
 
@@ -377,6 +480,49 @@ per page to match its background (dark case-study pages currently all pass the s
 put the footer beside `<main>` instead of below it. The case-study page wrappers
 (`.cs-page` / `.ai-page` / `.sd-page`) already set `flex-direction: column`, so only
 `HomePage` needed this fix.
+
+## Component: `MediaLightbox`
+
+`src/components/MediaLightbox.tsx` + `.css`. Portfolio-wide, page-agnostic full-viewport
+media overlay (Figma node 515:12335): a heading and an optional numbered notes list on the
+left, a large version of the triggering image/video on the right, over a fixed
+`rgba(0,0,0,0.84)` scrim — regardless of the host page's own colour scheme, since the scrim
+is dark on every page this has been used on so far.
+
+```tsx
+const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+
+// on the clickable trigger (image/video):
+<button onClick={() => setLightboxIndex(i)}>...</button>
+
+// mounted only while open — the component owns Escape-to-close, click-scrim-to-close,
+// and locking document.body scroll for as long as it's mounted:
+{lightboxIndex !== null && (
+  <MediaLightbox
+    heading={item.heading}
+    notes={item.captionItems}              // optional — omit for no numbered list
+    textColor={PAGE_FG}
+    media={{ kind: 'video', src: ... }}     // or { kind: 'image', src: ..., alt: ... }
+    onClose={() => setLightboxIndex(null)}
+  />
+)}
+```
+
+This is the reusable half of the pattern; the clickable trigger and the "which item is
+open" state stay page-owned (`lightboxIndex` above) so each page can wire it to whatever
+markup its media already has (e.g. `CaseStudyHomepage`'s outcome diagrams, which keep their
+existing hover-hotspot machinery on the trigger `<button>` — the lightbox itself doesn't
+know or care what the trigger looked like). Call sites so far:
+
+- `CaseStudyHomepage`'s "Design outcomes" diagrams — the original, single-gallery
+  integration; read this one first as the reference.
+- `CaseStudyHumanAI`'s "Transparency and trust" and "Policy recommendations" diagrams —
+  a page with **two** independent galleries, so it tracks two separate `lightboxIndex`
+  states (`transparencyLightboxIndex` / `policyRecLightboxIndex`), one `MediaLightbox`
+  mount per gallery. Transparency's "Always beta" item is also tabbed (two swappable
+  images via `feedbackTabIndex`) — its lightbox media follows whichever tab is currently
+  selected rather than a fixed image, computed once as `transparencyLightboxSrc` rather
+  than re-derived inline at each usage.
 
 ## Hook: `useHoverReveal`
 
@@ -602,3 +748,53 @@ scroll distance for every paragraph to get its turn as active before the section
 Reuse this pattern (hook + `.active` class + hard-swap media) for any future section shaped
 like "scrolling list of paragraphs paired with a swapping visual," rather than reaching for
 an `IntersectionObserver`-per-item or a carousel library.
+
+### Rail as a third synced column: numbered captions
+
+When a section's diagram needs numbered callouts (e.g. "1. Widgets can be moved without
+disrupting spacing…"), those captions go in `CaseStudySection`'s `rail` slot — the real
+middle column (see "Component: `CaseStudySection`" above) — not stacked underneath the image
+inside `media`. Rail sits between content and media for exactly this reason: content (text)
+| captions | image, matching the source Figma layout for every section that has captions
+(`CaseStudyHomepage`'s Design outcomes; `CaseStudyHumanAI`'s AI Design Principles,
+Transparency and trust, Policy recommendations).
+
+The rail content is a **third** consumer of the same `activeIndex` from
+`useActiveDiagramIndex` — mapped from the identical paragraph array, hard-swapped exactly
+like the media column (not inverted like the content column):
+
+```tsx
+rail={
+  <div className="cs-outcomes-notes">
+    {outcomeParagraphs.map((p, i) => (
+      <div key={p.label} className={`cs-outcomes-note-item${i === activeOutcomeIndex ? ' active' : ''}`}>
+        {p.captionItems && (
+          <ol className="cs-outcomes-caption-list">
+            {p.captionItems.map((item, idx) => (
+              <li className="cs-outcomes-caption-item" key={idx}>
+                <span className="type-caption1 cs-outcomes-caption-num">{idx + 1}</span>
+                <span className="type-caption1 cs-outcomes-caption-text">{item}</span>
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
+    ))}
+  </div>
+}
+```
+
+```css
+.cs-outcomes-notes { width: 100%; }
+.cs-outcomes-note-item { display: none; width: 100%; }
+.cs-outcomes-note-item.active { display: block; }
+```
+
+`captionItems` on the paragraph type is optional — a paragraph with no captions for that
+particular diagram just renders an empty (but still correctly `active`-toggled) note item.
+Every current instance names these four classes per its own page-prefix (e.g.
+`ai-principles-notes` / `ai-principles-note-item` on `CaseStudyHumanAI`) rather than sharing
+`CaseStudyHomepage`'s literal `cs-outcomes-*` names, continuing that page's one-namespace-
+per-section convention — but the shape (wrapper + per-item `display: none`/`.active { display:
+block }` + the `type-caption1` num/text spans) should stay identical for any new section that
+needs captions.

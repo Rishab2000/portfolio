@@ -20,18 +20,44 @@ interface MediaImage {
   aspect: string
 }
 
+/** Optional plain (non-hover) list rendered above the hover-reveal list — e.g.
+ * Automated calendar's "PROJECT CHARACTERISTICS". */
+interface CharacteristicsList {
+  label: string
+  items: string[]
+}
+
 interface CaseStudyIntroProps {
   bgColor: string
   textColor: string
   hoverColor: string
-  description: string
+  /** One or more intro paragraphs, rendered as a single tight-spaced block. */
+  description: string | string[]
+  characteristics?: CharacteristicsList
+  /** Label above the hover-reveal list — defaults to 'RESPONSIBILITIES'. */
+  listLabel?: string
   responsibilities: Responsibility[]
-  results: ResultEntry[]
-  media: MediaImage
+  /** Omit entirely to skip the "RESULTS" block (e.g. Automated calendar has none). */
+  results?: ResultEntry[]
+  /** One image (existing pages) or several, stacked vertically (e.g. Automated calendar). */
+  media: MediaImage | MediaImage[]
 }
 
-export default function CaseStudyIntro({ bgColor, textColor, hoverColor, description, responsibilities, results, media }: CaseStudyIntroProps) {
+export default function CaseStudyIntro({
+  bgColor,
+  textColor,
+  hoverColor,
+  description,
+  characteristics,
+  listLabel = 'RESPONSIBILITIES',
+  responsibilities,
+  results,
+  media,
+}: CaseStudyIntroProps) {
   const { revealed, hovered: hoveredLink, reveal, onEnter, onLeave } = useHoverReveal<string>()
+
+  const descParagraphs = Array.isArray(description) ? description : [description]
+  const mediaItems = Array.isArray(media) ? media : [media]
 
   const style = {
     '--cs-intro-bg': bgColor,
@@ -61,8 +87,27 @@ export default function CaseStudyIntro({ bgColor, textColor, hoverColor, descrip
         }
         content={
           <div className="cs-intro-content">
-            <p className="cs-intro-desc type-body">{description}</p>
-            <p className="cs-intro-label type-body">RESPONSIBILITIES</p>
+            <div className="cs-intro-desc">
+              {descParagraphs.map((p, i) => (
+                <p className="type-body" key={i}>{p}</p>
+              ))}
+            </div>
+
+            {characteristics && (
+              <>
+                <p className="cs-intro-label type-body">{characteristics.label}</p>
+                <ul className="cs-intro-plain-list">
+                  {characteristics.items.map((item) => (
+                    <li className="type-body" key={item}>
+                      <span className="dot">⋅</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+
+            <p className="cs-intro-label type-body">{listLabel}</p>
             <ul className="cs-intro-resp">
               {responsibilities.map((r) => (
                 <li className="type-body" key={r.link}>
@@ -76,20 +121,29 @@ export default function CaseStudyIntro({ bgColor, textColor, hoverColor, descrip
                 </li>
               ))}
             </ul>
-            <p className="cs-intro-label type-body">RESULTS</p>
-            <div className="cs-intro-results">
-              {results.map((entry) => (
-                <div className="cs-intro-result" key={entry.label}>
-                  <p className="cs-intro-result-label type-body">{entry.label}</p>
-                  <p className="cs-intro-result-stat type-heading1">{entry.stat}</p>
+
+            {results && (
+              <>
+                <p className="cs-intro-label type-body">RESULTS</p>
+                <div className="cs-intro-results">
+                  {results.map((entry) => (
+                    <div className="cs-intro-result" key={entry.label}>
+                      <p className="cs-intro-result-label type-body">{entry.label}</p>
+                      <p className="cs-intro-result-stat type-heading1">{entry.stat}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </>
+            )}
           </div>
         }
         media={
-          <div className="cs-intro-media-img" style={{ aspectRatio: media.aspect }}>
-            <img src={media.src} alt={media.alt} />
+          <div className="cs-intro-media">
+            {mediaItems.map((m, i) => (
+              <div className="cs-intro-media-img" style={{ aspectRatio: m.aspect }} key={i}>
+                <img src={m.src} alt={m.alt} />
+              </div>
+            ))}
           </div>
         }
       />

@@ -5,6 +5,7 @@ import { asset } from '../../lib/nav'
 import CaseStudyIntro from '../../components/CaseStudyIntro'
 import CaseStudySection from '../../components/CaseStudySection'
 import Footer from '../../components/Footer'
+import MediaLightbox from '../../components/MediaLightbox'
 import ProjectHeader from '../../components/ProjectHeader'
 import StackedSection from '../../components/StackedSection'
 import RetrospectiveSection, { RetroRevealToggle } from '../../components/RetrospectiveSection'
@@ -49,51 +50,164 @@ const aiPrinciplesParagraphs: AIPrincipleParagraph[] = [
   { heading: 'Why?', body: 'Establish the framework for all AI experiences, that way this effort will have it’s ripples for future offerings.' },
   {
     heading: 'Proactive',
-    body: 'The experience should nudge admins when intervention is needed, without requiring them to remember or take extra steps.',
+    body: 'Anticipate, predict and intervene before the user has resolve the issue or feel friction.',
     diagram: 'proactive.png',
     captionItems: [
-      'Prioritise designing AI capabilities that help avoid issues over diagnosing them',
-      'Nudge when intervention is required',
-      'Communicate and clarify the feature’s capabilities and limitations',
+      'Prioritise designing AI capabilities that avoid deployment problems, over diagnosing them.',
+      'Nudge users only when required, do not introduce noise through false positives or superficial insights.',
+      'Clarify an AI feature’s capabilities and limitations.',
     ],
   },
   {
     heading: 'Integrated',
-    body: 'Integrated seamlessly with existing and established workflows without increasing friction, while utilizing and enhance its experience.',
+    body: 'Compound and enhance established workflows, making existing workflows cumbersome with AI will be a failure on our part.',
     diagram: 'integrate.png',
     captionItems: [
-      'Do not re-invent the wheel, “at least not right now”.',
-      'Enhance established workflows when possible, not disrupt them.',
-      'Intentional usage of the chat interface.',
+      'Do not re-invent the wheel, make it run smoother.',
+      'Minimise the separation between traditional product functionality and AI functionality.',
+      'Do not default to the chat interface, evaluate and establish the need for chat.',
     ],
   },
   {
     heading: 'Contextualized',
-    body: 'Information and functionality should align with diverse customer needs and contexts, understanding user and organizational goals to provide a relevant experience.',
+    body: 'Design mouldable experiences, the functionality should adapt to diverse customer needs and contexts.',
     diagram: 'contextualize.png',
     captionItems: [
-      'Functionality should morph and align to the organisation’s strategy',
-      'Information should always contextualise to the active workflow or page',
+      'Morph workflows and granularity proportional to the size of the organisation.',
+      'Contextualise organisation strategy for insights and recommendations, avoid generic intervention',
+      'Information shown should always relate to the active page, workflow or surrounding information.'
     ],
   },
 ]
 
+interface TransparencyTab {
+  label: string
+  src: string
+}
+
+interface TransparencyParagraph {
+  label: string
+  heading: string
+  body: string
+  diagram?: string
+  tabs?: TransparencyTab[]
+  captionItems?: string[]
+}
+
+/* copy + diagram pairing (Figma node 433:1151 / 433:10051 / 433:10070) */
+const transparencyParagraphs: TransparencyParagraph[] = [
+  {
+    label: 'Clarity',
+    heading: 'Reduce the black box feeling',
+    body: 'Manage expectations by clearly communicating what the system is doing, how, and what information is used.',
+    diagram: 'explainability.png',
+    captionItems: [
+      'Clear definition of the capability to manage user expectations',
+      'Transparancy of AI model, and ability to learn more details',
+      'Clarifies the process we use to generate insights',
+    ],
+    
+  },
+  {
+    label: 'Always beta',
+    heading: 'First ever realtime feedback and telemetry',
+    body: 'Allowed design, product, and development to easily view and access user feedback. Fostered a user centred culture that complemented the existing engineering focus',
+    tabs: [
+      { label: 'Reinforcement', src: 'feedback positive.png' },
+      { label: 'Reconsider', src: 'feedback negative.png' },
+    ],
+     captionItems: [
+      'Enabled wider reach while saving time.',
+      'Generated generic and detailed user sentiment metrics.',
+      'Utilized to plan and clarify roadmap for this new business direction'
+
+    ],
+  },
+]
+
+interface PolicyRecParagraph {
+  heading: string
+  body: string
+  diagram?: string
+  video?: string
+  captionItems?: string[]
+}
+
+/* copy + diagram pairing (Figma node 453:10105 / 453:26648 / 453:26680 / 453:26711) */
+const policyRecParagraphs: PolicyRecParagraph[] = [
+  {
+    heading: 'Reducing the time to value from weeks to minutes.',
+    body: 'Customers can align to security standards (STIGS, HIIPA, GDPR, etc) with a click of a button.\n \n An effort that required weeks of research and implementation.',
+    diagram: 'Configure.png',
+    video:'configure.mp4',
+    captionItems: [
+      'Lowers the costs for large organisations to meet compliance requirements',
+      'Faster and more secure out of the box deployments for small and medium businesses',
+      'Allows users focus on the required outcome, not configuration technicalities',
+
+    ],
+  },
+  {
+    heading: 'Lowering maintenance costs',
+    body: 'Organisations can reduce operational resources for policy up-keep, as policies are automatically reviewed. \n \n Actionable recommendations point to the exact changes required to stay secure.',
+    diagram: 'recommendations.png',
+    video: 'recommendations.mp4',
+    captionItems: [
+      'Our business logic helps customers identify security gaps and upgrade policies when required.',
+      'Significantly reduced the time users spent researching, testing, and updating policy settings.',
+    ],
+  },
+  {
+    heading: 'Controlled automation minimizes outages.',
+    body: 'Misconfigured policies are often the reason for outages and productivity loss. \n \n The user experience prioritizes human review over heavy automation, avoiding bulk or hard to trace changes.',
+    diagram: 'apply_recommendations.png',
+    video: 'maintenance.mp4',
+    captionItems: [
+      'Trust human judgement on final decisions to update and deploy policies',
+      'New language guidelines prioritizes clear cause-and-effect explainability',
+      'A click through experience allows easy review before applying recommended changes.',
+    ],
+  },
+  {
+    heading: 'Quicker knowledge transfer',
+    body: 'Our customers experience high IT admin turnover, and are burdened with constant re-onboarding. \n \n Policy summarizations reduce the time it takes for a new admin to contribute',
+    diagram: 'summerization.png',
+    video:'summerisations.mp4',
+    captionItems: [
+      'Transfer of basic knowledge is handled in-product, allowing more time for discussing questions, architecture and strategy.',
+      'Benefits compond for organsations with 10-15 complex policies.',
+    ],
+  },
+]
+
+/* Shared between rail (screenshot mode) and media (video mode, below the video) — see
+   the Screenshot/Video toggle in the Policy recommendations CaseStudySection call.
+   `left` matches the video's caption placement (left-aligned under the widened media,
+   like rail's own column) instead of the screenshot's centered-under-the-image default. */
+function renderPolicyRecCaptions(items?: string[], align: 'center' | 'left' = 'center') {
+  if (!items) return null
+  return (
+    <ol className={`ai-policyrec-caption-list${align === 'left' ? ' ai-policyrec-caption-list--left' : ''}`}>
+      {items.map((item, idx) => (
+        <li className="ai-policyrec-caption-item" key={idx}>
+          <span className="type-caption1 ai-policyrec-caption-num">{idx + 1}</span>
+          <span className="type-caption1 ai-policyrec-caption-text">{item}</span>
+        </li>
+      ))}
+    </ol>
+  )
+}
+
 /* Placeholder — update with this project's real time-allocation breakdown. */
 const retroSegments: RetroSegment[] = [
-  { label: 'Placeholder category 1', percent: '~10%', items: ['Placeholder activity — update with real copy.'] },
-  { label: 'Placeholder category 2', percent: '~30%', items: ['Placeholder activity — update with real copy.'] },
-  { label: 'Placeholder category 3', percent: '~40%', items: ['Placeholder activity — update with real copy.'] },
-  { label: 'Placeholder category 4', percent: '~20%', items: ['Placeholder activity — update with real copy.'] },
+  { label: 'Designing', percent: '~30%', items: ['Creating MaaS360 AI design guidelines', 'User experience workflow mapping', 'UI design'],  },
+  { label: 'Dev support', percent: '~10%', items: ['Structuring figma files for seamless dev transition', 'Regular review and feedback sessions', 'Negotiating UX and technical compromises'], narrow: true, breakoutWidthPct: 220 },
+  { label: 'Collaborating and strategising', percent: '~60%', items: ['Defining business logic along architects and product managers', 'Researching, defining and aligning on MaaS360‘s AI northstar', 'Researching and defining rate based monetisation system', 'Stakeholder meetings and buy-ins'] },
 ]
 
 /* image assets (Figma node 40:3904) */
 const imgIntroMockup = asset('/human_ai_ibm/ibm-homepage%202.png')
 const imgContext = asset('/human_ai_ibm/context.png')
-const imgSolMacbook1 = asset('/ai/sol-macbook1.png')
-const imgSolMacbook2 = asset('/ai/sol-macbook2.png')
-const imgSolFeedback1 = asset('/ai/sol-feedback1.png')
-const imgSolFeedback2 = asset('/ai/sol-feedback2.png')
-const imgSolFeedback3 = asset('/ai/sol-feedback3.png')
 
 export default function CaseStudyHumanAI() {
   const pageRef = useRef<HTMLDivElement>(null)
@@ -116,6 +230,42 @@ export default function CaseStudyHumanAI() {
     offsetPx: 130,
   })
 
+  const transparencyContentRef = useRef<HTMLDivElement>(null)
+  const activeTransparencyIndex = useActiveDiagramIndex(transparencyContentRef, {
+    paragraphSelector: '.ai-transparency-para',
+    fixedHeaderSelector: '.project-header',
+    offsetPx: 130,
+  })
+
+  const [feedbackTabIndex, setFeedbackTabIndex] = useState(0)
+
+  // Transparency and trust lightbox (MediaLightbox) — index into
+  // transparencyParagraphs, or null when closed.
+  const [transparencyLightboxIndex, setTransparencyLightboxIndex] = useState<number | null>(null)
+  const transparencyLightboxItem = transparencyLightboxIndex !== null ? transparencyParagraphs[transparencyLightboxIndex] : null
+  // A tabbed item's lightbox media follows whichever tab is currently selected.
+  const transparencyLightboxSrc = transparencyLightboxItem
+    ? (transparencyLightboxItem.tabs ? transparencyLightboxItem.tabs[feedbackTabIndex].src : transparencyLightboxItem.diagram)
+    : null
+
+  const policyRecContentRef = useRef<HTMLDivElement>(null)
+  const activePolicyRecIndex = useActiveDiagramIndex(policyRecContentRef, {
+    paragraphSelector: '.ai-policyrec-para',
+    fixedHeaderSelector: '.project-header',
+    offsetPx: 130,
+  })
+
+  // Policy recommendations lightbox (MediaLightbox) — index into
+  // policyRecParagraphs, or null when closed.
+  const [policyRecLightboxIndex, setPolicyRecLightboxIndex] = useState<number | null>(null)
+
+  // Screenshot/Video toggle — per-paragraph, independently remembered (switching one
+  // paragraph to video doesn't affect any other paragraph's mode). Only paragraphs with
+  // a `video` ever read from this; everything else always renders as screenshot.
+  const [policyRecMediaMode, setPolicyRecMediaMode] = useState<Record<number, 'screenshot' | 'video'>>({})
+  const getPolicyRecMode = (i: number) =>
+    policyRecParagraphs[i].video && policyRecMediaMode[i] === 'video' ? 'video' : 'screenshot'
+
   const pageStyle = {
     '--cs-bg': PAGE_BG,
     '--cs-fg': PAGE_FG,
@@ -123,8 +273,8 @@ export default function CaseStudyHumanAI() {
   } as CSSProperties
 
   return (
-    <div className="ai">
-      <div className="ai-page" ref={pageRef} style={pageStyle}>
+    <div className="ai" style={pageStyle}>
+      <div className="ai-page" ref={pageRef}>
 
         {/* ── PAGE HEADER (sticky, always visible) ── */}
         <ProjectHeader
@@ -150,7 +300,7 @@ export default function CaseStudyHumanAI() {
             results={[
               { label: 'Engagement rate', stat: '~ 72%' },
               { label: 'Users adoption', stat: '~ 52%' },
-              { label: 'Best AI infusion in Software products at IBM', stat: 'Ranked 2nd' },
+              // { label: 'Best AI infusion in Software products at IBM', stat: 'Ranked 2nd' },
               { label: 'Customer feedback', stat: 'This should be in CNN and other news channels , it is a killer idea for regulated customers like us. We use it extensively now' },
             ]}
             media={{ src: imgIntroMockup, alt: 'IBM MaaS360 policy mockup collage', aspect: '1148 / 1046' }}
@@ -167,7 +317,7 @@ export default function CaseStudyHumanAI() {
             />
           }
         >
-          <RetrospectiveSection segments={retroSegments} revealMode={retroRevealMode} />
+          <RetrospectiveSection segments={retroSegments} revealMode={retroRevealMode} height="60vh" />
         </StackedSection>
 
         {/* ── CONTEXT (Figma node 363:682) ── */}
@@ -278,6 +428,27 @@ export default function CaseStudyHumanAI() {
           <CaseStudySection
             bgColor={PAGE_BG}
             textColor={PAGE_FG}
+            rail={
+              <div className="ai-principles-notes">
+                {aiPrinciplesParagraphs.map((p, i) => (
+                  <div
+                    key={p.heading}
+                    className={`ai-principles-note-item${i === activePrincipleIndex ? ' active' : ''}`}
+                  >
+                    {p.captionItems && (
+                      <ol className="ai-principles-caption-list">
+                        {p.captionItems.map((item, idx) => (
+                          <li className="ai-principles-caption-item" key={idx}>
+                            <span className="type-caption1 ai-principles-caption-num">{idx + 1}</span>
+                            <span className="type-caption1 ai-principles-caption-text">{item}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    )}
+                  </div>
+                ))}
+              </div>
+            }
             content={
               <div className="ai-principles-paras" ref={principlesContentRef}>
                 {aiPrinciplesParagraphs.map((p, i) => (
@@ -299,12 +470,31 @@ export default function CaseStudyHumanAI() {
                     className={`ai-principles-diagram-item${i === activePrincipleIndex ? ' active' : ''}`}
                   >
                     {p.diagram && <img src={asset(`/human_ai_ibm/diagrams/${p.diagram}`)} alt={p.heading} />}
+                  </div>
+                ))}
+              </div>
+            }
+          />
+        </StackedSection>
+
+        {/* ── TRANSPARENCY AND TRUST (Figma node 433:1151 / 433:10051) ── */}
+        <StackedSection title="Transparency and trust">
+          <CaseStudySection
+            bgColor={PAGE_BG}
+            textColor={PAGE_FG}
+            rail={
+              <div className="ai-transparency-notes">
+                {transparencyParagraphs.map((p, i) => (
+                  <div
+                    key={p.label}
+                    className={`ai-transparency-note-item${i === activeTransparencyIndex ? ' active' : ''}`}
+                  >
                     {p.captionItems && (
-                      <ol className="ai-principles-caption-list">
+                      <ol className="ai-transparency-caption-list">
                         {p.captionItems.map((item, idx) => (
-                          <li className="ai-principles-caption-item" key={idx}>
-                            <span className="type-caption1 ai-principles-caption-num">{idx + 1}</span>
-                            <span className="type-caption1 ai-principles-caption-text">{item}</span>
+                          <li className="ai-transparency-caption-item" key={idx}>
+                            <span className="type-caption1 ai-transparency-caption-num">{idx + 1}</span>
+                            <span className="type-caption1 ai-transparency-caption-text">{item}</span>
                           </li>
                         ))}
                       </ol>
@@ -313,141 +503,206 @@ export default function CaseStudyHumanAI() {
                 ))}
               </div>
             }
+            content={
+              <div className="ai-transparency-paras" ref={transparencyContentRef}>
+                {transparencyParagraphs.map((p, i) => (
+                  <div
+                    className={`ai-transparency-para${i === activeTransparencyIndex ? ' active' : ''}`}
+                    key={p.label}
+                  >
+                    <p className="type-body ai-transparency-label">{p.label}</p>
+                    <p className="type-heading1 ai-transparency-heading">{p.heading}</p>
+                    <p className="type-body ai-transparency-body">{p.body}</p>
+                  </div>
+                ))}
+              </div>
+            }
+            media={
+              <div className="ai-transparency-diagrams">
+                {transparencyParagraphs.map((p, i) => (
+                  <div
+                    key={p.label}
+                    className={`ai-transparency-diagram-item${i === activeTransparencyIndex ? ' active' : ''}`}
+                  >
+                    {p.tabs ? (
+                      <>
+                        <div className="ai-transparency-tabs">
+                          {p.tabs.map((tab, tabIdx) => (
+                            <button
+                              key={tab.label}
+                              type="button"
+                              className={`ai-transparency-tab type-body${tabIdx === feedbackTabIndex ? ' active' : ''}`}
+                              onClick={() => setFeedbackTabIndex(tabIdx)}
+                            >
+                              {tab.label}
+                            </button>
+                          ))}
+                        </div>
+                        <button
+                          type="button"
+                          className="ai-transparency-image-trigger"
+                          onClick={() => setTransparencyLightboxIndex(i)}
+                          aria-label={`View larger: ${p.heading}`}
+                        >
+                          <img
+                            className="ai-transparency-image"
+                            src={asset(`/human_ai_ibm/trust_and_transparency/${encodeURIComponent(p.tabs[feedbackTabIndex].src)}`)}
+                            alt={p.heading}
+                          />
+                        </button>
+                      </>
+                    ) : (
+                      p.diagram && (
+                        <button
+                          type="button"
+                          className="ai-transparency-image-trigger"
+                          onClick={() => setTransparencyLightboxIndex(i)}
+                          aria-label={`View larger: ${p.heading}`}
+                        >
+                          <img
+                            className="ai-transparency-image"
+                            src={asset(`/human_ai_ibm/trust_and_transparency/${p.diagram}`)}
+                            alt={p.heading}
+                          />
+                        </button>
+                      )
+                    )}
+                  </div>
+                ))}
+              </div>
+            }
           />
         </StackedSection>
 
-        {/* ── ALIGNING DESIGN AND BUSINESS ── */}
-        <section className="ai-section">
-          <div className="ai-align-box">
-            <div className="ai-align-row">
-              <div className="ai-align-left hidden">
-                <p className="goal type-label1">Creating a</p>
+        {/* ── POLICY RECOMMENDATIONS (Figma node 453:10105 / 453:26648 / 453:26680 / 453:26711) ── */}
+        <StackedSection title="Policy recommendations">
+          <CaseStudySection
+            bgColor={PAGE_BG}
+            textColor={PAGE_FG}
+            mediaSpansRail={getPolicyRecMode(activePolicyRecIndex) === 'video'}
+            rail={
+              <div className="ai-policyrec-notes">
+                {policyRecParagraphs.map((p, i) => (
+                  <div
+                    key={p.heading}
+                    className={`ai-policyrec-note-item${i === activePolicyRecIndex ? ' active' : ''}`}
+                  >
+                    {p.video && (
+                      <div className="ai-policyrec-media-toggle">
+                        <button
+                          type="button"
+                          className={`type-body${getPolicyRecMode(i) === 'screenshot' ? ' active' : ''}`}
+                          onClick={() => setPolicyRecMediaMode((m) => ({ ...m, [i]: 'screenshot' }))}
+                        >
+                          Screenshot
+                        </button>
+                        <button
+                          type="button"
+                          className={`type-body${getPolicyRecMode(i) === 'video' ? ' active' : ''}`}
+                          onClick={() => setPolicyRecMediaMode((m) => ({ ...m, [i]: 'video' }))}
+                        >
+                          Video
+                        </button>
+                      </div>
+                    )}
+                    {getPolicyRecMode(i) === 'screenshot' && renderPolicyRecCaptions(p.captionItems)}
+                  </div>
+                ))}
               </div>
-              <div className="ai-align-right ruled pb40">
-                <p className="ai-align-heading type-heading4">Aligning design and business</p>
+            }
+            content={
+              <div className="ai-policyrec-paras" ref={policyRecContentRef}>
+                {policyRecParagraphs.map((p, i) => (
+                  <div
+                    className={`ai-policyrec-para${i === activePolicyRecIndex ? ' active' : ''}`}
+                    key={p.heading}
+                  >
+                    <p className="type-heading1 ai-policyrec-heading">{p.heading}</p>
+                    <p className="type-body ai-policyrec-body">{p.body}</p>
+                  </div>
+                ))}
               </div>
-            </div>
+            }
+            media={
+              <div className="ai-policyrec-diagrams">
+                {policyRecParagraphs.map((p, i) => (
+                  <div
+                    key={p.heading}
+                    className={`ai-policyrec-diagram-item${i === activePolicyRecIndex ? ' active' : ''}`}
+                  >
+                    {getPolicyRecMode(i) === 'video' && p.video ? (
+                      <>
+                        <video
+                          className="ai-policyrec-video"
+                          src={asset(`/human_ai_ibm/slide_outs/${p.video}`)}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                        />
+                        {renderPolicyRecCaptions(p.captionItems, 'left')}
+                      </>
+                    ) : (
+                      p.diagram && (
+                        <button
+                          type="button"
+                          className="ai-policyrec-image-trigger"
+                          onClick={() => setPolicyRecLightboxIndex(i)}
+                          aria-label={`View larger: ${p.heading}`}
+                        >
+                          <img
+                            className="ai-policyrec-image"
+                            src={asset(`/human_ai_ibm/slide_outs/${p.diagram}`)}
+                            alt={p.heading}
+                          />
+                        </button>
+                      )
+                    )}
+                  </div>
+                ))}
+              </div>
+            }
+          />
+        </StackedSection>
 
-            <div className="ai-align-row">
-              <div className="ai-align-left">
-                <div className="ai-align-num"><p className="type-body">01</p></div>
-                <p className="goal type-label1">Business goal</p>
-              </div>
-              <div className="ai-align-right ruled pb40">
-                <p className="ai-align-body type-heading3">
-                  <span className="ln">MaaS360&rsquo;s strategic direction was to acquire the </span>
-                  <span className="ln accent">SMB</span>
-                  <span className="ln"> mobile device management market, which </span>
-                  <span className="ln accent">lacks a simple</span>
-                  <span className="ln"> and comprehensive </span>
-                  <span className="ln accent">solution.</span>
-                </p>
-              </div>
-            </div>
+        {transparencyLightboxItem && transparencyLightboxSrc && (
+          <MediaLightbox
+            heading={transparencyLightboxItem.heading}
+            notes={transparencyLightboxItem.captionItems}
+            textColor={PAGE_FG}
+            media={{
+              kind: 'image',
+              src: asset(`/human_ai_ibm/trust_and_transparency/${transparencyLightboxItem.tabs ? encodeURIComponent(transparencyLightboxSrc) : transparencyLightboxSrc}`),
+              alt: transparencyLightboxItem.heading,
+            }}
+            onClose={() => setTransparencyLightboxIndex(null)}
+          />
+        )}
 
-            <div className="ai-align-row">
-              <div className="ai-align-left">
-                <div className="ai-align-num"><p className="type-body">02</p></div>
-                <p className="goal type-label1">Design goal</p>
-              </div>
-              <div className="ai-align-right pb32">
-                <p className="ai-align-body type-heading3 tight">
-                  <span className="ln">Help </span>
-                  <span className="ln accent">SMBs</span>
-                  <span className="ln"> configure, understand and maintain policies so that they can </span>
-                  <span className="ln accent">manage their devices</span>
-                  <span className="ln"> with </span>
-                  <span className="ln accent">minimal effort</span>
-                  <span className="ln"> and </span>
-                  <span className="ln">focus more on growing their business</span>
-                </p>
-              </div>
-            </div>
+        {policyRecLightboxIndex !== null && policyRecParagraphs[policyRecLightboxIndex]?.diagram && (
+          <MediaLightbox
+            heading={policyRecParagraphs[policyRecLightboxIndex].heading}
+            notes={policyRecParagraphs[policyRecLightboxIndex].captionItems}
+            textColor={PAGE_FG}
+            media={{
+              kind: 'image',
+              src: asset(`/human_ai_ibm/slide_outs/${policyRecParagraphs[policyRecLightboxIndex].diagram}`),
+              alt: policyRecParagraphs[policyRecLightboxIndex].heading,
+            }}
+            onClose={() => setPolicyRecLightboxIndex(null)}
+          />
+        )}
+
+        {/* ── TAD TOO SENSITIVE (Figma node 516:12417) ── */}
+        <StackedSection title="Tad too sensitive">
+          <div className="ai-note-content">
+            <p className="type-heading2 ai-note-heading">
+              I’d be happy to share more about my ideas for the revenue model, business logic and AI strategy.
+            </p>
           </div>
-        </section>
+        </StackedSection>
 
-        {/* ── SOLUTION ── */}
-        <section className="ai-section">
-          <div className="ai-solution-inner">
-            <div className="ai-label"><p className="type-label1">Solution</p></div>
-
-            {/* Block A — Policy summarisation */}
-            <div className="ai-sol-row">
-              <div className="ai-sol-colA">
-                <div className="ai-sol-greencard">
-                  <p className="ttl type-heading2">Policy summarisation</p>
-                </div>
-                <div className="ai-sol-bordered">
-                  <p className="type-body">Policy summarization explains the policy and its configuration in a few words, this helps users understand the policy without manually reviewing each of the 100+ parameters.</p>
-                </div>
-              </div>
-              <div className="ai-sol-imgpanel">
-                <div className="ai-sol-img ai-sol-macbook1">
-                  <img src={imgSolMacbook1} alt="Policy summarisation in MaaS360" />
-                </div>
-              </div>
-            </div>
-
-            {/* Block B — Policy recommendation */}
-            <div className="ai-sol-row">
-              <div className="ai-sol-imgpanel beige fit">
-                <div className="ai-sol-img ai-sol-macbook2">
-                  <img src={imgSolMacbook2} alt="Policy recommendation flow" />
-                </div>
-              </div>
-              <div className="ai-sol-colB">
-                <div className="ai-sol-greencard gap24 tall">
-                  <p className="ttl type-heading2">Policy recommendation</p>
-                  <p className="body type-body">Policy summarization explains the policy and its configuration in a few words, this helps users understand the policy without manually reviewing each of the 100+ parameters.</p>
-                </div>
-                <div className="ai-sol-bordered">
-                  <p className="type-body">Policy summarization explains the policy and its configuration in a few words, this helps users understand the policy without manually reviewing each of the 100+ parameters.</p>
-                </div>
-                <div className="ai-sol-reduced">
-                  <p className="ttl type-heading2">Reduced policy creation time</p>
-                  <p className="sub type-body">from 3 weeks to 1 day</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Block C — Transparency banner */}
-            <div className="ai-sol-banner">
-              <div className="inner">
-                <p className="type-heading2">Transparency and feedback</p>
-              </div>
-            </div>
-
-            {/* Block D — Feedback image strip */}
-            <div className="ai-sol-feedback">
-              <div className="fb f1"><img src={imgSolFeedback1} alt="Feedback rating" /></div>
-              <div className="fb f2"><img src={imgSolFeedback2} alt="Analyze policy" /></div>
-              <div className="fb f3"><img src={imgSolFeedback3} alt="Feedback reasons" /></div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── USAGE METRICS ── */}
-        <section className="ai-section ai-usage">
-          <div className="ai-label"><p className="type-label1">Usage metrics</p></div>
-          <div className="ai-usage-box">
-            <div className="ai-usage-row">
-              <div className="ai-metric">
-                <div className="ai-metric-num type-stat1"><span className="sb">~</span><span>72</span><span>%</span></div>
-                <p className="ai-metric-label type-caption1">Regularly interacted with the feature</p>
-              </div>
-              <div className="ai-metric">
-                <div className="ai-metric-num type-stat1"><span className="sb">~</span><span>61</span><span>%</span></div>
-                <p className="ai-metric-label type-caption1">Configured recommendation</p>
-              </div>
-              <div className="ai-metric">
-                <div className="ai-metric-num type-stat1"><span>52</span><span>%</span></div>
-                <p className="ai-metric-label type-caption1">Applied recommendations</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <Footer textColor="#f5ecc2" />
+        <Footer textColor={PAGE_FG} />
 
       </div>
     </div>

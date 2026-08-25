@@ -1,12 +1,30 @@
 /* ═══════════════════════════════════════════
-   CaseStudySection — reusable 3-column grid
-   (rail / content / media), Figma node 159:163
+   CaseStudySection — reusable 3-column grid, content / rail / media
+   (Figma node 264:159 — the convention used across every 3-column
+   instance: CaseStudyIntro, Approach, Design outcomes, and the HumanAI
+   page's Overview / AI Design Principles / Transparency and trust /
+   Policy recommendations sections). DOM order stays rail/content/media
+   (content must stay the actual second child so useStackingSections and
+   the scroll-driven active-index hooks don't need to know about this);
+   each item is placed with an explicit `grid-column` AND `grid-row: 1`
+   (not `order`) so a specific item can be given a wider column span
+   without the other two falling back to auto-placement. `grid-row: 1` is
+   not optional here — DOM order is rail, then content, then media, so
+   without it, sparse auto-placement (the CSS Grid default) places rail
+   (needing column 2) before content (needing column 1) is ever
+   considered; since sparse packing never backtracks to an earlier column
+   once the cursor has advanced past it, content gets shoved onto an
+   implicit second row even though nothing actually collides — silently
+   splitting the grid into two rows and shifting content's position
+   whenever rail's height changes (e.g. Policy recommendations' Screenshot/
+   Video toggle changing whether rail shows captions). Column widths match
+   this node's fr-ratio (1 / 0.60 / 1).
    ═══════════════════════════════════════════ */
 
 .cs-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.70fr) minmax(0, 1fr) minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr); 
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.60fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   padding-bottom: var(--space-4);
   width: 100%;
   flex: 1 1 0%;
@@ -16,19 +34,25 @@
   overflow: visible;
 }
 
+.cs-grid-content {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  padding: var(--space-1) var(--space-1);
+}
+
 .cs-grid-rail {
+  grid-column: 2;
+  grid-row: 1;
   align-self: start;
   padding: var(--space-1) var(--space-1);
   position: sticky;
   /* top is computed and injected inline by useStackingSections */
 }
 
-.cs-grid-content {
-  align-self: start;
-  padding: var(--space-1) var(--space-1);
-}
-
 .cs-grid-media {
+  grid-column: 3;
+  grid-row: 1;
   align-self: start;
   display: flex;
   /* flex-start so the columns keep their natural (full) height and top-align
@@ -43,4 +67,28 @@
      overflow: hidden clips the capped sticky panel so images past the cap don't
      spill over the content below. */
   overflow: hidden;
+}
+
+/* Optional "wide" state (CaseStudySection's `mediaSpansRail` prop) — media widens to
+   cover rail's track too, e.g. for a video that should span past the screenshot's
+   normal width. `--cs-grid-toggle-h` defaults to 0 (no-op) so call sites that don't put
+   anything above rail's own content don't need to know about it; a page that renders a
+   toggle/control at the top of `rail` sets this custom property (scoped to that page's
+   grid instance) to the toggle's rendered height, so media's own content starts below
+   it instead of visually colliding with it — media has no background of its own, and
+   rail keeps rendering in its own track, so the two don't otherwise conflict. */
+.cs-grid-media.cs-grid-media--wide {
+  grid-column: 2 / 4;
+  padding-top: calc(var(--space-1) + var(--cs-grid-toggle-h, 0px));
+  /* The widened box's own bounding area (including the empty padding-top dead zone
+     above the content) now overlaps rail's column, and — being later in DOM order —
+     paints on top of it, silently swallowing clicks meant for rail's content (e.g. a
+     Screenshot/Video toggle) even where nothing is visibly drawn. Disable pointer
+     events on the container itself so clicks fall through to whatever's underneath,
+     then re-enable them on the actual content so the widened media stays interactive. */
+  pointer-events: none;
+}
+
+.cs-grid-media.cs-grid-media--wide > * {
+  pointer-events: auto;
 }

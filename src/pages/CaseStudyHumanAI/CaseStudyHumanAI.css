@@ -6,13 +6,19 @@
    --cs-hover, see CaseStudyHumanAI.tsx); .ai-* for the rest
    ═══════════════════════════════════════════ */
 
+/* Now single-toned end-to-end like CaseStudyHomepage's `.cs` — every section
+   left on the page is StackedSection-wrapped (navy/orange), so `.ai` paints
+   the same --cs-bg/--cs-fg the sections use instead of a hardcoded white,
+   letting the ambient page background (and Footer, which paints no
+   background of its own) read as the same navy without needing its own
+   color prop. */
 .ai {
-  background: #f9f8f6;
+  background: var(--cs-bg);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #101013;
+  color: var(--cs-fg);
 }
 
 .ai-page {
@@ -22,83 +28,17 @@
   flex-direction: column;
 }
 
-/* Generic section: 64px sides, 32px vertical, inner capped 1152 */
-.ai-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 32px 64px;
-  width: 100%;
-}
-
 /* ── OVERVIEW/RETROSPECTIVE theming (Figma node 363:586 — navy/orange) ──
-   `.ai` (the whole-page canvas) stays hardcoded white for the untouched
-   sections below, so unlike CaseStudyHomepage's single-toned `.cs`, nothing
-   here paints the page-wide background navy. Section content that doesn't
-   set its own opaque background (RetrospectiveSection has none — it only
-   sets border/text color, relying on an ambient page bg that doesn't exist
-   here) needs it painted explicitly. Scoped to `.ai-page .stack` rather than
-   `.ai-page` itself since only StackedSection-wrapped sections (currently
-   Overview, Retrospective) should get it — the untouched plain sections
-   below aren't `.stack`, so they're unaffected. */
+   `.ai` above already paints this same color ambiently, but sticky
+   `.stack-head`s still need their own explicit opaque background to occlude
+   content stacking underneath them as you scroll (see CLAUDE.md's stacking
+   reference pattern), and RetrospectiveSection's content has no background
+   of its own to inherit one from — so this stays explicit rather than
+   relying on inheritance from `.ai`. */
 .ai-page .stack-head,
 .ai-page .stack {
   background: var(--cs-bg);
   color: var(--cs-fg);
-}
-
-/* ── SECTION LABEL CHIP (reused look) ── */
-
-.ai-label {
-  display: flex;
-  align-items: center;
-  padding: 16px;
-  border-radius: 8px;
-  border: 3px solid #42be65;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.ai-label p {
-  color: #42be65;
-  margin: 0;
-  white-space: nowrap;
-}
-
-/* ── SHARED METRIC ATOMS ── */
-
-.ai-metric {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: flex-start;
-}
-
-.ai-metric-num {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.ai-metric-num p,
-.ai-metric-num span {
-  color: #fff;
-  margin: 0;
-  white-space: nowrap;
-}
-
-.ai-metric-num .sb { font-weight: 600; }
-
-.ai-metric-label {
-  color: #fff;
-  width: 137px;
-  margin: 0;
-}
-
-/* label grows to match its (wider) number row — Figma min-w-full w-min-content */
-.ai-metric-label.grow {
-  width: auto;
-  align-self: stretch;
 }
 
 /* ── CONTEXT (Figma node 363:682) ── */
@@ -308,7 +248,7 @@
   flex-direction: column;
   gap: var(--space-5);
   width: 100%;
-  height: 140vh;
+  height: 120vh;
 }
 
 .ai-principles-para {
@@ -357,6 +297,19 @@
   margin: 0 auto;
 }
 
+.ai-principles-notes {
+  width: 100%;
+}
+
+.ai-principles-note-item {
+  display: none;
+  width: 100%;
+}
+
+.ai-principles-note-item.active {
+  display: block;
+}
+
 .ai-principles-caption-list {
   display: flex;
   flex-direction: column;
@@ -383,328 +336,307 @@
   min-width: 0;
 }
 
-/* ── ALIGNING DESIGN AND BUSINESS (purple) ── */
+/* ── TRANSPARENCY AND TRUST (Figma node 433:1151 / 433:10051) ── */
 
-.ai-align-box {
-  border: 3px solid #a56eff;
-  border-radius: 8px;
-  padding: 40px;
-  width: 100%;
-  max-width: 1152px;
+.ai-transparency-paras {
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  box-sizing: border-box;
+  gap: var(--space-5);
+  width: 100%;
+  height: 110vh;
 }
 
-.ai-align-row {
+.ai-transparency-para {
   display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-0-5);
+  margin: -9px;
+}
+
+.ai-transparency-para.active {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.ai-transparency-label {
+  text-transform: uppercase;
+  margin: 0;
+  text-indent: var(--space-2);
+}
+
+.ai-transparency-heading {
+  margin: 0;
+  max-width: 472px;
+}
+
+.ai-transparency-body {
+  margin: 0;
+  max-width: 472px;
+  white-space: pre-wrap;
+}
+
+.ai-transparency-diagrams {
+  width: 100%;
+}
+
+.ai-transparency-diagram-item {
+  display: none;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
+  gap: var(--space-1);
   width: 100%;
 }
 
-.ai-align-left {
+.ai-transparency-diagram-item.active {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-self: stretch;
-  align-items: flex-start;
-  padding-top: 15px;
-  flex-shrink: 0;
 }
 
-.ai-align-left.hidden { opacity: 0; }
-
-.ai-align-num {
-  border: 1px solid #262626;
-  border-radius: 32px;
-  padding: 4px 16px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-.ai-align-num p {
-  color: #a56eff;
-  margin: 0;
-}
-
-.ai-align-left .goal {
-  color: #262626;
-  margin: 0;
-  white-space: nowrap;
-}
-
-.ai-align-right {
-  width: 768px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-self: stretch;
-  box-sizing: border-box;
-}
-
-.ai-align-right.ruled { border-bottom: 1px solid #262626; }
-.ai-align-right.pb40 { padding-bottom: 40px; }
-.ai-align-right.pb32 { padding-bottom: 32px; }
-
-.ai-align-heading {
-  color: #262626;
-  margin: 0;
-  width: 100%;
-}
-
-.ai-align-body {
-  font-weight: 500;
-  color: #262626;
-  margin: 0;
-  width: 100%;
-}
-
-.ai-align-body .ln { line-height: 60px; }
-.ai-align-body.tight .ln { line-height: 55px; }
-.ai-align-body .accent { color: #a56eff; }
-
-/* ── SOLUTION ── */
-
-.ai-solution-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  align-items: flex-start;
-  width: 100%;
-  max-width: 1152px;
-}
-
-.ai-sol-row {
-  display: flex;
-  gap: 16px;
-  align-items: stretch;
-  justify-content: center;
-  width: 100%;
-}
-
-/* block A left column (green title + bordered text) */
-.ai-sol-colA {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  align-self: stretch;
-  flex-shrink: 0;
-  width: 435px;
-}
-
-.ai-sol-greencard {
-  background: #42be65;
-  border-radius: 8px;
-  padding: 24px;
-  box-sizing: border-box;
-}
-
-.ai-sol-greencard .ttl {
-  color: #fff;
-  margin: 0;
-  width: 100%;
-}
-
-.ai-sol-greencard .body {
-  color: #f9f8f6;
-  width: 345px;
-  max-width: 100%;
-  margin: 0;
-}
-
-.ai-sol-greencard.gap24 { display: flex; flex-direction: column; gap: 24px; }
-
-.ai-sol-bordered {
-  border: 1px solid #42be65;
-  border-radius: 8px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  flex: 1 0 0;
-  min-height: 0;
-  box-sizing: border-box;
-}
-
-.ai-sol-bordered p {
-  color: #000;
-  width: 345px;
-  max-width: 100%;
-  margin: 0;
-}
-
-/* image panels */
-.ai-sol-imgpanel {
-  background: #d6cfc2;
-  border-radius: 8px;
-  padding: 16px;
-  flex: 1 0 0;
-  min-width: 0;
-  display: flex;
-  align-items: flex-start;
-  box-sizing: border-box;
-}
-
-.ai-sol-imgpanel.beige { background: #efece7; }
-.ai-sol-imgpanel.fit { flex: none; }
-
-.ai-sol-img {
-  position: relative;
-  width: 100%;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.ai-sol-img img {
+.ai-transparency-image-trigger {
+  /* button reset — the whole diagram is a click target that opens the
+     MediaLightbox (see CaseStudyHumanAI.tsx) */
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
   display: block;
+  width: 80%;
+}
+
+.ai-transparency-image {
   width: 100%;
   height: auto;
-  pointer-events: none;
-}
-
-/* macbook 1 (669×435) fills the flexible panel */
-.ai-sol-macbook1 { aspect-ratio: 669 / 435; }
-.ai-sol-macbook1 img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-
-/* macbook 2 (tall, 603×958 cropped from a wide source) */
-.ai-sol-macbook2 {
-  width: 603px;
-  height: 958px;
-  overflow: hidden;
-}
-.ai-sol-macbook2 img {
-  position: absolute;
-  height: 100%;
-  width: 243.84%;
-  left: -143.82%;
-  top: 0;
-  max-width: none;
-}
-
-/* block B right column */
-.ai-sol-colB {
-  flex: 1 0 0;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  height: 990px;
-  justify-content: center;
-}
-
-.ai-sol-greencard.tall { height: 586px; flex-shrink: 0; }
-
-.ai-sol-reduced {
-  border: 1px solid #42be65;
-  border-radius: 8px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  justify-content: flex-end;
-  flex-shrink: 0;
-  box-sizing: border-box;
-}
-
-.ai-sol-reduced .ttl {
-  color: #262626;
-  margin: 0;
-  width: 100%;
-}
-
-.ai-sol-reduced .sub {
-  color: #42be65;
-  margin: 0;
-  white-space: nowrap;
-}
-
-/* transparency banner */
-.ai-sol-banner {
-  display: flex;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.ai-sol-banner .inner {
-  background: #42be65;
-  border-radius: 8px;
-  padding: 24px;
-  flex: 1 0 0;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-.ai-sol-banner .inner p {
-  color: #fff;
-  margin: 0;
-  white-space: nowrap;
-}
-
-/* feedback image strip */
-.ai-sol-feedback {
-  background: #efece7;
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  gap: 40px;
-  align-items: flex-start;
-  justify-content: center;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.ai-sol-feedback .fb {
-  height: 503px;
-  position: relative;
-  flex-shrink: 0;
-}
-
-.ai-sol-feedback .fb img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   display: block;
-  pointer-events: none;
 }
 
-.ai-sol-feedback .fb.f1 { width: 320px; }
-.ai-sol-feedback .fb.f2 { width: 378.747px; }
-.ai-sol-feedback .fb.f2 img { object-fit: contain; }
-.ai-sol-feedback .fb.f3 { width: 320px; }
-
-/* ── USAGE METRICS ── */
-
-.ai-usage {
-  gap: 8px;
-}
-
-.ai-usage-box {
-  background: #42be65;
-  height: 159px;
-  border-radius: 8px;
-  padding: 24px;
+.ai-transparency-notes {
   width: 100%;
-  max-width: 1152px;
+}
+
+.ai-transparency-note-item {
+  display: none;
+  width: 100%;
+}
+
+.ai-transparency-note-item.active {
+  display: block;
+}
+
+.ai-transparency-caption-list {
   display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 325px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.ai-transparency-caption-item {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.ai-transparency-caption-num {
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.ai-transparency-caption-text {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.ai-transparency-tabs {
+  display: flex;
+  gap: var(--space-0-5);
+}
+
+.ai-transparency-tab {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: var(--space-0-5);
+  margin: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ai-transparency-tab.active {
+  background: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+/* ── POLICY RECOMMENDATIONS (Figma node 453:10105 / 453:26648 / 453:26680 / 453:26711) ── */
+
+.ai-policyrec-paras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  height: 190vh;
+}
+
+.ai-policyrec-para {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-0-5);
+  margin: -9px;
+}
+
+.ai-policyrec-para.active {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.ai-policyrec-heading {
+  margin: 0;
+  max-width: 472px;
+}
+
+.ai-policyrec-body {
+  margin: 0;
+  max-width: 472px;
+  white-space: pre-wrap;
+}
+
+.ai-policyrec-diagrams {
+  width: 100%;
+}
+
+.ai-policyrec-diagram-item {
+  display: none;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  width: 100%;
+}
+
+.ai-policyrec-diagram-item.active {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.ai-policyrec-image-trigger {
+  /* button reset — the whole diagram is a click target that opens the
+     MediaLightbox (see CaseStudyHumanAI.tsx) */
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  display: block;
+  width: 65%;
+}
+
+.ai-policyrec-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Screenshot/Video toggle (per paragraph — see CaseStudyHumanAI.tsx). Styled like
+   ai-transparency-tab: plain buttons, solid `--cs-hover` fill on the active one. */
+.ai-policyrec-media-toggle {
+  display: flex;
+  gap: var(--space-0-5);
+}
+
+.ai-policyrec-media-toggle button {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: var(--space-0-5);
+  margin: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ai-policyrec-media-toggle button.active {
+  background: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.ai-policyrec-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Scopes CaseStudySection's --cs-grid-toggle-h to just this section's grid instance
+   (the only one on this page that ever sets mediaSpansRail), so the widened media's
+   extra top padding matches this section's own toggle height without affecting any
+   other CaseStudySection call site. --space-3 (54px) matches the Figma toggle height
+   + gap measurement. */
+.cs-grid:has(.ai-policyrec-notes) {
+  --cs-grid-toggle-h: var(--space-3);
+}
+
+.ai-policyrec-notes {
+  width: 100%;
+}
+
+.ai-policyrec-note-item {
+  display: none;
+  width: 100%;
+}
+
+.ai-policyrec-note-item.active {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ai-policyrec-caption-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 325px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+/* Video mode's captions sit left-aligned under the widened media (matching rail's own
+   column position), not centered under a narrower screenshot. `.ai-policyrec-diagram-item`
+   uses `align-items: center` (a flex cross-axis rule, not `margin: auto`) to center its
+   children, so overriding centering needs `align-self`, not just resetting `margin`. */
+.ai-policyrec-caption-list--left {
+  margin: 0;
+  align-self: flex-start;
+}
+
+.ai-policyrec-caption-item {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.ai-policyrec-caption-num {
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.ai-policyrec-caption-text {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+/* ── TAD TOO SENSITIVE (Figma node 516:12417) ── */
+
+.ai-note-content {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-2) var(--space-1) var(--space-8) var(--space-1);
+  width: 100%;
   box-sizing: border-box;
 }
 
-.ai-usage-row {
-  display: flex;
-  gap: 140px;
-  align-items: flex-start;
-  justify-content: center;
-  width: 100%;
+.ai-note-heading {
+  margin: 0;
+  max-width: 953px;
 }

@@ -5,6 +5,7 @@ import { asset } from '../../lib/nav'
 import CaseStudyIntro from '../../components/CaseStudyIntro'
 import CaseStudySection from '../../components/CaseStudySection'
 import Footer from '../../components/Footer'
+import MediaLightbox from '../../components/MediaLightbox'
 import ProjectHeader from '../../components/ProjectHeader'
 import StackedSection from '../../components/StackedSection'
 import RetrospectiveSection, { RetroRevealToggle } from '../../components/RetrospectiveSection'
@@ -34,11 +35,13 @@ interface OutcomeHotspot {
 
 interface OutcomeDiagram {
   /** default image, path relative to /homepage-modernization/outcomes/ */
-  src: string
+  src?: string
   /** optional hover-state image per hotspot, same order/length as hotspots */
   hovers?: string[]
   /** optional hit-zone position (% of image width/height) per hotspot, same order as hovers */
   hotspots?: OutcomeHotspot[]
+  /** looping video, path relative to /homepage-modernization/outcomes/ — takes over from src/hovers/hotspots when set */
+  video?: string
 }
 
 interface OutcomeParagraph {
@@ -147,12 +150,7 @@ const outcomeParagraphs: OutcomeParagraph[] = [
     heading: 'Maintains composure when faced with different use cases',
     body: 'The layout allows flexibility for customisation, fluidity for different data types and easy scalability and maintenance.',
     diagram: {
-      src: 'flexibility/no_hover.png',
-      hovers: ['flexibility/one_hover.png', 'flexibility/two_hover.png'],
-      hotspots: [
-        { xPct: 21.8, yPct: 29.7 },
-        { xPct: 73.3, yPct: 75.2 },
-      ],
+      video: 'flexibility/Homepage_Sections_Flexibility.mp4',
     },
     captionItems: [
       'The fixed-width widgets with content hugging height affords a page structure to accommodate information of varying natures.',
@@ -176,12 +174,7 @@ const outcomeParagraphs: OutcomeParagraph[] = [
     heading: 'Homepage caters to the usecases of 35k plus users',
     body: 'The homepage is completely customisable to the user’s needs, research informed that cookie cutter approach would only cause increase user friction and engineering overhead.',
     diagram: {
-      src: 'customisation/no_hover.png',
-      hovers: ['customisation/one_hover.png', 'customisation/two_hover.png'],
-      hotspots: [
-        { xPct: 69.6, yPct: 39.7 },
-        { xPct: 89.2, yPct: 88.9 },
-      ],
+      video: 'customisation/Homepage_Sections_Customization.mp4',
     },
     captionItems: [
       'User’s can make customise their homepage with the widgets that align workflows or usecases.',
@@ -206,6 +199,11 @@ export default function CaseStudyHomepage() {
   useStackingSections(pageRef, { fixedHeaderSelector: '.project-header' })
 
   const [retroRevealMode, setRetroRevealMode] = useState<'stay' | 'disappear'>('stay')
+
+  // Design outcomes lightbox (MediaLightbox, Figma node 515:12335) — index
+  // into outcomeParagraphs, or null when closed. Escape/scroll-lock/click-to-
+  // close all live in MediaLightbox itself.
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const approachContentRef = useRef<HTMLDivElement>(null)
   const activeDiagramIndex = useActiveDiagramIndex(approachContentRef, {
@@ -272,7 +270,7 @@ export default function CaseStudyHomepage() {
             />
           }
         >
-          <RetrospectiveSection segments={retroSegments} revealMode={retroRevealMode} />
+          <RetrospectiveSection segments={retroSegments} revealMode={retroRevealMode} height="60vh" />
         </StackedSection>
 
         {/* ── CHALLENGES ── */}
@@ -342,6 +340,27 @@ export default function CaseStudyHomepage() {
           <CaseStudySection
             bgColor={PAGE_BG}
             textColor={PAGE_FG}
+            rail={
+              <div className="cs-approach-notes">
+                {approachParagraphs.map((p, i) => (
+                  <div
+                    key={p.heading}
+                    className={`cs-approach-note-item${i === activeDiagramIndex ? ' active' : ''}`}
+                  >
+                    {p.captionItems && (
+                      <ol className="cs-approach-caption-list">
+                        {p.captionItems.map((item, idx) => (
+                          <li className="cs-approach-caption-item" key={idx}>
+                            <span className="type-caption1 cs-approach-caption-num">{idx + 1}</span>
+                            <span className="type-caption1 cs-approach-caption-text">{item}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    )}
+                  </div>
+                ))}
+              </div>
+            }
             content={
               <div className="cs-approach-paras" ref={approachContentRef}>
                 {approachParagraphs.map((p, i) => (
@@ -366,16 +385,6 @@ export default function CaseStudyHomepage() {
                       src={asset(`/homepage-modernization/diagrams/svgs/${encodeURIComponent(p.diagram)}`)}
                       alt={p.heading}
                     />
-                    {p.captionItems && (
-                      <ol className="cs-approach-caption-list">
-                        {p.captionItems.map((item, idx) => (
-                          <li className="cs-approach-caption-item" key={idx}>
-                            <span className="type-caption1 cs-approach-caption-num">{idx + 1}</span>
-                            <span className="type-caption1 cs-approach-caption-text">{item}</span>
-                          </li>
-                        ))}
-                      </ol>
-                    )}
                   </div>
                 ))}
               </div>
@@ -388,6 +397,27 @@ export default function CaseStudyHomepage() {
           <CaseStudySection
             bgColor={PAGE_BG}
             textColor={PAGE_FG}
+            rail={
+              <div className="cs-outcomes-notes">
+                {outcomeParagraphs.map((p, i) => (
+                  <div
+                    key={p.label}
+                    className={`cs-outcomes-note-item${i === activeOutcomeIndex ? ' active' : ''}`}
+                  >
+                    {p.captionItems && (
+                      <ol className="cs-outcomes-caption-list">
+                        {p.captionItems.map((item, idx) => (
+                          <li className="cs-outcomes-caption-item" data-caption={idx + 1} key={idx}>
+                            <span className="type-caption1 cs-outcomes-caption-num">{idx + 1}</span>
+                            <span className="type-caption1 cs-outcomes-caption-text">{item}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    )}
+                  </div>
+                ))}
+              </div>
+            }
             content={
               <div className="cs-outcomes-paras" ref={outcomesContentRef}>
                 {outcomeParagraphs.map((p, i) => (
@@ -410,41 +440,49 @@ export default function CaseStudyHomepage() {
                     className={`cs-outcomes-diagram-item${i === activeOutcomeIndex ? ' active' : ''}`}
                   >
                     {p.diagram && (
-                      <div className="cs-outcomes-image-stack">
-                        <img
-                          className="cs-outcomes-image cs-outcomes-image-base"
-                          src={asset(`/homepage-modernization/outcomes/${p.diagram.src}`)}
-                          alt={p.heading}
-                        />
-                        {p.diagram.hovers?.map((hover, idx) => (
-                          <img
-                            key={hover}
-                            className="cs-outcomes-image cs-outcomes-image-variant"
-                            data-variant={idx + 1}
-                            src={asset(`/homepage-modernization/outcomes/${hover}`)}
-                            alt=""
-                            aria-hidden="true"
+                      <button
+                        type="button"
+                        className="cs-outcomes-image-stack"
+                        onClick={() => setLightboxIndex(i)}
+                        aria-label={`View larger: ${p.heading}`}
+                      >
+                        {p.diagram.video ? (
+                          <video
+                            className="cs-outcomes-image cs-outcomes-image-base"
+                            src={asset(`/homepage-modernization/outcomes/${p.diagram.video}`)}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
                           />
-                        ))}
-                        {p.diagram.hotspots?.map((spot, idx) => (
-                          <div
-                            key={idx}
-                            className="cs-outcomes-hotspot"
-                            data-hotspot={idx + 1}
-                            style={{ left: `${spot.xPct}%`, top: `${spot.yPct}%` }}
-                          />
-                        ))}
-                      </div>
-                    )}
-                    {p.captionItems && (
-                      <ol className="cs-outcomes-caption-list">
-                        {p.captionItems.map((item, idx) => (
-                          <li className="cs-outcomes-caption-item" data-caption={idx + 1} key={idx}>
-                            <span className="type-caption1 cs-outcomes-caption-num">{idx + 1}</span>
-                            <span className="type-caption1 cs-outcomes-caption-text">{item}</span>
-                          </li>
-                        ))}
-                      </ol>
+                        ) : (
+                          <>
+                            <img
+                              className="cs-outcomes-image cs-outcomes-image-base"
+                              src={asset(`/homepage-modernization/outcomes/${p.diagram.src}`)}
+                              alt={p.heading}
+                            />
+                            {p.diagram.hovers?.map((hover, idx) => (
+                              <img
+                                key={hover}
+                                className="cs-outcomes-image cs-outcomes-image-variant"
+                                data-variant={idx + 1}
+                                src={asset(`/homepage-modernization/outcomes/${hover}`)}
+                                alt=""
+                                aria-hidden="true"
+                              />
+                            ))}
+                            {p.diagram.hotspots?.map((spot, idx) => (
+                              <div
+                                key={idx}
+                                className="cs-outcomes-hotspot"
+                                data-hotspot={idx + 1}
+                                style={{ left: `${spot.xPct}%`, top: `${spot.yPct}%` }}
+                              />
+                            ))}
+                          </>
+                        )}
+                      </button>
                     )}
                   </div>
                 ))}
@@ -452,6 +490,20 @@ export default function CaseStudyHomepage() {
             }
           />
         </StackedSection>
+
+        {lightboxIndex !== null && outcomeParagraphs[lightboxIndex]?.diagram && (
+          <MediaLightbox
+            heading={outcomeParagraphs[lightboxIndex].heading}
+            notes={outcomeParagraphs[lightboxIndex].captionItems}
+            textColor={PAGE_FG}
+            media={
+              outcomeParagraphs[lightboxIndex].diagram!.video
+                ? { kind: 'video', src: asset(`/homepage-modernization/outcomes/${outcomeParagraphs[lightboxIndex].diagram!.video}`) }
+                : { kind: 'image', src: asset(`/homepage-modernization/outcomes/${outcomeParagraphs[lightboxIndex].diagram!.src}`), alt: outcomeParagraphs[lightboxIndex].heading }
+            }
+            onClose={() => setLightboxIndex(null)}
+          />
+        )}
 
         <Footer textColor={PAGE_FG} />
 

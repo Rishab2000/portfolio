@@ -1,7 +1,6 @@
 import { useEffect, type RefObject } from 'react'
 
 const RESIZE_DEBOUNCE_MS = 150
-const RAIL_MEDIA_GAP_PX = 20
 
 interface StackedHeader {
   el: HTMLElement
@@ -85,15 +84,17 @@ export function useStackingSections(
       } else {
         stackStep = 0
       }
-      // Rail/media sticky columns pin just below the single top header, which
-      // always rests at baseOffset. This MUST run BEFORE measuring naturalTop
+      // Rail/media sticky columns pin flush with where the content column
+      // naturally starts — baseOffset + header height, same as the content
+      // column's own top (content has no injected offset at all, it just
+      // flows in document order). This MUST run BEFORE measuring naturalTop
       // below: capping the media column shrinks any section whose media was its
       // tallest column, so measuring first would cache header positions from
       // the un-capped (taller) layout.
       els.forEach((el) => {
         const section = el.nextElementSibling
         if (section instanceof HTMLElement && section.classList.contains('stack')) {
-          const railMediaTop = Math.round(baseOffset + el.offsetHeight + RAIL_MEDIA_GAP_PX)
+          const railMediaTop = Math.round(baseOffset + el.offsetHeight)
           const rail = section.querySelector<HTMLElement>('.cs-grid-rail')
           const media = section.querySelector<HTMLElement>('.cs-grid-media')
           if (rail) rail.style.top = `${railMediaTop}px`

@@ -26,8 +26,7 @@ export default function HomePage() {
             <div className="project-list">
               <ProjectRow hoverColor="#802626" hoverTextColor="#f5ecc2" title="Modernizing IBM MaaS360’s dashboard" path="/homepage-modernization" />
               <ProjectRow hoverColor="#12354e" hoverTextColor="#f99d1b" title="Human + AI at IBM MaaS360" path="/human-ai-maas360" />
-              <ProjectRow hoverColor="#9a72aa" hoverTextColor="#f5ecc2" title="Designing IBM MaaS360's security vision" path="/security-vision" />
-              <ProjectRow hoverColor="#112f2c" hoverTextColor="#fdd4bd" title="Creating a user experience roadmap map" path="/ux-roadmap-sdplus" />
+              <ProjectRow hoverColor="#9a72aa" hoverTextColor="#f5ecc2" title="Automated calendar" path="/security-vision" />
             </div>
           </section>
 
