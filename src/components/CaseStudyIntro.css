@@ -26,7 +26,15 @@
 }
 
 .cs-intro-desc {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
   margin: 0 0 var(--space-2) 0;
+  width: 100%;
+}
+
+.cs-intro-desc p {
+  margin: 0;
   width: 100%;
 }
 
@@ -34,6 +42,25 @@
   text-indent: var(--space-2);
   margin: 0 0 var(--space-1) 0;
   width: 100%;
+}
+
+/* Optional plain (non-hover) list, e.g. "PROJECT CHARACTERISTICS" — same
+   layout as .cs-intro-resp below but with no underlined/hoverable term. */
+.cs-intro-plain-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  margin: 0 0 var(--space-2) 0;
+  padding: 0;
+  width: 100%;
+}
+
+.cs-intro-plain-list li {
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
 }
 
 .cs-intro-resp {
@@ -123,9 +150,18 @@
 
 /* ── MEDIA ── */
 
-.cs-intro-media-img {
+/* Single flex child of .cs-grid-media (row axis) — fills the column's width;
+   stacks one-or-more .cs-intro-media-img children vertically inside it. */
+.cs-intro-media {
   flex: 1 0 0;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.cs-intro-media-img {
   position: relative;
   width: 100%;
   overflow: hidden;

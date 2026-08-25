@@ -1,0 +1,87 @@
+/* ═══════════════════════════════════════════
+   MediaLightbox — full-viewport media overlay, Figma node 515:12335
+   ═══════════════════════════════════════════ */
+
+.media-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background-color: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: stretch;
+  cursor: pointer;
+  overflow: auto;
+}
+
+.media-lightbox-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  width: 40%;
+  max-width: 558px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.media-lightbox-heading-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.media-lightbox-heading {
+  margin: 0;
+  max-width: 472px;
+}
+
+.media-lightbox-description {
+  margin: 0;
+  max-width: 472px;
+}
+
+.media-lightbox-notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+  max-width: 380px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.media-lightbox-note-item {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.media-lightbox-note-num {
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.media-lightbox-note-text {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.media-lightbox-media {
+  flex: 1 1 0%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-2);
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.media-lightbox-media img,
+.media-lightbox-media video {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}

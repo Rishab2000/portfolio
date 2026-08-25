@@ -20,15 +20,9 @@
   flex-direction: column;
 }
 
-/* Generic section: 64px side padding, inner content capped at 1152 */
-.cs-section {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  padding-left: var(--space-2);;
-  padding-right: var(--space-2);
-  width: 100%;
-}
+/* .cs-section's base rule lives in RetrospectiveSection.css — that component
+   hardcodes the class on its own root element, so it owns the definition;
+   this page only adds its own .gap8/.pad24 modifiers below on top of it. */
 
 .cs-inner {
   width: 100%;
@@ -266,12 +260,25 @@
   margin: 0 auto;
 }
 
+.cs-approach-notes {
+  width: 100%;
+}
+
+.cs-approach-note-item {
+  display: none;
+  width: 100%;
+}
+
+.cs-approach-note-item.active {
+  display: block;
+}
+
 .cs-approach-caption-list {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  width: 325px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -347,6 +354,16 @@
 }
 
 .cs-outcomes-image-stack {
+  /* button reset — this is a <button> so the whole diagram is a click target
+     that opens the lightbox (Figma node 515:12335) */
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  display: block;
   position: relative;
   width: 100%;
 }
@@ -379,7 +396,7 @@
   opacity: 1;
 }
 
-.cs-outcomes-diagram-item:has(.cs-outcomes-hotspot[data-hotspot="1"]:hover) .cs-outcomes-caption-item[data-caption="1"] {
+.cs-grid:has(.cs-outcomes-hotspot[data-hotspot="1"]:hover) .cs-outcomes-caption-item[data-caption="1"] {
   background-color: var(--cs-hover);
   color: var(--cs-bg);
 }
@@ -388,9 +405,22 @@
   opacity: 1;
 }
 
-.cs-outcomes-diagram-item:has(.cs-outcomes-hotspot[data-hotspot="2"]:hover) .cs-outcomes-caption-item[data-caption="2"] {
+.cs-grid:has(.cs-outcomes-hotspot[data-hotspot="2"]:hover) .cs-outcomes-caption-item[data-caption="2"] {
   background-color: var(--cs-hover);
   color: var(--cs-bg);
+}
+
+.cs-outcomes-notes {
+  width: 100%;
+}
+
+.cs-outcomes-note-item {
+  display: none;
+  width: 100%;
+}
+
+.cs-outcomes-note-item.active {
+  display: block;
 }
 
 .cs-outcomes-caption-list {
@@ -399,8 +429,7 @@
   gap: var(--space-1);
   width: 100%;
   padding: 0;
-  margin: 0 0 0 -9px;
-  max-width: 325px;
+  margin: 0;
   list-style: none;
 }
 
@@ -421,6 +450,10 @@
   min-width: 0;
 }
 
+/* Lightbox for these diagrams is now the shared `MediaLightbox` component
+   (src/components/MediaLightbox.tsx/.css) — see the "Design outcomes"
+   section's onClick/lightboxIndex wiring in CaseStudyHomepage.tsx. */
+
 /* ═══════════════════════════════════════════
    TABLET HORIZONTAL  ≤ 1024px  (node 40:771)
    px-64 · inner 896 · hero stacks · fonts shrink
@@ -440,10 +473,8 @@
 
 @media (max-width: 768px) {
 
-  .cs-section {
-    padding-left: 32px;
-    padding-right: 32px;
-  }
+  /* .cs-section's own ≤768px override lives alongside its base rule in
+     RetrospectiveSection.css. */
 
   .cs-inner {
     max-width: 704px;

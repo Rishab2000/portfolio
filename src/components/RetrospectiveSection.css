@@ -3,10 +3,25 @@
    Figma node 287:1738 (no-hover) / 264:209 (hover)
    ═══════════════════════════════════════════ */
 
-.cs-retro-section {
-  padding-top: var(--space-1);
-  padding-bottom: var(--space-1);
-  height: 60vh;
+/* Base layout for the root `.cs-section` class this component hardcodes on
+   itself (see RetrospectiveSection.tsx) — owned here, not by any one page's
+   CSS, since RetrospectiveSection is reused across pages (CaseStudyHomepage,
+   CaseStudyHumanAI, CaseStudyAutomatedCalendar). CaseStudyHomepage.css layers
+   its own .gap8/.pad24 modifiers on top of this for its one direct (non-
+   RetrospectiveSection) use of the class. */
+.cs-section {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  /* padding: var(--space-1); */
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .cs-section {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
 }
 
 .cs-retro-grid {
@@ -63,6 +78,16 @@
   gap: var(--space-0-5);
   margin: 0;
   padding: 0;
+  max-width: 300px;
+}
+
+/* A panel with exactly one item renders as plain text (see
+   RetrospectiveSection.tsx) instead of a one-line bulleted list — same
+   300px cap so a single long sentence still wraps instead of running the
+   full width of a merged (grouped) panel. */
+.cs-retro-panel-text {
+  margin: 0;
+  max-width: 300px;
 }
 
 .cs-retro-panel-list li {
@@ -92,13 +117,22 @@
 
 /* Breakout block: wider than its own narrow column (ratio taken from the
    Figma export — 315px list vs. 215px column), centered on that column so
-   it spills evenly into its neighbours' space below the grid. */
+   it spills evenly into its neighbours' space below the grid. The top
+   border is what reads as the horizontal "closing" line under the dashed
+   verticals — it's the same box as the list, so widening one widens both.
+   --cs-retro-breakout-width is the default; override it per-segment via
+   RetroSegment.breakoutWidthPct (see RetrospectiveSection.tsx) rather than
+   changing the default here, since not every narrow segment on every page
+   has the same amount of room to spill into. The margins stay in sync with
+   the width via calc() either way, so it's always centered on its own
+   column. */
 
 .cs-retro-breakout {
+  --cs-retro-breakout-width: 146.5%;
   box-sizing: border-box;
-  width: 146.5%;
-  margin-left: -23.25%;
-  margin-right: -23.25%;
+  width: var(--cs-retro-breakout-width);
+  margin-left: calc((100% - var(--cs-retro-breakout-width)) / 2);
+  margin-right: calc((100% - var(--cs-retro-breakout-width)) / 2);
   padding-top: var(--space-1);
   border-top: 1px solid var(--cs-fg);
   color: var(--cs-fg);

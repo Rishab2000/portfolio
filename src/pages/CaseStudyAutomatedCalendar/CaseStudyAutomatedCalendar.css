@@ -1,0 +1,378 @@
+/* ═══════════════════════════════════════════
+   CASE STUDY — Automated calendar
+   Figma node 516:12417 (Desktop, 1512 wide)
+   Header/Overview use the shared ProjectHeader/StackedSection/CaseStudyIntro
+   components (themed via --cs-bg/--cs-fg/--cs-hover, see
+   CaseStudyAutomatedCalendar.tsx) — no page-specific section styling yet,
+   this file is just the page wrapper until more sections land.
+   ═══════════════════════════════════════════ */
+
+/* Single-toned end-to-end (like CaseStudyHomepage's `.cs`) — every section on
+   this page is StackedSection-wrapped on the same purple/cream theme, so
+   `.ac` paints --cs-bg/--cs-fg ambiently instead of a hardcoded color,
+   letting the page background (and Footer, which paints no background of
+   its own) read as the same purple without needing its own color prop. */
+.ac {
+  background: var(--cs-bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--cs-fg);
+}
+
+.ac-page {
+  width: 100%;
+  max-width: 3024px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sticky stack-heads need their own explicit opaque background to occlude
+   content stacking underneath them as you scroll (see CLAUDE.md's stacking
+   reference pattern), rather than relying on inheritance from `.ac`. */
+.ac-page .stack-head,
+.ac-page .stack {
+  background: var(--cs-bg);
+}
+
+/* ── WATCH IT TO BELIEVE IT (full-bleed video, Figma node 516:12446) ── */
+
+.ac-video-wrap {
+  width: 100%;
+  padding: var(--space-1);
+  box-sizing: border-box;
+}
+
+.ac-video {
+  display: block;
+  margin: auto;
+  width: 82%;
+  aspect-ratio: 3840 / 2160;
+  background: #000;
+}
+
+/* ── CONCEPT (tab-switched essence highlight, Figma node 597:3456) ── */
+
+.ac-concept-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-1) var(--space-4) var(--space-1);
+  width: 100%;
+}
+
+.ac-concept-tabs {
+  display: flex;
+  align-items: flex-start;
+  margin-left: calc(var(--space-0-5) * -1);
+}
+
+.ac-concept-tab {
+  padding: var(--space-0-5);
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ac-concept-tab.active {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.ac-concept-statement {
+  margin: 0;
+  max-width: 1077px;
+  width: 100%;
+}
+
+/* Filler spans dim to match the Overview/UI/Back-end "not in focus" opacity
+   convention on this page; only applied while the "Its essence" tab is
+   active (see conceptTab in CaseStudyAutomatedCalendar.tsx) — under
+   "Statment" every span renders at full opacity. */
+.ac-concept-statement span.dim {
+  opacity: 0.16;
+}
+
+/* Own flex block (separate from .ac-concept-content above) so the gap
+   between the "CORE LOGIC" label and the RetrospectiveSection bar is
+   controlled independently of the tabs/statement spacing above it. */
+.ac-concept-corelogic {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-1);
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.ac-concept-label {
+  /* text-indent: var(--space-2);
+  text-transform: uppercase; */
+  margin: 0;
+  width: 100%;
+}
+
+/* ── INSPIRATION (plain 2-column layout, no rail — Figma node 598:3710) ── */
+
+.ac-inspiration-content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-1);
+  width: 100%;
+}
+
+.ac-inspiration-paras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 560px;
+  flex-shrink: 0;
+}
+
+.ac-inspiration-para {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.ac-inspiration-para-heading {
+  margin: 0;
+}
+
+.ac-inspiration-para-body {
+  margin: 0;
+  max-width: 472px;
+  white-space: pre-wrap;
+}
+
+.ac-inspiration-media {
+  flex: 1 0 0;
+  min-width: 0;
+  position: relative;
+  aspect-ratio: 952 / 896;
+}
+
+.ac-inspiration-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── UI (placeholder copy, same scroll-linked content/media/rail pattern as
+   Back-end below — Figma node 583:3279 etc.) ── */
+
+.ac-ui-paras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  height: 120vh;
+}
+
+.ac-ui-para {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-0-5);
+  margin: -9px;
+  opacity: 0.16;
+}
+
+.ac-ui-para.active {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+  opacity: 1;
+}
+
+.ac-ui-para-heading {
+  margin: 0;
+}
+
+.ac-ui-para-body {
+  margin: 0;
+  max-width: 372px;
+  white-space: pre-wrap;
+}
+
+.ac-ui-diagrams {
+  width: 100%;
+}
+
+.ac-ui-diagram-item {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.ac-ui-diagram-item.active {
+  display: flex;
+}
+
+.ac-ui-diagram-trigger {
+  /* button reset — this is a <button> so the whole diagram is a click target
+     that opens the lightbox (Figma node 515:12335), same pattern as
+     CaseStudyHomepage's Design outcomes diagrams. */
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+}
+
+.ac-ui-diagram-trigger img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.ac-ui-notes {
+  width: 100%;
+}
+
+.ac-ui-note-item {
+  display: none;
+  width: 100%;
+}
+
+.ac-ui-note-item.active {
+  display: block;
+}
+
+.ac-ui-caption-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 325px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.ac-ui-caption-item {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.ac-ui-caption-num {
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.ac-ui-caption-text {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+/* ── BACK-END (scroll-linked content/media sync, same pattern as
+   CaseStudyHumanAI's AI Design Principles — Figma node 582:2834 etc.) ── */
+
+.ac-backend-paras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  height: 120vh;
+}
+
+.ac-backend-para {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-0-5);
+  margin: -9px;
+  opacity: 0.16;
+}
+
+.ac-backend-para.active {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+  opacity: 1;
+}
+
+.ac-backend-para-heading {
+  margin: 0;
+}
+
+.ac-backend-para-body {
+  margin: 0;
+  max-width: 610px;
+  white-space: pre-wrap;
+}
+
+.ac-backend-diagrams {
+  width: 100%;
+}
+
+.ac-backend-diagram-item {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.ac-backend-diagram-item.active {
+  display: flex;
+}
+
+.ac-backend-diagram-item img {
+  width: 70%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.ac-backend-notes {
+  width: 100%;
+}
+
+.ac-backend-note-item {
+  display: none;
+  width: 100%;
+}
+
+.ac-backend-note-item.active {
+  display: block;
+}
+
+.ac-backend-caption-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 325px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.ac-backend-caption-item {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.ac-backend-caption-num {
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.ac-backend-caption-text {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.ac-backend-caption-sublist {
+  list-style: disc;
+  margin: var(--space-0-5) 0 0 0;
+  padding-left: var(--space-2);
+}
