@@ -1,40 +1,39 @@
 /* ═══════════════════════════════════════════
    ProjectHeader — sticky page titlebar with a "Home" backlink
-   Figma node 226:349
+   Figma node 597:3609
    ═══════════════════════════════════════════ */
 
 .project-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   background: var(--ph-bg);
   color: var(--ph-text);
   border-bottom: 1px solid currentColor;
-  padding: var(--space-1) var(--space-1);
+  padding: var(--space-1) ;
   width: 100%;
+}
+
+.project-header-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
 }
 
 .project-header-back {
   appearance: none;
-  grid-column: 1;
+  flex: 0 0 auto;
   align-self: center;
   color: inherit;
   text-align: inherit;
   text-decoration: underline;
+  white-space: nowrap;
   background: none;
   border: none;
   padding: 0;
   margin: 0;
   cursor: pointer;
-}
-
-.project-header-title {
-  grid-column: 2 / 4;
-  align-self: center;
-  min-width: 0;
-  margin: 0;
-  padding-left: var(--space-0-5);
 }

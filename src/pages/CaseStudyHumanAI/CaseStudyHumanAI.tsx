@@ -12,6 +12,7 @@ import RetrospectiveSection, { RetroRevealToggle } from '../../components/Retros
 import type { RetroSegment } from '../../components/RetrospectiveSection'
 import { useStackingSections } from '../../hooks/useStackingSections'
 import { useActiveDiagramIndex } from '../../hooks/useActiveDiagramIndex'
+import { useProportionalHeight } from '../../hooks/useProportionalHeight'
 import { useHoverReveal } from '../../hooks/useHoverReveal'
 
 /* Overview/header colour scheme (Figma node 363:586) — change these to retheme the sticky
@@ -224,6 +225,7 @@ export default function CaseStudyHumanAI() {
   } = useHoverReveal<string>()
 
   const principlesContentRef = useRef<HTMLDivElement>(null)
+  useProportionalHeight(principlesContentRef, 0.5)
   const activePrincipleIndex = useActiveDiagramIndex(principlesContentRef, {
     paragraphSelector: '.ai-principles-para',
     fixedHeaderSelector: '.project-header',
@@ -231,6 +233,7 @@ export default function CaseStudyHumanAI() {
   })
 
   const transparencyContentRef = useRef<HTMLDivElement>(null)
+  useProportionalHeight(transparencyContentRef, 0.5)
   const activeTransparencyIndex = useActiveDiagramIndex(transparencyContentRef, {
     paragraphSelector: '.ai-transparency-para',
     fixedHeaderSelector: '.project-header',
@@ -249,6 +252,7 @@ export default function CaseStudyHumanAI() {
     : null
 
   const policyRecContentRef = useRef<HTMLDivElement>(null)
+  useProportionalHeight(policyRecContentRef, 0.5)
   const activePolicyRecIndex = useActiveDiagramIndex(policyRecContentRef, {
     paragraphSelector: '.ai-policyrec-para',
     fixedHeaderSelector: '.project-header',

@@ -14,6 +14,12 @@ interface MediaLightboxProps {
   media: LightboxMedia
   textColor: string
   onClose: () => void
+  /** Optional — when provided, ArrowRight/ArrowDown calls onNext and ArrowLeft/ArrowUp calls
+   *  onPrevious (an instant background swap, no scroll/animation — the caller just updates
+   *  its index state, same as clicking a different trigger would). Omit either to disable
+   *  cycling in that direction (e.g. a single-item gallery, or a non-cyclic first/last item). */
+  onNext?: () => void
+  onPrevious?: () => void
 }
 
 /**
@@ -28,10 +34,12 @@ interface MediaLightboxProps {
  * First built for `CaseStudyHomepage`'s "Design outcomes" diagrams — see that
  * page for a reference call site.
  */
-export default function MediaLightbox({ heading, description, notes, media, textColor, onClose }: MediaLightboxProps) {
+export default function MediaLightbox({ heading, description, notes, media, textColor, onClose, onNext, onPrevious }: MediaLightboxProps) {
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
+      else if ((e.key === 'ArrowRight' || e.key === 'ArrowDown') && onNext) onNext()
+      else if ((e.key === 'ArrowLeft' || e.key === 'ArrowUp') && onPrevious) onPrevious()
     }
     window.addEventListener('keydown', onKeyDown)
     // Lock the page scroll behind the overlay while it's mounted.
@@ -41,7 +49,7 @@ export default function MediaLightbox({ heading, description, notes, media, text
       window.removeEventListener('keydown', onKeyDown)
       document.body.style.overflow = previousOverflow
     }
-  }, [onClose])
+  }, [onClose, onNext, onPrevious])
 
   return (
     <div

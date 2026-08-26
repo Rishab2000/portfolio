@@ -10,6 +10,7 @@ import ProjectHeader from '../../components/ProjectHeader'
 import StackedSection from '../../components/StackedSection'
 import { useStackingSections } from '../../hooks/useStackingSections'
 import { useActiveDiagramIndex } from '../../hooks/useActiveDiagramIndex'
+import { useProportionalHeight } from '../../hooks/useProportionalHeight'
 import RetrospectiveSection from '../../components/RetrospectiveSection'
 import type { RetroSegment } from '../../components/RetrospectiveSection'
 
@@ -22,7 +23,7 @@ const PAGE_FG = '#f5ecc2'
 const PAGE_HOVER = '#fdd4bd'
 
 /* image assets (Figma node 516:12417) */
-const imgDemoSetup = asset('/automated-calendar/overview/demo-setup.jpg')
+const imgDemoSetup = asset('/automated-calendar/overview/demo-setup.png')
 const imgDemoInteraction = asset('/automated-calendar/overview/demo-interaction.jpg')
 
 /* video assets (Figma node 516:12446) */
@@ -41,8 +42,8 @@ const conceptSegments: ConceptSegment[] = [
   { text: 'Help', essence: false },
   { text: ' busy families ', essence: true },
   { text: 'move beyond', essence: false },
-  { text: ' scheduling chaos through ', essence: true },
-  { text: 'a central view, morphing long-term plans into ', essence: false },
+  { text: ' scheduling chaos ', essence: true },
+  { text: 'through a central view, morphing long-term plans into ', essence: false },
   { text: 'simple, achievable daily actions.', essence: true },
 ]
 
@@ -62,6 +63,16 @@ const conceptCoreLogicSegments: RetroSegment[] = [
   { label: 'Un-bound to-dos', percent: '', items: [], groupKey: 'flexible' },
 ]
 
+/* "Interaction goal" block (Figma node 597:3510, appended below Core logic)
+   — one heading + two body paragraphs, same plain 2-column layout (fixed
+   content column, single image, no rail) as the Inspiration section below. */
+const interactionGoalHeading = 'Interaction goal'
+const interactionGoalBody: string[] = [
+  'Inspired by the behaviour of parent(s) coming to the kitchen or the living room to plan or align on the things they need to do.',
+  'These are artifact that always live in the same place, and helps the viewer quickly get an overview of what needs to be done, it requires very little interaction. Just looking at it.',
+]
+const imgTargetBehaviour = asset('/automated-calendar/target_behaviour.png')
+
 interface InspirationParagraph {
   heading: string
   body: string
@@ -75,7 +86,17 @@ const inspirationParagraphs: InspirationParagraph[] = [
   { heading: 'Signage', body: 'Signage design was a key source of inspiration for creating a readable and scannable interface, pivoting my approach to use a mix of monospaced and proportional typefaces.' },
 ]
 
-const imgInspiration = asset('/automated-calendar/inspiration.jpg')
+const imgInspiration = asset('/automated-calendar/inspiration.png')
+
+/* "Product shots" 2×2 grid (Figma node 610:3911) — no text, just the four
+   photos; filenames match the Figma layer names 1:1 (top-left, top-right,
+   bottom-left, bottom-right, in that order). */
+const productShots = [
+  '2026-07-01_10-30-23.jpg',
+  '2026-07-01_10-30-50.jpg',
+  '2026-07-01_10-31-28.jpg',
+  '2026-07-01_10-31-56.jpg',
+]
 
 interface BackendCaption {
   text: string
@@ -189,6 +210,7 @@ export default function CaseStudyAutomatedCalendar() {
   const [conceptTab, setConceptTab] = useState<'statement' | 'essence'>('essence')
 
   const uiContentRef = useRef<HTMLDivElement>(null)
+  useProportionalHeight(uiContentRef, 1)
   const activeUiIndex = useActiveDiagramIndex(uiContentRef, {
     paragraphSelector: '.ac-ui-para',
     fixedHeaderSelector: '.project-header',
@@ -199,7 +221,38 @@ export default function CaseStudyAutomatedCalendar() {
   // into uiParagraphs, or null when closed.
   const [uiLightboxIndex, setUiLightboxIndex] = useState<number | null>(null)
 
+  // Scrolls the page so the UI paragraph at `index` sits exactly at the same
+  // activation line useActiveDiagramIndex uses above (fixed header + this
+  // section's own stack-head + the same 130px offsetPx) — so that after
+  // cycling through the lightbox with arrow keys and closing it, the page is
+  // scrolled to wherever the paragraph you were last looking at naturally
+  // reads as "active", not wherever you happened to scroll from originally.
+  // Deferred via setTimeout(0) rather than called synchronously: MediaLightbox
+  // still has document.body.style.overflow locked at the moment onClose
+  // fires (its own cleanup effect only restores it on unmount, after this
+  // render), and scrollTo is a no-op while the page can't scroll at all.
+  function scrollUiParagraphIntoActivation(index: number) {
+    const container = uiContentRef.current
+    const target = container?.querySelectorAll<HTMLElement>('.ac-ui-para')[index]
+    if (!target) return
+    const fixedHeader = document.querySelector<HTMLElement>('.project-header')
+    const stackHead = container?.closest('.stack')?.previousElementSibling
+    const activationLine =
+      (fixedHeader?.offsetHeight ?? 0) + (stackHead instanceof HTMLElement ? stackHead.offsetHeight : 0) + 130
+    const delta = target.getBoundingClientRect().top - activationLine
+    window.scrollTo({ top: window.scrollY + delta })
+  }
+
+  function closeUiLightbox() {
+    if (uiLightboxIndex !== null) {
+      const index = uiLightboxIndex
+      setTimeout(() => scrollUiParagraphIntoActivation(index), 0)
+    }
+    setUiLightboxIndex(null)
+  }
+
   const backendContentRef = useRef<HTMLDivElement>(null)
+  useProportionalHeight(backendContentRef, 1)
   const activeBackendIndex = useActiveDiagramIndex(backendContentRef, {
     paragraphSelector: '.ac-backend-para',
     fixedHeaderSelector: '.project-header',
@@ -226,12 +279,12 @@ export default function CaseStudyAutomatedCalendar() {
             textColor={PAGE_FG}
             hoverColor={PAGE_HOVER}
             description={[
-              'This project represented a paradigm shift from reactive computing, requiring explicit interaction, to proactive computing where the system executes the users command.',
+              'This project represented a paradigm shift from reactive computing, requiring explicit interaction, to proactive where the system responds based on intent.',
               'The goal is design an experience and system that does not require explicit interaction, clicks or touches.',
             ]}
             characteristics={{
               label: 'PROJECT CHARACTERISTICS',
-              items: ['3 months duration', 'Individual effort', 'Develop a working prototype'],
+              items: ['3 months duration', 'Individual effort', 'Developing a working prototype'],
             }}
             listLabel="LEARNINGS"
             responsibilities={[
@@ -294,14 +347,32 @@ export default function CaseStudyAutomatedCalendar() {
 
           <div className="ac-concept-corelogic">
             <p className="ac-concept-label type-body">Core logic</p>
-            <RetrospectiveSection segments={conceptCoreLogicSegments} height="40vh" />
+            <RetrospectiveSection segments={conceptCoreLogicSegments} />
+          </div>
+
+          <div className="ac-concept-goal">
+            <div className="ac-concept-goal-content cs-sticky">
+              <p className="type-heading1 ac-concept-goal-heading">{interactionGoalHeading}</p>
+              <div className="ac-concept-goal-body">
+                {interactionGoalBody.map((p, i) => (
+                  <p className="type-body" key={i}>{p}</p>
+                ))}
+              </div>
+            </div>
+            <div className="ac-concept-goal-media">
+                <p className="type-caption1 ac-concept-goal-caption">Yes these are AI generated images, but you get the point.</p>
+              <div className="ac-concept-goal-image">
+                <img src={imgTargetBehaviour} alt="Parents planning together at the kitchen fridge" />
+              </div>
+            
+            </div>
           </div>
         </StackedSection>
 
         {/* ── INSPIRATION (Figma node 598:3710) ── */}
         <StackedSection title="Inspiration">
           <div className="ac-inspiration-content">
-            <div className="ac-inspiration-paras">
+            <div className="ac-inspiration-paras cs-sticky">
               {inspirationParagraphs.map((p) => (
                 <div className="ac-inspiration-para" key={p.heading}>
                   <p className="type-heading1 ac-inspiration-para-heading">{p.heading}</p>
@@ -381,7 +452,9 @@ export default function CaseStudyAutomatedCalendar() {
             notes={uiParagraphs[uiLightboxIndex].captionItems}
             textColor={PAGE_FG}
             media={{ kind: 'image', src: asset(`/automated-calendar/UI/${uiParagraphs[uiLightboxIndex].diagram}`), alt: uiParagraphs[uiLightboxIndex].heading }}
-            onClose={() => setUiLightboxIndex(null)}
+            onClose={closeUiLightbox}
+            onNext={() => setUiLightboxIndex((i) => (i === null ? i : Math.min(i + 1, uiParagraphs.length - 1)))}
+            onPrevious={() => setUiLightboxIndex((i) => (i === null ? i : Math.max(i - 1, 0)))}
           />
         )}
 
@@ -442,6 +515,17 @@ export default function CaseStudyAutomatedCalendar() {
               </div>
             }
           />
+        </StackedSection>
+
+        {/* ── PRODUCT SHOTS (Figma node 610:3911) ── */}
+        <StackedSection title="Product shots">
+          <div className="ac-shots-grid">
+            {productShots.map((src) => (
+              <div className="ac-shots-item" key={src}>
+                <img src={asset(`/automated-calendar/product_shots/${src}`)} alt="" />
+              </div>
+            ))}
+          </div>
         </StackedSection>
 
         <Footer textColor={PAGE_FG} />

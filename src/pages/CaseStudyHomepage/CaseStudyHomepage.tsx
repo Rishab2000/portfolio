@@ -12,6 +12,7 @@ import RetrospectiveSection, { RetroRevealToggle } from '../../components/Retros
 import type { RetroSegment } from '../../components/RetrospectiveSection'
 import { useStackingSections } from '../../hooks/useStackingSections'
 import { useActiveDiagramIndex } from '../../hooks/useActiveDiagramIndex'
+import { useProportionalHeight } from '../../hooks/useProportionalHeight'
 
 /* Whole-page colour scheme — change these two to retheme the entire page.
    Consumed as CSS custom properties (--cs-bg/--cs-fg/--cs-hover) set inline
@@ -206,6 +207,7 @@ export default function CaseStudyHomepage() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const approachContentRef = useRef<HTMLDivElement>(null)
+  useProportionalHeight(approachContentRef, 0.5)
   const activeDiagramIndex = useActiveDiagramIndex(approachContentRef, {
     paragraphSelector: '.approach-para',
     fixedHeaderSelector: '.project-header',
@@ -213,6 +215,7 @@ export default function CaseStudyHomepage() {
   })
 
   const outcomesContentRef = useRef<HTMLDivElement>(null)
+  useProportionalHeight(outcomesContentRef, 0.5)
   const activeOutcomeIndex = useActiveDiagramIndex(outcomesContentRef, {
     paragraphSelector: '.cs-outcomes-para',
     fixedHeaderSelector: '.project-header',
