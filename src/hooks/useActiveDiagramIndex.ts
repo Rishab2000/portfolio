@@ -23,7 +23,11 @@ export function useActiveDiagramIndex(
   containerRef: RefObject<HTMLElement | null>,
   { paragraphSelector, fixedHeaderSelector, offsetPx = DEFAULT_OFFSET_PX }: UseActiveDiagramIndexOptions,
 ): number {
-  const [activeIndex, setActiveIndex] = useState(0)
+  // -1 = not yet reached (no paragraph has crossed the activation line yet) — i.e. this
+  // section's own header hasn't reached the top yet. Consumers compare `i === activeIndex`
+  // in a .map(), so -1 naturally means nothing matches and nothing is marked active yet,
+  // with no consumer-side changes needed.
+  const [activeIndex, setActiveIndex] = useState(-1)
 
   useEffect(() => {
     const container = containerRef.current
@@ -36,7 +40,7 @@ export function useActiveDiagramIndex(
     let activationLine = 0
 
     function update() {
-      let index = 0
+      let index = -1
       for (let i = 0; i < paragraphs.length; i++) {
         if (paragraphs[i].getBoundingClientRect().top <= activationLine) index = i
       }

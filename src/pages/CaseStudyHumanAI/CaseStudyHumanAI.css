@@ -41,6 +41,14 @@
   color: var(--cs-fg);
 }
 
+/* Local wrapper around <RetrospectiveSection> so this page can give it its
+   own padding without touching the shared component's CSS (its .cs-section
+   base rule is currently commented out in RetrospectiveSection.css) — same
+   pattern as CaseStudyHomepage's .cs-retro-wrap. */
+.ai-retro-wrap {
+  padding: var(--space-1);
+}
+
 /* ── CONTEXT (Figma node 363:682) ── */
 
 .ai-context-content {

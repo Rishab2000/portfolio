@@ -74,6 +74,15 @@
 .cs-section.gap8 { gap: 8px; padding-top: 24px; padding-bottom: 24px; }
 .cs-section.pad24 { padding-top: 24px; padding-bottom: 24px; }
 
+/* ── RETROSPECTIVE ── */
+
+/* Local wrapper around <RetrospectiveSection> so this page can give it its
+   own padding without touching the shared component's CSS (its .cs-section
+   base rule is currently commented out in RetrospectiveSection.css). */
+.cs-retro-wrap {
+  padding: var(--space-1);
+}
+
 /* ── CHALLENGES (225:147) ── */
  
 .cs-challenge {
