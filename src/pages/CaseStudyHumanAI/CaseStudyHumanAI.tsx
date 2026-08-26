@@ -268,7 +268,7 @@ export default function CaseStudyHumanAI() {
   // a `video` ever read from this; everything else always renders as screenshot.
   const [policyRecMediaMode, setPolicyRecMediaMode] = useState<Record<number, 'screenshot' | 'video'>>({})
   const getPolicyRecMode = (i: number) =>
-    policyRecParagraphs[i].video && policyRecMediaMode[i] === 'video' ? 'video' : 'screenshot'
+    policyRecParagraphs[i]?.video && policyRecMediaMode[i] === 'video' ? 'video' : 'screenshot'
 
   const pageStyle = {
     '--cs-bg': PAGE_BG,
@@ -321,7 +321,9 @@ export default function CaseStudyHumanAI() {
             />
           }
         >
-          <RetrospectiveSection segments={retroSegments} revealMode={retroRevealMode} height="60vh" />
+          <div className="ai-retro-wrap">
+            <RetrospectiveSection segments={retroSegments} revealMode={retroRevealMode} height="60vh" />
+          </div>
         </StackedSection>
 
         {/* ── CONTEXT (Figma node 363:682) ── */}

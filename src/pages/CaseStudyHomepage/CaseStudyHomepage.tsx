@@ -273,12 +273,14 @@ export default function CaseStudyHomepage() {
             />
           }
         >
-          <RetrospectiveSection segments={retroSegments} revealMode={retroRevealMode} height="60vh" />
+          <div className="cs-retro-wrap">
+            <RetrospectiveSection segments={retroSegments} revealMode={retroRevealMode} height="60vh" />
+          </div>
         </StackedSection>
 
         {/* ── CHALLENGES ── */}
         <StackedSection title="Challenges">
-          <div className="cs-section pad24">
+          <div className="cs-section">
             <div className="cs-inner cs-challenge">
               <div className="cs-challenge-top">
                 <div className="cs-challenge-intro">
