@@ -301,6 +301,17 @@ cross-frame state, so nothing can drift**:
   section immediately following each header — this is what makes `CaseStudySection`'s rail
   and media columns stick correctly under the currently-pinned header. This no-ops
   gracefully for sections with no such elements (bespoke section content).
+- Any element tagged `.cs-sticky` (in addition to, or instead of, `.cs-grid-rail`/
+  `.cs-grid-media`) gets the same live-tracked `top`, plus a fixed `STICKY_OFFSET` (24px) of
+  extra breathing room below the header — rail/media pin flush against it, but a sticky text
+  column reads better with a small gap instead of touching the header's bottom border. This
+  is the generic opt-in for a bespoke (non-`CaseStudySection`) layout that still wants the
+  stick-under-header behaviour, e.g. a short text column beside a taller image with no
+  rail/content/media grid involved (`CaseStudyAutomatedCalendar`'s "Interaction goal" block).
+  Unlike `.cs-grid-media`, it gets no `maxHeight` cap — it un-sticks naturally once its own
+  (taller) sibling scrolls the shared container out of view, rather than being clipped like a
+  capped media band. The element must also declare `position: sticky` itself in its own page
+  CSS (the hook only ever injects `top`, never `position`, matching rail/media).
 - Recomputes on a debounced `resize` (150ms) and a `requestAnimationFrame`-throttled
   `scroll` listener.
 
@@ -717,6 +728,35 @@ crossed that line as `activeIndex`. `offsetPx` is extra breathing room past the 
 header stack before a paragraph counts as active — tune per-section if the swap feels early
 or late; `130` matched Approach/Design outcomes acceptably but isn't a universal constant.
 
+### `useProportionalHeight`
+
+`src/hooks/useProportionalHeight.ts`. The scrolling paragraph column driving `activeIndex`
+above needs extra empty scroll distance below its last paragraph, or that paragraph never
+gets its own turn as active before the section ends. A flat `vh` height (the original
+approach) makes that runway proportional to the *screen*, not the *content* — three short
+paragraphs and six long ones got the same scroll distance. This hook sets an explicit height
+equal to the element's own natural content height × `(1 + extraRatio)` instead:
+
+```ts
+const contentRef = useRef<HTMLDivElement>(null)
+useProportionalHeight(contentRef, 0.5)   // → natural height × 1.5
+const activeIndex = useActiveDiagramIndex(contentRef, { ... })
+```
+
+Call it right after declaring the ref, before (or after — order doesn't matter, see below)
+the matching `useActiveDiagramIndex` call. `extraRatio` is `0.5` everywhere it's used so far
+(`CaseStudyHomepage`'s Approach/Design outcomes, `CaseStudyHumanAI`'s AI Design
+Principles/Transparency and trust/Policy recommendations) except `CaseStudyAutomatedCalendar`
+(`0.2` — a deliberate one-off, not yet reconciled with the rest). The paragraph column's CSS
+must NOT set its own `height` (leave it out entirely so the hook's measurement of "natural"
+height isn't reading back a value it already forced).
+
+Uses `useLayoutEffect`, not `useEffect` — this is what makes call order vs.
+`useStackingSections`/`useActiveDiagramIndex` (both plain `useEffect`) not matter: React
+guarantees every `useLayoutEffect` across the whole component tree fires before any
+`useEffect`, so the height is always committed before either of those hooks measures layout,
+regardless of which hook was called first in the component body.
+
 ### Consumer convention (`CaseStudyHomepage.tsx` + its `.css`)
 
 Both `content` and `media` are built by mapping the same paragraph-array data and tagging
@@ -742,8 +782,9 @@ The content-side paragraph inverts colour (same "active item inverts to `--cs-ho
 convention as `useHoverReveal` consumers), while the media-side item hard-swaps via
 `display: none/flex` rather than crossfading — matches the instant/no-easing hover rule in
 spirit even though this is scroll-driven, not hover-driven. `.cs-approach-paras` /
-`.cs-outcomes-paras` are given an explicit tall height (`140vh`/`150vh`) so there's enough
-scroll distance for every paragraph to get its turn as active before the section ends.
+`.cs-outcomes-paras` need enough scroll distance below the last paragraph for every
+paragraph to get its own turn as active before the section ends — given via
+`useProportionalHeight(ref, 0.5)` (see below), not a flat `vh` value.
 
 Reuse this pattern (hook + `.active` class + hard-swap media) for any future section shaped
 like "scrolling list of paragraphs paired with a swapping visual," rather than reaching for

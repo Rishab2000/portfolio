@@ -83,7 +83,7 @@
 
 .ac-concept-statement {
   margin: 0;
-  max-width: 1077px;
+  max-width: 1140px;
   width: 100%;
 }
 
@@ -101,7 +101,7 @@
 .ac-concept-corelogic {
   display: flex;
   flex-direction: column;
-  padding: var(--space-1);
+  padding: var(--space-1) var(--space-1) var(--space-4) var(--space-1);
   gap: var(--space-1);
   width: 100%;
 }
@@ -111,6 +111,72 @@
   text-transform: uppercase; */
   margin: 0;
   width: 100%;
+}
+
+/* "Interaction goal" block — same plain 2-column shape (fixed content
+   column, single image, no rail) as .ac-inspiration-* below; kept in its
+   own Concept-scoped namespace rather than sharing those class names. */
+.ac-concept-goal {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-1);
+  width: 100%;
+}
+
+.ac-concept-goal-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 560px;
+  flex-shrink: 0;
+  /* .cs-sticky class (see useStackingSections.ts / CLAUDE.md) — top is
+     computed and injected inline per-frame; position is declared here since
+     the hook only ever sets top, never position. */
+  position: sticky;
+}
+
+.ac-concept-goal-heading {
+  margin: 0;
+}
+
+.ac-concept-goal-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  max-width: 372px;
+}
+
+.ac-concept-goal-body p {
+  margin: 0;
+}
+
+.ac-concept-goal-media {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.ac-concept-goal-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 952 / 1054;
+}
+
+.ac-concept-goal-image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ac-concept-goal-caption {
+  margin: 0;
+  max-width: 472px;
 }
 
 /* ── INSPIRATION (plain 2-column layout, no rail — Figma node 598:3710) ── */
@@ -129,6 +195,10 @@
   gap: var(--space-3);
   width: 560px;
   flex-shrink: 0;
+  /* .cs-sticky class (see useStackingSections.ts / CLAUDE.md) — top is
+     computed and injected inline per-frame; position is declared here since
+     the hook only ever sets top, never position. */
+  position: sticky;
 }
 
 .ac-inspiration-para {
@@ -143,7 +213,7 @@
 
 .ac-inspiration-para-body {
   margin: 0;
-  max-width: 472px;
+  max-width: 372px;
   white-space: pre-wrap;
 }
 
@@ -169,18 +239,20 @@
 .ac-ui-paras {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-3);
   width: 100%;
-  height: 120vh;
+  /* height: natural content height × 1.2 — set by useProportionalHeight,
+     see CaseStudyAutomatedCalendar.tsx, so the scroll runway below the
+     last paragraph scales with how much content there is, not the screen. */
 }
 
 .ac-ui-para {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  padding: var(--space-0-5);
+  padding: calc(var(--space-0-5) + 2px) var(--space-0-5);
   margin: -9px;
-  opacity: 0.16;
+  opacity: 1;
 }
 
 .ac-ui-para.active {
@@ -281,18 +353,20 @@
 .ac-backend-paras {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-3);
   width: 100%;
-  height: 120vh;
+  /* height: natural content height × 1.2 — set by useProportionalHeight,
+     see CaseStudyAutomatedCalendar.tsx, so the scroll runway below the
+     last paragraph scales with how much content there is, not the screen. */
 }
 
 .ac-backend-para {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  padding: var(--space-0-5);
+  padding: calc(var(--space-0-5) + 2px) var(--space-0-5);
   margin: -9px;
-  opacity: 0.16;
+  opacity: 1;
 }
 
 .ac-backend-para.active {
@@ -307,7 +381,7 @@
 
 .ac-backend-para-body {
   margin: 0;
-  max-width: 610px;
+  max-width: 372px;
   white-space: pre-wrap;
 }
 
@@ -375,4 +449,29 @@
   list-style: disc;
   margin: var(--space-0-5) 0 0 0;
   padding-left: var(--space-2);
+}
+
+/* ── PRODUCT SHOTS (2×2 photo grid, no text — Figma node 610:3911) ── */
+
+.ac-shots-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-1);
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.ac-shots-item {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3840 / 2160;
+}
+
+.ac-shots-item img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }

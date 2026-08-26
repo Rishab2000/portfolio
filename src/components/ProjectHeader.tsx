@@ -15,9 +15,9 @@ export default function ProjectHeader({ title, bgColor, textColor }: ProjectHead
   } as CSSProperties
 
   return (
-    <header className="project-header " style={style}>
-      <button className="project-header-back type-body" onClick={() => navigate('/')}>Home</button>
+    <header className="project-header" style={style}>
       <p className="project-header-title type-heading1">{title}</p>
+      <button className="project-header-back type-body" onClick={() => navigate('/')}>Home</button>
     </header>
   )
 }

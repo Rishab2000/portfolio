@@ -1,6 +1,10 @@
 import { useEffect, type RefObject } from 'react'
 
 const RESIZE_DEBOUNCE_MS = 150
+// Extra breathing room below the pinned header for .cs-sticky elements specifically —
+// unlike rail/media, which pin flush against it, a sticky text column reads better with
+// a small gap instead of touching the header's bottom border.
+const STICKY_OFFSET = 24
 
 interface StackedHeader {
   el: HTMLElement
@@ -107,6 +111,16 @@ export function useStackingSections(
             const mediaMaxHeight = Math.max(0, Math.round(window.innerHeight - railMediaTop))
             media.style.maxHeight = `${mediaMaxHeight}px`
           }
+          // Generic opt-in sticky column, for bespoke (non-CaseStudySection)
+          // layouts that still want the same live-tracked stick-under-header
+          // behaviour — e.g. a short text column beside a taller image, no
+          // CaseStudySection grid involved. Same top as rail/media, but no
+          // maxHeight cap: it just un-sticks naturally once its own (taller)
+          // sibling scrolls the shared container out of view, rather than
+          // being clipped like media's capped-and-cropped band.
+          section.querySelectorAll<HTMLElement>('.cs-sticky').forEach((sticky) => {
+            sticky.style.top = `${railMediaTop + STICKY_OFFSET}px`
+          })
         }
       })
 
