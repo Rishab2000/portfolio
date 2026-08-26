@@ -1,6 +1,7 @@
 import './HomePage.css'
 import ProjectRow from '../../components/ProjectRow'
 import Footer from '../../components/Footer'
+import { asset } from '../../lib/nav'
 
 export default function HomePage() {
   return (
@@ -24,9 +25,9 @@ export default function HomePage() {
             </div>
 
             <div className="project-list">
-              <ProjectRow hoverColor="#9a72aa" hoverTextColor="#f5ecc2" title="Automated calendar" path="/security-vision" />
-              <ProjectRow hoverColor="#802626" hoverTextColor="#f5ecc2" title="Modernizing IBM MaaS360’s dashboard" path="/homepage-modernization" />
-              <ProjectRow hoverColor="#12354e" hoverTextColor="#f99d1b" title="Human + AI at IBM MaaS360" path="/human-ai-maas360" />
+              <ProjectRow hoverColor="#9a72aa" hoverTextColor="#f5ecc2" title="Automated calendar" path="/security-vision" showcaseImage={asset('/automated-calendar/overview/demo-setup.png')} />
+              <ProjectRow hoverColor="#802626" hoverTextColor="#f5ecc2" title="Modernizing IBM MaaS360’s dashboard" path="/homepage-modernization" showcaseImage={asset('/homepage-modernization/overview.png')} />
+              <ProjectRow hoverColor="#12354e" hoverTextColor="#f99d1b" title="Human + AI at IBM MaaS360" path="/human-ai-maas360" showcaseImage={asset('/human_ai_ibm/overview.mp4')} />
             </div>
           </section>
 

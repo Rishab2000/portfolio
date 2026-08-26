@@ -117,6 +117,26 @@
   outline-offset: -2px;
 }
 
+.project-row-hover-image {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* EXPERIMENT: 80% of the image's own natural pixel size, not a fixed box —
+     see the note in ProjectRow.tsx. transform-origin stays at the corner
+     `left`/`top` position, so the scale doesn't shift where it's anchored. */
+  transform: scale(0.5);
+  transform-origin: top left;
+  pointer-events: none;
+  z-index: 100;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-row-hover-image {
+    display: block;
+  }
+}
+
 .project-row-text {
   font-family: 'Medway', sans-serif;
   font-style: normal;
