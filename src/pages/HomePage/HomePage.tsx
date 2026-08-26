@@ -30,7 +30,7 @@ export default function HomePage() {
               <ProjectRow hoverColor="#802626" hoverTextColor="#f5ecc2" title="Modernizing IBM MaaS360’s dashboard" path="/homepage-modernization" showcaseImage={asset('/homepage-modernization/overview.png')} />
             </div>
           </section>
-
+ 
         </main>
 
         <Footer textColor="#292929" />
