@@ -49,7 +49,7 @@ export default function CaseStudyIntro({
   hoverColor,
   description,
   characteristics,
-  listLabel = 'RESPONSIBILITIES',
+  listLabel = 'WHAT I DID',
   responsibilities,
   results,
   media,

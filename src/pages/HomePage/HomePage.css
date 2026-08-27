@@ -24,19 +24,19 @@
    Color and font-family are set at the usage site.
    ═══════════════════════════════════════════ */
 
+/* Font (size/weight/line-height/letter-spacing) comes from .type-heading3,
+   applied alongside this class in JSX — this class is now just layout, and
+   stays only as a stable selector for the tablet/mobile @media overrides
+   below (which continue to override .type-heading3's own font-size /
+   letter-spacing at narrower breakpoints — same specificity, later in
+   source order, so they still win over the base .type-heading3 rule). */
 .hero-heading {
-  font-size: var(--fs-heading3);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: -0.9px;
+  white-space: nowrap;
 }
 
-.project-row-title {
-  font-size: var(--fs-heading3); /* 51px, standing in for design's 48px */
-  font-weight: 400;
-  line-height: 1.15;
-  letter-spacing: -1.392px;
-}
+/* .project-row-title itself has no base rule — font comes from .type-heading3
+   in JSX (same as .hero-heading above); the class name still exists purely
+   so the tablet/mobile @media overrides below have something to select. */
 
 /* ── HERO HEADING (node 96:147/148) ── */
 
@@ -44,8 +44,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 40px;
-  padding: 40px 70px;
+  padding: 40px 60px;
   width: 100%;
 }
 
@@ -63,15 +62,46 @@
   color: #e3e3e3;
 }
 
+/* ── HERO NAME COLUMN (node 628:3968) ── */
+
+.hero-name-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch; /* only this column stretches to match the description's height — the outer row itself stays items: flex-start, per Figma */
+  flex-shrink: 0;
+}
+
+.hero-name-top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  align-items: flex-start;
+}
+
+.hero-years,
+.hero-degree {
+  color: #292929;
+  width: 496px;
+  margin: 0;
+}
+
+.hero-degree em {
+  font-style: italic;
+}
+
 .hero-description {
-  font-family: 'Medway Schoolbook', sans-serif;
-  font-size: var(--fs-body); /* 21px, standing in for design's 20px */
-  font-weight: 400;
-  line-height: 1.14;
-  letter-spacing: -0.1px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   color: #292929;
   width: 496px;
   flex-shrink: 0;
+}
+
+.hero-description p {
+  margin: 0;
 }
 
 /* ── PROJECT LIST (node 96:150) ── */

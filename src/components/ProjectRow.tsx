@@ -85,7 +85,7 @@ export default function ProjectRow({ title, path, hoverColor, hoverTextColor, sh
       onMouseMove={showcaseImage ? positionImage : undefined}
       onMouseLeave={showcaseImage ? () => setShowImage(false) : undefined}
     >
-      <p className="project-row-title project-row-text">{title}</p>
+      <p className="type-heading3 project-row-title project-row-text">{title}</p>
       {showcaseImage && showImage && (
         <img
           ref={imgRef}

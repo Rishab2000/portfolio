@@ -53,6 +53,30 @@ This means: never add `transition: ...` to a rule that only changes on `:hover`,
 add `border-radius` to a `:hover` rule or to a base rule whose only purpose is to support a
 hover state. Plain color/background swaps only.
 
+## Rule: implementing a Figma design means reading the spec, not the screenshot
+
+When `get_design_context` returns a node, the rendered screenshot is a sanity check, not the
+source of truth. Every padding/gap/width value, and every alignment property, must come from
+the actual returned code (the Tailwind classes on each node), read precisely — not
+approximated by eyeballing how the screenshot looks.
+
+This was gotten wrong on `HomePage`'s hero header (Figma node 157:161): the screenshot
+"looked right" with `padding: 40px 70px` and `align-items: stretch` on the whole row, but the
+actual spec was `px-[60px] py-[40px]` (a real, visible difference) and `items-start` on the
+row with `self-stretch` on only *one* child (the name column) — not the same thing as
+stretching the whole row, even though the two can render similarly in simple cases. Several
+child elements also carried an explicit `w-[496px]` that a screenshot alone gives no reason to
+suspect is there (nothing looks constrained since the text is shorter than the box).
+
+In practice: before writing layout CSS from a `get_design_context` result, read every
+`px-`/`py-`/`gap-`/`w-`/`h-` class and every `items-`/`justify-`/`self-` class on every
+relevant node in the returned code — including nodes whose text content looks unremarkable in
+the screenshot. `self-stretch` on a child is not interchangeable with `align-items: stretch`
+on its parent: the former overrides just that one child, the latter affects every sibling
+that doesn't have its own `align-self`. When a value doesn't map cleanly onto this codebase's
+conventions (e.g. spacing tokens), that's a decision to make deliberately (see the spacing
+rule above), not a reason to skip reading it in the first place.
+
 ## Reference pattern: "Stacking Sticky Sections" scroll behaviour
 
 Source analyzed: https://laboratoire-graphique.fr/plateforme/documents/presentation-du-fonds/
