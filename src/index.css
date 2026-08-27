@@ -190,6 +190,18 @@
   letter-spacing: -0.009em;
 }
 
+/* Was declared in the shared selector list above but never given a rule —
+   completing it (not a new class) with the exact values HomePage's body
+   copy already used via a hand-rolled font-family/size on --fs-body1
+   directly, before this existed. */
+.type-body1 {
+  font-family: 'Medway Schoolbook', sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-body1);
+  line-height: 1.14;
+  letter-spacing: -0.1px;
+}
+
 .type-body {
   font-family: 'Medway', sans-serif;
   font-weight: 400;
