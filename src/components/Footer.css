@@ -8,6 +8,9 @@
   width: 100%;
   padding: var(--space-1) var(--space-4) var(--space-2) var(--space-1);
   border-top: 1px solid var(--footer-fg);
+  /* Transparent by default (shows the page background); set --footer-bg via the
+     Footer `bgColor` prop to give the footer its own fill. */
+  background: var(--footer-bg, transparent);
   color: var(--footer-fg);
 }
 

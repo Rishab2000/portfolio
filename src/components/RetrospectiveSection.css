@@ -138,6 +138,26 @@
   color: var(--cs-fg);
 }
 
+/* ── HOVER HINT ──
+   Discoverability cue under the first (leftmost) segment; removed once the
+   viewer hovers any segment (see RetrospectiveSection.tsx). padding-left
+   matches .cs-retro-seg's inner padding so the text lines up under the
+   segment label above it. */
+
+.cs-retro-hint {
+  margin: 0;
+  padding-left: var(--space-1);
+  padding-top: var(--space-0-5);
+  color: var(--cs-fg);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-0-5);
+}
+
+.cs-retro-hint-arrow {
+  display: inline-block;
+}
+
 /* ── REVEAL-MODE TOGGLE (section header, Figma node 353:2248 checked / 353:2242 unchecked) ── */
 
 .cs-retro-toggle {

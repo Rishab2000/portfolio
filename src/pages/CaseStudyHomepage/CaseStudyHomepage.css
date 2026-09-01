@@ -26,7 +26,9 @@
 
 .cs-inner {
   width: 100%;
-  max-width: 1152px;
+  max-width: 1512px; /* 13"/14" MacBook default logical resolution — fills available
+                        width up to that, no centering (fills, doesn't float) */
+  padding: var(--space-1);
 }
 
 /* Page header (sticky "Home" backlink + title) lives in ProjectHeader.css —
@@ -146,9 +148,25 @@
 
 .cs-challenge-grid {
   display: flex;
-  gap: var(--space-7);
+  gap: var(--space-4);
   width: 100%;
   padding: 0 0;
+}
+
+.cs-challenge-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1 0 0;
+  min-width: 0;
+  width: 570px;
+}
+
+.cs-challenge-group {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-1);
+  width: 100%;
 }
 
 .cs-challenge-col {
@@ -177,24 +195,44 @@
 
 .cs-challenge-axis-col {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   gap: var(--space-1);
-  width: 100%;
+  align-self: stretch;
+  flex-shrink: 0;
 }
 
 .cs-challenge-axis-rule {
-  height: 40px;
-  width: 100%;
+  width: 40px;
+  align-self: stretch;
   border: 1px solid var(--cs-fg);
-  border-top: none;
+  border-left: none;
   box-sizing: border-box;
+}
+
+.cs-challenge-media {
+  position: relative;
+  flex: 1 0 0;
+  min-width: 0;
+  align-self: flex-start; /* explicit — don't stretch to match .cs-challenge-text-col's height, aspect-ratio drives height off the resolved width instead */
+  aspect-ratio: 1098 / 573.57; /* same ratio as .cs-oldhome — same image asset */
+}
+
+.cs-challenge-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .cs-challenge-axis-label {
   margin: 0;
-  text-align: center;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
   white-space: nowrap;
+  text-align: center;
 }
 
 .cs-oldhome {
@@ -423,24 +461,16 @@
   color: var(--cs-bg);
 }
 
-.cs-outcomes-notes {
-  width: 100%;
-}
-
-.cs-outcomes-note-item {
-  display: none;
-  width: 100%;
-}
-
-.cs-outcomes-note-item.active {
-  display: block;
-}
-
+/* Caption list stacked directly below the media (image or video) inside
+   .cs-outcomes-diagram-item — same architecture as CaseStudyHumanAI's Policy
+   recommendations video mode (.ai-policyrec-caption-list--left): left-aligned
+   under the widened media rather than centred, capped to the page's body width. */
 .cs-outcomes-caption-list {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  width: 100%;
+  max-width: 472px;
+  align-self: flex-start;
   padding: 0;
   margin: 0;
   list-style: none;
@@ -449,7 +479,6 @@
 .cs-outcomes-caption-item {
   display: flex;
   gap: var(--space-2);
-  padding: var(--space-0-5);
   align-items: flex-start;
 }
 

@@ -10,15 +10,21 @@ const HOVER_GIF_OFFSET_Y = 16
 
 interface FooterProps {
   textColor: string
+  /** Optional footer background — consumed as `--footer-bg`. Omit to stay
+   *  transparent (the footer then shows through to the page background). */
+  bgColor?: string
 }
 
-export default function Footer({ textColor }: FooterProps) {
+export default function Footer({ textColor, bgColor }: FooterProps) {
   const [copied, setCopied] = useState(false)
   const [showGif, setShowGif] = useState(false)
   const timeoutRef = useRef<number | undefined>(undefined)
   const gifRef = useRef<HTMLImageElement>(null)
   const gifPosRef = useRef({ x: 0, y: 0 })
-  const style = { '--footer-fg': textColor } as CSSProperties
+  const style = {
+    '--footer-fg': textColor,
+    ...(bgColor ? { '--footer-bg': bgColor } : {}),
+  } as CSSProperties
 
   useEffect(() => () => window.clearTimeout(timeoutRef.current), [])
 

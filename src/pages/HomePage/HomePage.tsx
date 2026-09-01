@@ -17,7 +17,25 @@ export default function HomePage() {
               <div className="hero-name-col">
                 <div className="hero-name-top">
                   <p className="type-heading3 hero-heading hero-heading-text">Rishab Sachidanand</p>
-                  <p className="type-body hero-years">4.8 years experience in shipping products | B.Des, <em>upcoming</em> MA </p>
+                  <div className="type-body hero-years">
+                    <span className="hero-degree-term">5 yrs 6 mos
+                      <span className="hero-degree-tooltip">
+                        <p className="type-body">4 years 8 months @ IBM Software Labs | UX Designer</p>
+                        <p className="type-body">10 months @ Smarter Dharma | Sole designer at the Startup</p>
+                      </span>
+                    </span> experience in shipping products | <span className="hero-degree-term">B Des
+                      <span className="hero-degree-tooltip">
+                        <p className="type-body">Bachelor in Design | 2016 - 2020</p>
+                        <p className="type-body">Srishti Manipal Institute of Art Design and Technology, Bangalore</p>
+                      </span>
+                    </span>, <span className="hero-degree-term"><em>upcoming</em> MA
+                      <span className="hero-degree-tooltip">
+                        <p className="type-body">Master in Digital Experience Design | 2025 - 2027</p>
+                        <p className="type-body">ECAL, Switzerland</p>
+              
+                      </span>
+                    </span>
+                  </div>
                 </div>
               </div>
               <div className="hero-description">
@@ -27,9 +45,10 @@ export default function HomePage() {
             </div>
 
             <div className="project-list">
-              <ProjectRow hoverColor="#9a72aa" hoverTextColor="#f5ecc2" title="Automated calendar" path="/security-vision" showcaseImage={asset('/automated-calendar/product_shots/2026-07-01_10-30-50.png')} />
+              <ProjectRow hoverColor="#9a72aa" hoverTextColor="#f5ecc2" title="Automated calendar" path="/security-vision" showcaseImage={asset('/automated-calendar/overview/demo-setup.png')} />
               <ProjectRow hoverColor="#12354e" hoverTextColor="#f99d1b" title="Human + AI at IBM MaaS360" path="/human-ai-maas360" showcaseImage={asset('/human_ai_ibm/overview.mp4')} />
-              <ProjectRow hoverColor="#802626" hoverTextColor="#f5ecc2" title="Modernizing IBM MaaS360’s dashboard" path="/homepage-modernization" showcaseImage={asset('/homepage-modernization/overview.png')} />
+              <ProjectRow hoverColor="#802626" hoverTextColor="#f5ecc2" title="Modernizing IBM MaaS360’s dashboard" path="/homepage-modernization" showcaseImage={asset('/homepage-modernization/overview.mp4')} />
+              <p className="type-body project-list-note">In the process of adding more fun projects!</p>
             </div>
           </section>
  

@@ -2,10 +2,10 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import type { CSSProperties, MouseEvent as ReactMouseEvent } from 'react'
 import { navigate } from '../lib/nav'
 
-// EXPERIMENT: each row's showcase image renders at HOVER_IMAGE_SCALE of its own
-// natural pixel size (see .project-row-hover-image in HomePage.css) rather than a
-// shared fixed box — so unlike Footer's hover-gif, every row's preview is a
-// different size/shape depending on its source image. Flagged as a deliberate
+// EXPERIMENT: each row's showcase image is sized to 40vw wide with height: auto
+// (see .project-row-hover-image in HomePage.css) rather than a shared fixed box —
+// so unlike Footer's hover-gif, every row's preview keeps its source image's aspect
+// ratio and is a different height depending on that ratio. Flagged as a deliberate
 // try-it-and-see call, not the usual "uniform thumbnail" convention.
 const HOVER_IMAGE_OFFSET_X = 16
 const HOVER_IMAGE_OFFSET_Y = 16
@@ -35,8 +35,8 @@ export default function ProjectRow({ title, path, hoverColor, hoverTextColor, sh
 
   // Since every image can render at a different size (see note above), the vertical
   // offset has to be computed from this image's own rendered height — read straight off
-  // the DOM (getBoundingClientRect already reflects the CSS scale() transform) rather
-  // than a shared constant.
+  // the DOM (getBoundingClientRect reflects the CSS-sized box) rather than a shared
+  // constant.
   function applyPosition() {
     const el = imgRef.current
     if (!el) return

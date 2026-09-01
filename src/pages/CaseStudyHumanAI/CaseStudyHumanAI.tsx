@@ -13,6 +13,7 @@ import type { RetroSegment } from '../../components/RetrospectiveSection'
 import { useStackingSections } from '../../hooks/useStackingSections'
 import { useActiveDiagramIndex } from '../../hooks/useActiveDiagramIndex'
 import { useProportionalHeight } from '../../hooks/useProportionalHeight'
+import { useScrollRevealProgress } from '../../hooks/useScrollRevealProgress'
 import { useHoverReveal } from '../../hooks/useHoverReveal'
 
 /* Overview/header colour scheme (Figma node 363:586) — change these to retheme the sticky
@@ -28,6 +29,24 @@ const PAGE_BG = '#12354e'
 const PAGE_FG = '#f99d1b'
 const PAGE_HOVER = '#f5ecc2'
 
+/* "Aligning on the purpose" section colour override — passed to that one
+   StackedSection, which sets --cs-bg/--cs-fg/--cs-hover on its header + wrapper;
+   the nested CaseStudySection inherits (no colour props needed there). Set to
+   the page defaults for now; change these three to retheme just that section. */
+const PURPOSE_BG = PAGE_BG
+const PURPOSE_FG = PAGE_FG
+const PURPOSE_HOVER = PAGE_HOVER
+
+/* "Tad too sensitive" closing section colour override — same mechanism (passed
+   to its StackedSection). Set to the page defaults for now. */
+const NOTE_BG = PAGE_BG
+const NOTE_FG = PAGE_FG
+
+/* Footer colour override — `bgColor` fills the (otherwise transparent) footer,
+   `textColor` drives its text + borders. Page defaults for now. */
+const FOOTER_BG = PAGE_BG
+const FOOTER_FG = PAGE_FG
+
 interface PurposeReveal {
   key: string
   description: string
@@ -35,8 +54,24 @@ interface PurposeReveal {
 
 const purposeReveals: PurposeReveal[] = [
   { key: 'SMBs', description: 'MaaS360’s strategy was to acquire the SMB market for mobile device management.' },
-  { key: 'secure their devices', description: 'The global average cost of a data breach is $4.4M, security is pivotal to ensure business continuity.' },
-  { key: 'minimal effort', description: "The available solutions were bloated and complex, creating an opportunity for a simpler option." },
+  { key: 'secure their devices', description: 'The global average cost of a data breach is $4.4M, maintaining security is pivotal to ensure business continuity' },
+  { key: 'minimal effort', description: 'The market was filled with bloated and complex solutions, creating an opportunity for a simpler option.' },
+]
+
+/* Left-column scroll-linked list (Figma node 642:8869 / 642:8972) — same
+   architecture as AI Design Principles: the paragraph in the activation zone
+   inverts to the hover colour, and the last one ("Why?") being active is what
+   flips the sticky North star column from 12% to full opacity. */
+interface PurposeParagraph {
+  heading: string
+  body: string
+}
+
+const purposeParagraphs: PurposeParagraph[] = [
+  { heading: 'We wanted to...', body: 'Build the first AI offering for MaaS360, we wanted make a mark and set the boat sailing for future features.' },
+  { heading: 'We hoped to...', body: 'We hoped that GenAI would be the core of our functionality, such that it helps with marketability on release.' },
+  { heading: 'We aimed for...', body: 'Finding relevant places where we could use the technology, aimed at finding these workflows.' },
+  { heading: 'Why?', body: 'This lead us down a path were we were focused on implementing the tech rather than delivering value.' },
 ]
 
 interface AIPrincipleParagraph {
@@ -216,13 +251,30 @@ export default function CaseStudyHumanAI() {
 
   const [retroRevealMode, setRetroRevealMode] = useState<'stay' | 'disappear'>('stay')
 
+  // Only the `hovered` half of the hover-reveal is used now — the North star
+  // notes are always rendered (they're part of the scroll wipe), so hovering a
+  // term just highlights its matching note while the pointer is over it.
   const {
-    revealed: purposeRevealed,
     hovered: purposeHovered,
-    reveal: revealPurpose,
     onEnter: onPurposeEnter,
     onLeave: onPurposeLeave,
   } = useHoverReveal<string>()
+
+  const purposeContentRef = useRef<HTMLDivElement>(null)
+  useProportionalHeight(purposeContentRef, 0.8)
+  const activePurposeIndex = useActiveDiagramIndex(purposeContentRef, {
+    paragraphSelector: '.ai-purpose-para',
+    fixedHeaderSelector: '.project-header',
+    offsetPx: 130,
+  })
+  // 0 → 1 wipe progress for the North star reveal (0 at "We wanted to…", 1 once
+  // "Why?" reaches the top). Drives the veil height; terms unlock at 1.
+  const purposeRevealProgress = useScrollRevealProgress(purposeContentRef, {
+    paragraphSelector: '.ai-purpose-para',
+    fixedHeaderSelector: '.project-header',
+    offsetPx: 130,
+  })
+  const purposeUnlocked = purposeRevealProgress >= 1
 
   const principlesContentRef = useRef<HTMLDivElement>(null)
   useProportionalHeight(principlesContentRef, 0.5)
@@ -322,29 +374,29 @@ export default function CaseStudyHumanAI() {
           }
         >
           <div className="ai-retro-wrap">
-            <RetrospectiveSection segments={retroSegments} revealMode={retroRevealMode} height="60vh" />
+            <RetrospectiveSection segments={retroSegments} revealMode={retroRevealMode} height="60vh" hint="Give this a hover" />
           </div>
         </StackedSection>
 
         {/* ── CONTEXT (Figma node 363:682) ── */}
         <StackedSection title="Context">
           <div className="ai-context-content">
-            <div className="ai-context-cols">
+            <div className="ai-context-cols cs-sticky">
               <div className="ai-context-col">
-                <p className="ai-context-label type-body">WHAT IS POLICY MANAGEMENT?</p>
-                <p className="ai-context-body type-body">A security feature that lets IT administrators enforce rules, settings, and restrictions on corporate devices, providing granual control over device functionality and restrictions.</p>
+                <p className="ai-context-label type-heading1">What is policy management?</p>
+                <p className="ai-context-body type-body">A security feature that lets IT administrators enforce rules, settings, and restrictions on corporate devices.</p>
               </div>
               <div className="ai-context-col">
-                <p className="ai-context-label type-body">WHAT IS THE ISSUE?</p>
-                <p className="ai-context-body type-body"> As this offers granual control over device functionality, there are hundreds of rules creating an extremely information heavy experience. It reaquired users to be extremely proficient its functioning and security standards.</p>
+                <p className="ai-context-label type-heading1">What is the issue?</p>
+                <p className="ai-context-body type-body"> As this offers granual control over hundreds of device functionality, creating an information heavy experience. It reaquired users to be proficient in all security standards.</p>
               </div>
               <div className="ai-context-col">
-                <p className="ai-context-label type-body">WHO ARE OUR USERS?</p>
-                <p className="ai-context-body type-body">They are either small or medium business owners with no background in security and MDM. Or they're an overstretched IT admin, busy attending to support tickets or fixing technical issues.</p>
+                <p className="ai-context-label type-heading1">Who are our users?</p>
+                <p className="ai-context-body type-body">Small or medium business owners with no background in IT security. Or they're an overstretched IT admin, busy fixing technical issues.</p>
               </div>
             </div>
             <div className="ai-context-media">
-              <p className="ai-context-label type-body">POLICY MANAGEMENT UI</p>
+              <p className="ai-context-label type-caption1">The policy mangement UI</p>
               <div className="ai-context-images">
                 <div className="ai-context-image"><img src={imgContext} alt="MaaS360 Default iOS MDM Policy configuration screen" /></div>
                 <div className="ai-context-image"><img src={imgContext} alt="MaaS360 Default iOS MDM Policy configuration screen" /></div>
@@ -353,80 +405,70 @@ export default function CaseStudyHumanAI() {
           </div>
         </StackedSection>
 
-        {/* ── ALIGNING ON THE PURPOSE (Figma node 413:151) ── */}
-        <StackedSection title="Aligning on the purpose">
-          <div className="ai-purpose-content">
-            <div className="ai-purpose-cols">
-              <div className="ai-purpose-col">
-                <p className="ai-purpose-label type-body">WE WANTED TO...</p>
-                <p className="ai-purpose-body type-body">Build the first AI offering for MaaS360, leaving a mark and set the boat sailing for future features.</p>
-              </div>
-              <div className="ai-purpose-col">
-                <p className="ai-purpose-label type-body">WE HOPED THAT...</p>
-                <p className="ai-purpose-body type-body">GenAI would be the core of our functionality, such that it helps with marketability.</p>
-              </div>
-              <div className="ai-purpose-col">
-                <p className="ai-purpose-label type-body">WE AIMED FOR...</p>
-                <p className="ai-purpose-body type-body">Finding relevant places where we could use the technology, aimed at finding these workflows.</p>
-              </div>
-            </div>
-
-            <div className="ai-purpose-terminal">
-              <div className="ai-purpose-terminal-row">
-                <p className="type-body">============================================================================================================================================================================================================================================================================================================================</p>
-                <p className="type-body"><span className="ai-purpose-terminal-word">Futile end</span>============================================================================================================================================================================================================================================================================================================================</p>
-                <p className="type-body">============================================================================================================================================================================================================================================================================================================================</p>
-              </div>
-              <div className="ai-purpose-cols">
-                <div />
-                <div className="ai-purpose-col">
-                  <p className="ai-purpose-label type-body">WHY?</p>
-                  <p className="ai-purpose-body type-body">We go too caught up with implementing the tech rather than delivering value.</p>
-                </div>
-                <div />
-              </div>
-              {/* <div className="ai-purpose-cols">
-                <div />
-                <div className="ai-purpose-col">
-                  <p className="ai-purpose-label type-body">TO MOVE FORWARD</p>
-                  <p className="ai-purpose-body type-body">Defined our north star, a singular goal that informs every decision.</p>
-                </div>
-                <div />
-              </div> */}
-            </div>
-
-            <div className="ai-purpose-terminal-row">
-              <p className="type-body">============================================================================================================================================================================================================================================================================================================================</p>
-              <p className="type-body"><span className="ai-purpose-terminal-word">Reoriented</span>============================================================================================================================================================================================================================================================================================================================</p>
-              <p className="type-body">============================================================================================================================================================================================================================================================================================================================</p>
-            </div>
-
-            <div className="ai-purpose-northstar">
-              
-              <div className="ai-purpose-northstar-heading-group">
-                <p className="ai-purpose-label type-body">NORTH STAR</p>
-                <p className="ai-purpose-heading type-heading2">
-                  Help{' '}
-                  <span className="ai-purpose-term" onMouseEnter={() => onPurposeEnter('SMBs')} onMouseLeave={onPurposeLeave} onClick={() => revealPurpose('SMBs')}>SMBs</span>{' '}
-                  configure and maintain policies so that they can{' '}
-                  <span className="ai-purpose-term" onMouseEnter={() => onPurposeEnter('secure their devices')} onMouseLeave={onPurposeLeave} onClick={() => revealPurpose('secure their devices')}>secure their devices</span>{' '}
-                  with{' '}
-                  <span className="ai-purpose-term" onMouseEnter={() => onPurposeEnter('minimal effort')} onMouseLeave={onPurposeLeave} onClick={() => revealPurpose('minimal effort')}>minimal effort</span>{' '}
-                  to help redirect resources towards growing their business.
-                </p>
-              </div>
-              <div className="ai-purpose-reveal-row">
-                {purposeReveals.map((r) => (
+        {/* ── ALIGNING ON THE PURPOSE (Figma node 642:8869 / 642:8972) ──
+             Same CaseStudySection scroll-linked architecture as AI Design
+             Principles / Policy recommendations: `content` is the left column
+             that scrolls through 4 paragraphs (active one inverts to the hover
+             colour); `media` (spanning the rail track — no rail here) is the
+             sticky North star, revealed by a top-down wipe driven by
+             useScrollRevealProgress (0 at "We wanted to…", 1 once "Why?" hits
+             the top). The three terms only become hoverable at full reveal. */}
+        <StackedSection
+          title="Aligning on the purpose"
+          bgColor={PURPOSE_BG}
+          textColor={PURPOSE_FG}
+          hoverColor={PURPOSE_HOVER}
+        >
+          <CaseStudySection
+            mediaSpansRail
+            content={
+              <div className="ai-purpose-paras" ref={purposeContentRef}>
+                {purposeParagraphs.map((p, i) => (
                   <div
-                    key={r.key}
-                    className={`ai-purpose-reveal-box${purposeRevealed.has(r.key) ? ' revealed' : ''}${r.key === purposeHovered ? ' active' : ''}`}
+                    className={`ai-purpose-para${i === activePurposeIndex ? ' active' : ''}`}
+                    key={p.heading}
                   >
-                    <p className="ai-purpose-body type-body">{r.description}</p>
+                    <p className="type-heading1 ai-purpose-para-heading">{p.heading}</p>
+                    <p className="type-body ai-purpose-para-body">{p.body}</p>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
+            }
+            media={
+              <div className={`ai-purpose-northstar${purposeUnlocked ? ' unlocked' : ''}`}>
+                <div className="ai-purpose-northstar-heading-group">
+                  <p className="ai-purpose-label type-body">NORTH STAR</p>
+                  <p className="ai-purpose-heading type-heading2">
+                    Help{' '}
+                    <span className="ai-purpose-term" onMouseEnter={purposeUnlocked ? () => onPurposeEnter('SMBs') : undefined} onMouseLeave={purposeUnlocked ? onPurposeLeave : undefined}>SMBs</span>{' '}
+                    configure and maintain policies so that they can{' '}
+                    <span className="ai-purpose-term" onMouseEnter={purposeUnlocked ? () => onPurposeEnter('secure their devices') : undefined} onMouseLeave={purposeUnlocked ? onPurposeLeave : undefined}>secure their devices</span>{' '}
+                    with{' '}
+                    <span className="ai-purpose-term" onMouseEnter={purposeUnlocked ? () => onPurposeEnter('minimal effort') : undefined} onMouseLeave={purposeUnlocked ? onPurposeLeave : undefined}>minimal effort</span>{' '}
+                    to help redirect resources towards growing their business.
+                  </p>
+                </div>
+                <div className="ai-purpose-reveal-col">
+                  {purposeReveals.map((r) => (
+                    <div
+                      key={r.key}
+                      className={`ai-purpose-reveal-box${purposeUnlocked && r.key === purposeHovered ? ' active' : ''}`}
+                    >
+                      <p className="ai-purpose-body type-body">{r.description}</p>
+                    </div>
+                  ))}
+                </div>
+                {/* Dimming veil — bottom-anchored, height shrinks as you scroll,
+                    wiping the reveal in from the top. Height is the only thing
+                    that changes per frame. */}
+                <div
+                  className="ai-purpose-northstar-veil"
+                  aria-hidden="true"
+                  style={{ height: `${(1 - purposeRevealProgress) * 100}%` }}
+                />
+              </div>
+            }
+          />
         </StackedSection>
 
         {/* ── AI DESIGN PRINCIPLES (Figma node 427:410) ── */}
@@ -484,10 +526,8 @@ export default function CaseStudyHumanAI() {
         </StackedSection>
 
         {/* ── TRANSPARENCY AND TRUST (Figma node 433:1151 / 433:10051) ── */}
-        <StackedSection title="Transparency and trust">
+        <StackedSection title="Transparency and trust" bgColor={"#fdbf68"} textColor={PAGE_BG}>
           <CaseStudySection
-            bgColor={PAGE_BG}
-            textColor={PAGE_FG}
             rail={
               <div className="ai-transparency-notes">
                 {transparencyParagraphs.map((p, i) => (
@@ -581,10 +621,8 @@ export default function CaseStudyHumanAI() {
         </StackedSection>
 
         {/* ── POLICY RECOMMENDATIONS (Figma node 453:10105 / 453:26648 / 453:26680 / 453:26711) ── */}
-        <StackedSection title="Policy recommendations">
+        <StackedSection title="Policy recommendations" bgColor={"#fdbf68"} textColor={PAGE_BG}>
           <CaseStudySection
-            bgColor={PAGE_BG}
-            textColor={PAGE_FG}
             mediaSpansRail={getPolicyRecMode(activePolicyRecIndex) === 'video'}
             rail={
               <div className="ai-policyrec-notes">
@@ -700,7 +738,7 @@ export default function CaseStudyHumanAI() {
         )}
 
         {/* ── TAD TOO SENSITIVE (Figma node 516:12417) ── */}
-        <StackedSection title="Tad too sensitive">
+        <StackedSection title="Tad too sensitive" bgColor={"#fdbf68"} textColor={PAGE_BG}>
           <div className="ai-note-content">
             <p className="type-heading2 ai-note-heading">
               I’d be happy to share more about my ideas for the revenue model, business logic and AI strategy.
@@ -708,7 +746,7 @@ export default function CaseStudyHumanAI() {
           </div>
         </StackedSection>
 
-        <Footer textColor={PAGE_FG} />
+        <Footer bgColor={"#fdbf68"} textColor={PAGE_BG}/>
 
       </div>
     </div>

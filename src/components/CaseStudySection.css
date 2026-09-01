@@ -29,8 +29,12 @@
   width: 100%;
   flex: 1 1 0%;
   min-height: 0;
-  background: var(--cs-grid-bg);
-  color: var(--cs-grid-text);
+  /* Falls back to the ambient section theme (--cs-bg/--cs-fg, set on `.stack`
+     by StackedSection) when the bgColor/textColor props are omitted, so a
+     section can be rethemed from one place — StackedSection — and the grid
+     follows. */
+  background: var(--cs-grid-bg, var(--cs-bg));
+  color: var(--cs-grid-text, var(--cs-fg));
   overflow: visible;
 }
 

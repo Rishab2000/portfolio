@@ -1,0 +1,55 @@
+.ssn {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  background-color: #ffffff;
+  color: #292929;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-3) var(--space-2);
+}
+
+.ssn-message {
+  width: 100%;
+  max-width: 801px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.ssn-contact {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-4);
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 801px;
+  padding: 0 var(--space-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-0-5);
+}
+
+.ssn-contact p {
+  margin: 0;
+}
+
+/* Click-to-copy email — mirrors Footer's .cs-footer-email / .cs-footer-copied. */
+.ssn-email {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ssn-copied {
+  border: 1px solid currentColor;
+  padding: var(--space-0-5) var(--space-1);
+}

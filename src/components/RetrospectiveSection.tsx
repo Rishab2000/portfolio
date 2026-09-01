@@ -37,6 +37,11 @@ interface RetrospectiveSectionProps {
    *  call site rather than baked into RetrospectiveSection.css. Omit for natural
    *  content height. */
   height?: string
+  /** Discoverability cue shown under the first (leftmost) segment with a vertical arrow
+   *  pointing up at it — the hover interaction isn't otherwise visible. Rendered only until
+   *  the viewer hovers any segment for the first time (`revealed` is empty), then gone for
+   *  the life of the page view. Omit to show no hint. */
+  hint?: string
 }
 
 interface RetroRevealToggleProps {
@@ -83,7 +88,7 @@ function revealKeyOf(s: RetroSegment): string {
   return s.groupKey ?? s.label
 }
 
-export default function RetrospectiveSection({ segments, revealMode = 'stay', height }: RetrospectiveSectionProps) {
+export default function RetrospectiveSection({ segments, revealMode = 'stay', height, hint }: RetrospectiveSectionProps) {
   const { revealed, hovered, onEnter, onLeave } = useHoverReveal<string>()
 
   const gridTemplateColumns = segments
@@ -170,6 +175,13 @@ export default function RetrospectiveSection({ segments, revealMode = 'stay', he
             )
         )}
       </div>
+
+      {hint && revealed.size === 0 && (
+        <p className="cs-retro-hint type-body">
+          {hint}
+          <span className="cs-retro-hint-arrow" aria-hidden="true">↑</span>
+        </p>
+      )}
     </div>
   )
 }
