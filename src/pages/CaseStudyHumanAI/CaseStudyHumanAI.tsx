@@ -38,14 +38,14 @@ const PURPOSE_FG = PAGE_FG
 const PURPOSE_HOVER = PAGE_HOVER
 
 /* "Tad too sensitive" closing section colour override — same mechanism (passed
-   to its StackedSection). Set to the page defaults for now. */
-const NOTE_BG = PAGE_BG
-const NOTE_FG = PAGE_FG
+   to its StackedSection). */
+const NOTE_BG = '#fdbf68'
+const NOTE_FG = PAGE_BG
 
 /* Footer colour override — `bgColor` fills the (otherwise transparent) footer,
-   `textColor` drives its text + borders. Page defaults for now. */
-const FOOTER_BG = PAGE_BG
-const FOOTER_FG = PAGE_FG
+   `textColor` drives its text + borders. */
+const FOOTER_BG = '#fdbf68'
+const FOOTER_FG = PAGE_BG
 
 interface PurposeReveal {
   key: string
@@ -738,7 +738,7 @@ export default function CaseStudyHumanAI() {
         )}
 
         {/* ── TAD TOO SENSITIVE (Figma node 516:12417) ── */}
-        <StackedSection title="Tad too sensitive" bgColor={"#fdbf68"} textColor={PAGE_BG}>
+        <StackedSection title="Tad too sensitive" bgColor={NOTE_BG} textColor={NOTE_FG}>
           <div className="ai-note-content">
             <p className="type-heading2 ai-note-heading">
               I’d be happy to share more about my ideas for the revenue model, business logic and AI strategy.
@@ -746,7 +746,7 @@ export default function CaseStudyHumanAI() {
           </div>
         </StackedSection>
 
-        <Footer bgColor={"#fdbf68"} textColor={PAGE_BG}/>
+        <Footer bgColor={FOOTER_BG} textColor={FOOTER_FG}/>
 
       </div>
     </div>

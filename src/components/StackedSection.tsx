@@ -26,11 +26,11 @@ interface StackedSectionProps {
 export default function StackedSection({ title, headerRight, bgColor, textColor, hoverColor, children }: StackedSectionProps) {
   const themeStyle: CSSProperties | undefined =
     bgColor || textColor || hoverColor
-      ? {
+      ? ({
           ...(bgColor ? { '--cs-bg': bgColor } : {}),
           ...(textColor ? { '--cs-fg': textColor } : {}),
           ...(hoverColor ? { '--cs-hover': hoverColor } : {}),
-        }
+        } as CSSProperties)
       : undefined
 
   return (
