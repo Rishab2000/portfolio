@@ -270,7 +270,7 @@ export default function CaseStudyAutomatedCalendar() {
       <div className="ac-page" ref={pageRef}>
 
         {/* ── PAGE HEADER (sticky, always visible) ── */}
-        <ProjectHeader title="Automated calendar" bgColor={PAGE_BG} textColor={PAGE_FG} />
+        <ProjectHeader title="Common ground: An ambient calendar" bgColor={PAGE_BG} textColor={PAGE_FG} />
 
         {/* ── OVERVIEW (Figma node 516:12417) ── */}
         <StackedSection title="Overview">
@@ -294,8 +294,8 @@ export default function CaseStudyAutomatedCalendar() {
               { prefix: 'Scripting and filming', link: 'product videos', description: 'To pitch and sell out idea, I filmed a product video that conveyed the value prosition in just a few minutes.' },
             ]}
             media={[
-              { src: imgDemoSetup, alt: 'Automated calendar demo setup', aspect: '3840 / 2160' },
-              { src: imgDemoInteraction, alt: 'Automated calendar demo in use', aspect: '3840 / 2160' },
+              { src: imgDemoSetup, alt: 'Common ground demo setup', aspect: '3840 / 2160' },
+              { src: imgDemoInteraction, alt: 'Common ground demo in use', aspect: '3840 / 2160' },
             ]}
           />
         </StackedSection>
