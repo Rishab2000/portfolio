@@ -2,8 +2,12 @@ import './CaseStudySection.css'
 import type { CSSProperties, ReactNode } from 'react'
 
 interface CaseStudySectionProps {
-  bgColor: string
-  textColor: string
+  /* Optional — when omitted, `.cs-grid` inherits `--cs-bg` / `--cs-fg` from a
+     themed ancestor (e.g. StackedSection's bgColor/textColor props, set on
+     `.stack`). Pass explicitly only to theme the grid independently of the
+     section it sits in. */
+  bgColor?: string
+  textColor?: string
   rail?: ReactNode
   content?: ReactNode
   media?: ReactNode
@@ -17,8 +21,8 @@ interface CaseStudySectionProps {
 
 export default function CaseStudySection({ bgColor, textColor, rail, content, media, mediaSpansRail }: CaseStudySectionProps) {
   const style = {
-    '--cs-grid-bg': bgColor,
-    '--cs-grid-text': textColor,
+    ...(bgColor ? { '--cs-grid-bg': bgColor } : {}),
+    ...(textColor ? { '--cs-grid-text': textColor } : {}),
   } as CSSProperties
 
   return (

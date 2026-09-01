@@ -347,7 +347,7 @@ export default function CaseStudyAutomatedCalendar() {
 
           <div className="ac-concept-corelogic">
             <p className="ac-concept-label type-body">Core logic</p>
-            <RetrospectiveSection segments={conceptCoreLogicSegments} />
+            <RetrospectiveSection segments={conceptCoreLogicSegments} hint="Give this a hover" />
           </div>
 
           <div className="ac-concept-goal">

@@ -151,7 +151,7 @@ const outcomeParagraphs: OutcomeParagraph[] = [
     heading: 'Maintains composure when faced with different use cases',
     body: 'The layout allows flexibility for customisation, fluidity for different data types and easy scalability and maintenance.',
     diagram: {
-      video: 'flexibility/Homepage_Sections_Flexibility.mp4',
+      video: 'flexibility/Homepage_Sections_Flexibility1.mp4',
     },
     captionItems: [
       'The fixed-width widgets with content hugging height affords a page structure to accommodate information of varying natures.',
@@ -194,6 +194,25 @@ const imgOldHome = asset('/homepage-modernization/old-homepage.png')
 
 /* image assets (Figma node 159:147 — CaseStudyIntro) */
 const imgIntro = asset('/homepage-modernization/intro_image.png')
+
+/* Numbered caption list rendered below the media (image or video) in the Design
+   outcomes section — mirrors CaseStudyHumanAI's renderPolicyRecCaptions / Policy
+   recommendations architecture (mediaSpansRail + captions stacked under the media),
+   minus the Screenshot/Video toggle and its center/left alignment split: this page
+   has no toggle, captions are always left-aligned under the widened media. */
+function renderOutcomeCaptions(items?: string[]) {
+  if (!items) return null
+  return (
+    <ol className="cs-outcomes-caption-list">
+      {items.map((item, idx) => (
+        <li className="cs-outcomes-caption-item" data-caption={idx + 1} key={idx}>
+          <span className="type-caption1 cs-outcomes-caption-num">{idx + 1}</span>
+          <span className="type-caption1 cs-outcomes-caption-text">{item}</span>
+        </li>
+      ))}
+    </ol>
+  )
+}
 
 export default function CaseStudyHomepage() {
   const pageRef = useRef<HTMLDivElement>(null)
@@ -274,7 +293,7 @@ export default function CaseStudyHomepage() {
           }
         >
           <div className="cs-retro-wrap">
-            <RetrospectiveSection segments={retroSegments} revealMode={retroRevealMode} height="60vh" />
+            <RetrospectiveSection segments={retroSegments} revealMode={retroRevealMode} height="60vh" hint="Give this a hover" />
           </div>
         </StackedSection>
 
@@ -298,41 +317,50 @@ export default function CaseStudyHomepage() {
               <div className="cs-challenge-issues">
                 <p className="cs-challenge-eyebrow type-body">Problems that I uncovered</p>
                 <div className="cs-challenge-grid">
-                  <div className="cs-challenge-col">
-                    <div className="cs-challenge-item">
-                      <p className="cs-challenge-item-ttl type-heading1">No summarized system status</p>
-                      <p className="cs-challenge-item-desc type-body">IT admins are required to view multiple pages to gather information, to later piece it together from memory to form a complete understanding.</p>
+                  <div className="cs-challenge-text-col">
+                    <div className="cs-challenge-group">
+                      <div className="cs-challenge-col">
+                        <div className="cs-challenge-item">
+                          <p className="cs-challenge-item-ttl type-heading1">No summarized system status</p>
+                          <p className="cs-challenge-item-desc type-body">IT admins are required to view multiple pages to gather information, to later piece it together from memory to form a complete understanding.</p>
+                        </div>
+                        <div className="cs-challenge-item">
+                          <p className="cs-challenge-item-ttl type-heading1">Lengthy navigation paths</p>
+                          <p className="cs-challenge-item-desc type-body">Our product offers a rich amount of information, however users need to follow lengthy workflows to find the details they need.</p>
+                        </div>
+                        <div className="cs-challenge-item">
+                          <p className="cs-challenge-item-ttl type-heading1">Lack of flexibility</p>
+                          <p className="cs-challenge-item-desc type-body">Existing capabilities lack contextualization, adding unnecessary noise/information to customers with specific needs.</p>
+                        </div>
+                      </div>
+                      <div className="cs-challenge-axis-col">
+                        <div className="cs-challenge-axis-rule" />
+                        <p className="cs-challenge-axis-label type-caption1">Design problems</p>
+                      </div>
                     </div>
-                    <div className="cs-challenge-item">
-                      <p className="cs-challenge-item-ttl type-heading1">Lengthy navigation paths</p>
-                      <p className="cs-challenge-item-desc type-body">Our product offers a rich amount of information, however users need to follow lengthy workflows to find the details they need.</p>
-                    </div>
-                    <div className="cs-challenge-item">
-                      <p className="cs-challenge-item-ttl type-heading1">Lack of flexibility</p>
-                      <p className="cs-challenge-item-desc type-body">Existing capabilities lack contextualization, adding unnecessary noise/information to customers with specific needs.</p>
-                    </div>
-                    <div className="cs-challenge-axis-col">
-                      <div className="cs-challenge-axis-rule" />
-                      <p className="cs-challenge-axis-label type-caption1">Design problems</p>
+                    <div className="cs-challenge-group">
+                      <div className="cs-challenge-col">
+                        <div className="cs-challenge-item">
+                          <p className="cs-challenge-item-ttl type-heading1">No business requirements</p>
+                          <p className="cs-challenge-item-desc type-body">Product team was not involved, this was an incubator project run by the engineering and design team, as a result there was no guidance on business direction</p>
+                        </div>
+                        <div className="cs-challenge-item">
+                          <p className="cs-challenge-item-ttl type-heading1">Unclear design patterns</p>
+                          <p className="cs-challenge-item-desc type-body">IBM design patterns for analytical homepages was still in its nascent stages, the carbon design team was working on a scaleable framework for homepages</p>
+                        </div>
+                        <div className="cs-challenge-item">
+                          <p className="cs-challenge-item-ttl type-heading1">No funding to productise</p>
+                          <p className="cs-challenge-item-desc type-body">As this was an incubator project, means to productise was through volunteers, there was no formal pipeline to deliver the feature to customers.</p>
+                        </div>
+                      </div>
+                      <div className="cs-challenge-axis-col">
+                        <div className="cs-challenge-axis-rule" />
+                        <p className="cs-challenge-axis-label type-caption1">Systemic challenges</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="cs-challenge-col">
-                    <div className="cs-challenge-item">
-                      <p className="cs-challenge-item-ttl type-heading1">No business requirements</p>
-                      <p className="cs-challenge-item-desc type-body">Product team was not involved, this was an incubator project run by the engineering and design team, as a result there was no guidance on business direction</p>
-                    </div>
-                    <div className="cs-challenge-item">
-                      <p className="cs-challenge-item-ttl type-heading1">Unclear design patterns</p>
-                      <p className="cs-challenge-item-desc type-body">IBM design patterns for analytical homepages was still in its nascent stages, the carbon design team was working on a scaleable framework for homepages</p>
-                    </div>
-                    <div className="cs-challenge-item">
-                      <p className="cs-challenge-item-ttl type-heading1">No funding to productise</p>
-                      <p className="cs-challenge-item-desc type-body">As this was an incubator project, means to productise was through volunteers, there was no formal pipeline to deliver the feature to customers.</p>
-                    </div>
-                    <div className="cs-challenge-axis-col">
-                      <div className="cs-challenge-axis-rule" />
-                      <p className="cs-challenge-axis-label type-caption1">Systemic challenges</p>
-                    </div>
+                  <div className="cs-challenge-media">
+                    <img src={imgOldHome} alt="Old MaaS360 homepage" />
                   </div>
                 </div>
               </div>
@@ -402,27 +430,7 @@ export default function CaseStudyHomepage() {
           <CaseStudySection
             bgColor={PAGE_BG}
             textColor={PAGE_FG}
-            rail={
-              <div className="cs-outcomes-notes">
-                {outcomeParagraphs.map((p, i) => (
-                  <div
-                    key={p.label}
-                    className={`cs-outcomes-note-item${i === activeOutcomeIndex ? ' active' : ''}`}
-                  >
-                    {p.captionItems && (
-                      <ol className="cs-outcomes-caption-list">
-                        {p.captionItems.map((item, idx) => (
-                          <li className="cs-outcomes-caption-item" data-caption={idx + 1} key={idx}>
-                            <span className="type-caption1 cs-outcomes-caption-num">{idx + 1}</span>
-                            <span className="type-caption1 cs-outcomes-caption-text">{item}</span>
-                          </li>
-                        ))}
-                      </ol>
-                    )}
-                  </div>
-                ))}
-              </div>
-            }
+            mediaSpansRail
             content={
               <div className="cs-outcomes-paras" ref={outcomesContentRef}>
                 {outcomeParagraphs.map((p, i) => (
@@ -489,6 +497,7 @@ export default function CaseStudyHomepage() {
                         )}
                       </button>
                     )}
+                    {renderOutcomeCaptions(p.captionItems)}
                   </div>
                 ))}
               </div>

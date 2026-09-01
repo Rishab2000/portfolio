@@ -378,8 +378,13 @@ floor** — nothing in this codebase should re-add `min-height: 100vh` to make a
 
 Props: `title: string` (rendered in the header), `headerRight?: ReactNode` (optional
 control right-aligned next to the title — e.g. `RetrospectiveSection`'s "keep information
-on screen" toggle), `children: ReactNode` (rendered inside `section.stack`, completely
-opaque to this component).
+on screen" toggle), `bgColor?` / `textColor?` / `hoverColor?` (optional per-section colour
+override — when set, `--cs-bg` / `--cs-fg` / `--cs-hover` are applied inline to BOTH the
+`stack-head` and the `section.stack`, so one section can break from the page's ambient
+theme: its header bar, background, and any descendant reading those vars, including a
+nested `CaseStudySection` if passed the same colours. `CaseStudyHumanAI`'s "Aligning on
+the purpose" threads `PURPOSE_BG/FG/HOVER` this way), `children: ReactNode` (rendered
+inside `section.stack`, completely opaque to this component).
 
 Hard constraint: must keep rendering `header.nextElementSibling === section` with
 `stack-head` / `stack` classes on those exact two elements — `useStackingSections` reads
@@ -451,8 +456,17 @@ resolved, rendered track list, which reveals extra implicit rows/columns immedia
 for that first if a grid layout ever looks like it has a phantom row/column with no
 CSS rule that could explain it.
 
-`bgColor`/`textColor` become `--cs-grid-bg`/`--cs-grid-text`, so the same component renders
-correctly on differently-themed pages. `.cs-grid-rail` and `.cs-grid-media` are
+`bgColor`/`textColor` are **optional** — when passed they become `--cs-grid-bg`/`--cs-grid-text`
+(theme the grid independently of its surroundings); when omitted, `.cs-grid` falls back to
+`var(--cs-bg)`/`var(--cs-fg)` inherited from a themed ancestor — normally the enclosing
+`StackedSection` given its own `bgColor`/`textColor`/`hoverColor` (which sets those vars on
+both `stack-head` and `stack`). Prefer theming a whole section from `StackedSection` alone
+and letting the nested `CaseStudySection` inherit — passing colours to both is redundant and
+easy to leave half-done (the header stops matching the body). Sections themed *light*
+(bg = the page's accent, text = the page's dark) also need their intra-section `.active`
+invert rules to use `var(--cs-fg)` for text instead of `var(--cs-bg)` — see the note above
+`.ai-transparency-para.active` in `CaseStudyHumanAI.css`. Passing colours explicitly still
+lets the same component render correctly on differently-themed pages. `.cs-grid-rail` and `.cs-grid-media` are
 `position: sticky` with `top` (and, for media, `max-height`) computed and injected inline
 by `useStackingSections` — they do nothing on their own without a page wired into that
 hook. `.cs-grid-media` uses `align-items: flex-start` (not the `stretch` default) plus
@@ -505,10 +519,13 @@ at: `.project-header`.
 
 `src/components/Footer.tsx` + `.css`. Shared footer (quote + email/phone contact, with a
 "click to copy email" interaction) reused verbatim across `HomePage` and all case study
-pages. Takes a single `textColor: string` prop, consumed as `--footer-fg` and driving both
-the text colour and both border colours — no separate border prop needed. Pick the value
-per page to match its background (dark case-study pages currently all pass the same cream
-`#f5ecc2`; `HomePage`, which is white, passes `#292929` to match its other dark text).
+pages. Takes `textColor: string` (required — consumed as `--footer-fg`, drives the text
+colour and both border colours, no separate border prop needed) and `bgColor?: string`
+(optional — consumed as `--footer-bg`; omitted, the footer stays transparent and shows the
+page background through, which is the default everywhere except where a page wants the
+footer on its own fill, e.g. `CaseStudyHumanAI`'s `FOOTER_BG`/`FOOTER_FG`). Pick `textColor`
+per page to match whatever's behind it (dark case-study pages currently all pass the same
+cream `#f5ecc2`; `HomePage`, which is white, passes `#292929` to match its other dark text).
 
 `HomePage`'s wrapper (`.layout-inner`) needed `flex-direction: column` added before
 `<Footer />` could be dropped in as a second child — it defaults to `row` without it, which
@@ -751,6 +768,54 @@ height + `offsetPx` slack) and, every scroll frame, picks the *last* paragraph w
 crossed that line as `activeIndex`. `offsetPx` is extra breathing room past the pinned
 header stack before a paragraph counts as active — tune per-section if the swap feels early
 or late; `130` matched Approach/Design outcomes acceptably but isn't a universal constant.
+
+### `useScrollRevealProgress`
+
+`src/hooks/useScrollRevealProgress.ts`. Same geometry/rAF machinery, same options, but
+returns a continuous `0 → 1` instead of an index: `0` when the first matched paragraph's top
+reaches the `activationLine`, `1` when the last one's does (clamped either side, i.e. the
+span between first- and last-paragraph tops is the whole 0→1 range). Kept standalone from
+`useActiveDiagramIndex` — a section can take the fraction, the index, or run both hooks side
+by side. `CaseStudyHumanAI`'s "Aligning on the purpose" runs both: `activeIndex` highlights
+the left column's current paragraph, while the progress drives the scroll-wipe veil below.
+
+### Pattern: scroll-wipe reveal veil
+
+A **veil** is a plain overlay that dims the element it covers, and progressively uncovers it
+as you scroll — a directional "wipe" (top-down, bottom-up, or sideways) rather than a whole-
+element opacity fade. First built for `CaseStudyHumanAI`'s "Aligning on the purpose" North
+star column (`.ai-purpose-northstar-veil`). Reuse this instead of animating the target's own
+`opacity` whenever the reveal should be *partial* — some of the element clear, the rest still
+dimmed — at any given scroll position.
+
+Mechanics:
+
+- The target renders at **full opacity**; `position: relative`.
+- A single child `<div aria-hidden="true">`, `position: absolute`, pinned to three sides
+  (`left: 0; right: 0` + `bottom: 0` for a top-down wipe, or `top: 0` for bottom-up),
+  `background: var(--cs-bg)` (whatever the page/section background is) at a high `opacity`
+  (~0.96 leaves the covered content barely legible — this is the one number you tune for
+  "how dim"), `pointer-events: none`, and a small `z-index` so it paints above the target's
+  flow content. It's the **last** DOM child of the target.
+- Exactly one property changes per scroll frame, set inline from a `0 → 1` progress value
+  (`useScrollRevealProgress`, or any other scroll-linked ratio): `style={{ height:
+  `${(1 - progress) * 100}%` }}`. Anchored at `bottom`, shrinking height wipes the reveal in
+  from the top. No CSS `transition` — it tracks scroll 1:1, which *is* the animation (and
+  keeps to the repo's "hover/scroll state changes are instant, no easing" rule).
+- **Gotcha — the veil sizes to the target's box, so that box must actually reach the visible
+  bottom of the content.** A negative bottom `margin` on the target's last child (e.g. the
+  `-var(--space-1)` bleed margins on `.ai-purpose-reveal-box`) pulls the target's box up,
+  and `height: X%` / `bottom: 0` then both stop short of the real text bottom. Fix by adding
+  a matching `padding-bottom` to the target (see `.ai-purpose-northstar`), not by hacking
+  the veil's offsets.
+- If the target sits inside `CaseStudySection`'s `mediaSpansRail` (`.cs-grid-media--wide`),
+  note that `> *` there gets `pointer-events: auto` — that rule only hits the target (a
+  direct child), not the veil (a grandchild), so the veil's own `pointer-events: none` still
+  wins and clicks fall through to interactive content behind it.
+
+"Aligning on the purpose" also gates its three hover terms (`.ai-purpose-term`) — inert
+(`pointer-events: none`, handlers not wired) until `progress >= 1`, via an `.unlocked` class
+toggled on the target.
 
 ### `useProportionalHeight`
 

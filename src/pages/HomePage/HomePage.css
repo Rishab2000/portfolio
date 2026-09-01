@@ -80,15 +80,58 @@
   align-items: flex-start;
 }
 
-.hero-years,
-.hero-degree {
+.hero-years {
   color: #292929;
   width: 496px;
   margin: 0;
 }
 
-.hero-degree em {
-  font-style: italic;
+/* ── DEGREE HOVER TOOLTIPS (Figma node 628:4000 / 628:4019) ── */
+
+.hero-degree-term {
+  position: relative;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  text-underline-position: from-font;
+  padding: var(--space-0-25);
+  margin: calc(var(--space-0-25) * -1);
+}
+
+.hero-degree-term:hover {
+  background-color: #292929;
+  color: #fff;
+}
+
+.hero-degree-tooltip {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: var(--space-0-5);
+  z-index: 10;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-0-5);
+  background: #292929;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.hero-degree-tooltip p {
+  margin: 0;
+}
+
+.hero-degree-tooltip-link {
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  text-underline-position: from-font;
+  cursor: pointer;
+}
+
+.hero-degree-term:hover .hero-degree-tooltip {
+  display: flex;
 }
 
 .hero-description {
@@ -112,6 +155,11 @@
   align-items: flex-start;
   width: 100%;
   padding: 0 10px;
+}
+
+.project-list-note {
+  padding: 24px 60px; /* matches .project-row's 60px text inset; vertical tighter */
+  color: #292929;
 }
 
 .project-row {
@@ -152,11 +200,11 @@
   position: fixed;
   top: 0;
   left: 0;
-  /* EXPERIMENT: 80% of the image's own natural pixel size, not a fixed box —
-     see the note in ProjectRow.tsx. transform-origin stays at the corner
-     `left`/`top` position, so the scale doesn't shift where it's anchored. */
-  transform: scale(0.5);
-  transform-origin: top left;
+  /* EXPERIMENT: each row's showcase image is sized to a fraction of the viewport
+     width, not a fixed box or its own natural size — see the note in ProjectRow.tsx.
+     height: auto keeps the source image's aspect ratio. */
+  width: 50vw;
+  height: auto;
   pointer-events: none;
   z-index: 100;
 }

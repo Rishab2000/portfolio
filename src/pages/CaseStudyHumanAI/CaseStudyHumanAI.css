@@ -49,65 +49,66 @@
   padding: var(--space-1);
 }
 
-/* ── CONTEXT (Figma node 363:682) ── */
+/* ── CONTEXT (Figma node 363:682) — plain 2-column layout, sticky text column
+   + scrolling media column, mirroring CaseStudyAutomatedCalendar's
+   .ac-inspiration-* (NOT CaseStudySection's 3-column content/rail/media grid —
+   this section has no rail/middle column). */
 
 .ai-context-content {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
   align-items: flex-start;
-  padding: 24px;
+  gap: var(--space-2);
+  padding: var(--space-1);
   width: 100%;
   box-sizing: border-box;
 }
 
 .ai-context-cols {
   display: flex;
-  gap: var(--space-1);
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 560px;
+  flex-shrink: 0;
+  /* .cs-sticky class (see useStackingSections.ts / CLAUDE.md) — top is
+     computed and injected inline per-frame; position is declared here since
+     the hook only ever sets top, never position. */
+  position: sticky;
 }
 
 .ai-context-col {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  flex: 1 0 0;
-  min-width: 0;
 }
 
 .ai-context-label {
-  text-indent: 24px;
-  white-space: nowrap;
   margin: 0;
 }
 
 .ai-context-body {
-  width: 375px;
-  max-width: 100%;
+  max-width: 372px;
   margin: 0;
 }
 
 .ai-context-media {
+  flex: 1 0 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
   align-items: flex-start;
-  width: 100%;
 }
 
 .ai-context-images {
   display: flex;
+  flex-direction: column;
   gap: var(--space-1);
-  align-items: flex-start;
   width: 100%;
 }
 
 .ai-context-image {
   position: relative;
-  flex: 1 0 0;
-  min-width: 0;
+  width: 100%;
   aspect-ratio: 1512 / 982;
   overflow: hidden;
 }
@@ -122,36 +123,91 @@
   pointer-events: none;
 }
 
-/* ── ALIGNING ON THE PURPOSE (Figma node 413:151) ── */
+/* ── ALIGNING ON THE PURPOSE (Figma node 642:8869 / 642:8972) — reuses
+   CaseStudySection (content + media, mediaSpansRail so there's no empty rail
+   gap), exactly like AI Design Principles below. `content` = .ai-purpose-paras
+   scrolls (useActiveDiagramIndex + useProportionalHeight); `media` =
+   .ai-purpose-northstar is sticky (via .cs-grid-media) and renders at full
+   opacity, dimmed by .ai-purpose-northstar-veil — a bottom-anchored overlay
+   whose height shrinks with useScrollRevealProgress, wiping the reveal in from
+   the top. Terms unlock (become hoverable) only at full reveal. ── */
 
-.ai-purpose-content {
+.ai-purpose-paras {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  align-items: flex-start;
-  padding: 24px 24px var(--space-5) 24px;
   width: 100%;
-  box-sizing: border-box;
+  /* height: natural content height × 1.5 — set by useProportionalHeight (see
+     CaseStudyHumanAI.tsx), so the scroll runway below the last paragraph
+     scales with content, not the screen. Do NOT set height here. */
 }
 
-.ai-purpose-cols {
-  display: flex;
-  gap: var(--space-1);
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.ai-purpose-col {
+.ai-purpose-para {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  flex: 1 0 0;
-  min-width: 0;
+  gap: var(--space-1);
+  padding: var(--space-1);
 }
 
-.ai-purpose-cols > div:empty {
-  flex: 1 0 0;
+.ai-purpose-para.active {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.ai-purpose-para-heading {
+  margin: 0;
+  width: 472px;
+  max-width: 100%;
+}
+
+.ai-purpose-para-body {
+  margin: 0;
+  width: 372px;
+  max-width: 100%;
+}
+
+/* Right column lives inside .cs-grid-media (already position: sticky, top
+   injected per-frame by useStackingSections). Full opacity — the dim comes
+   from the veil overlay below. position: relative anchors that veil. */
+.ai-purpose-northstar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  /* Cancels the last .ai-purpose-reveal-box's negative bottom margin (see
+     below) so this element's height — which the veil's `height: X%` and
+     bottom anchor both resolve against — reaches the true bottom of the
+     visible text instead of stopping 18px short. */
+  padding-bottom: var(--space-1);
+}
+
+/* Bottom-anchored dimming overlay. Only `height` changes per scroll frame
+   (set inline from useScrollRevealProgress: 100% → 0%); as it shrinks it
+   uncovers the column from the top down. --cs-bg at 0.96 leaves the covered
+   text barely visible, matching the old dimmed look. */
+.ai-purpose-northstar-veil {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background: var(--cs-bg);
+  opacity: 0.96;
+  pointer-events: none;
+}
+
+/* Terms are inert until the wipe finishes (.unlocked added in JSX). */
+.ai-purpose-northstar:not(.unlocked) .ai-purpose-term {
+  pointer-events: none;
+  cursor: default;
+}
+
+.ai-purpose-northstar-heading-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
 }
 
 .ai-purpose-label {
@@ -160,79 +216,36 @@
   margin: 0;
 }
 
-.ai-purpose-body {
-  width: 375px;
-  max-width: 100%;
-  margin: 0;
-}
-
-.ai-purpose-terminal {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  width: 100%;
-}
-
-.ai-purpose-terminal-row {
-  display: flex;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.ai-purpose-terminal-row p {
-  flex: 1 0 0;
-  min-width: 0;
-  margin: 0;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.ai-purpose-terminal-word {
-  margin-left: 24px;
-  margin-right: 24px;
-}
-
-.ai-purpose-northstar {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  width: 100%;
-}
-
-.ai-purpose-northstar-heading-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  width: 100%;
-}
-
 .ai-purpose-heading {
   margin: 0;
   width: 100%;
 }
 
-.ai-purpose-reveal-row {
+.ai-purpose-reveal-col {
   display: flex;
+  flex-direction: column;
   gap: var(--space-2);
   width: 100%;
 }
 
+/* Notes are always rendered now (part of the scroll wipe, not hover-revealed);
+   .active is just the hover highlight, and only fires once terms are unlocked. */
 .ai-purpose-reveal-box {
-  flex: 1 0 0;
-  min-width: 0;
+  margin: calc(var(--space-1) * -1);
+  width: 372px;
   padding: var(--space-1);
-  margin: -18px;
   box-sizing: border-box;
-  opacity: 0;
-}
-
-.ai-purpose-reveal-box.revealed {
-  opacity: 1;
 }
 
 .ai-purpose-reveal-box.active {
   background: var(--cs-hover);
   color: var(--cs-bg);
+}
+
+.ai-purpose-body {
+  width: 375px;
+  max-width: 100%;
+  margin: 0;
 }
 
 .ai-purpose-term {
@@ -366,9 +379,13 @@
   margin: -9px;
 }
 
+/* This section is themed light (orange bg / navy text) via StackedSection, so
+   the active-item invert wants the section's own text colour (--cs-fg = navy),
+   not --cs-bg — unlike the dark sections (purpose, principles) where --cs-bg is
+   the dark one. Same for the tab/toggle `.active` rules below. */
 .ai-transparency-para.active {
   background-color: var(--cs-hover);
-  color: var(--cs-bg);
+  color: var(--cs-fg);
 }
 
 .ai-transparency-label {
@@ -479,7 +496,7 @@
 
 .ai-transparency-tab.active {
   background: var(--cs-hover);
-  color: var(--cs-bg);
+  color: var(--cs-fg);
 }
 
 /* ── POLICY RECOMMENDATIONS (Figma node 453:10105 / 453:26648 / 453:26680 / 453:26711) ── */
@@ -502,9 +519,11 @@
   margin: -9px;
 }
 
+/* Themed light via StackedSection — invert to --cs-fg (navy), see the note on
+   .ai-transparency-para.active above. */
 .ai-policyrec-para.active {
   background-color: var(--cs-hover);
-  color: var(--cs-bg);
+  color: var(--cs-fg);
 }
 
 .ai-policyrec-heading {
@@ -572,7 +591,7 @@
 
 .ai-policyrec-media-toggle button.active {
   background: var(--cs-hover);
-  color: var(--cs-bg);
+  color: var(--cs-fg);
 }
 
 .ai-policyrec-video {

@@ -206,7 +206,7 @@
   font-family: 'Medway', sans-serif;
   font-weight: 400;
   font-size: var(--fs-body);
-  line-height: 116%;
+  line-height: 118%;
   letter-spacing: -0.009em;
 }
 
@@ -234,6 +234,7 @@
    ═══════════════════════════════════════════ */
 
 :root {
+  --space-0-25: 4.5px; /* quarter line — added for a case that didn't round cleanly to --space-0-5 */
   --space-0-5: 9px;  /* half line */
   --space-1: 18px;  /* 1 line */
   --space-2: 36px;  /* 2 lines */
