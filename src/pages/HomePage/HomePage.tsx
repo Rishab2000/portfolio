@@ -18,9 +18,9 @@ export default function HomePage() {
                 <div className="hero-name-top">
                   <p className="type-heading3 hero-heading hero-heading-text">Rishab Sachidanand</p>
                   <div className="type-body hero-years">
-                    <span className="hero-degree-term">5 yrs 6 mos
+                    <span className="hero-degree-term">5 yrs 7 months
                       <span className="hero-degree-tooltip">
-                        <p className="type-body">4 years 8 months @ IBM Software Labs | UX Designer</p>
+                        <p className="type-body">4 years 7 months @ IBM Software Labs | UX Designer</p>
                         <p className="type-body">10 months @ Smarter Dharma | Sole designer at the Startup</p>
                       </span>
                     </span> experience in shipping products | <span className="hero-degree-term">B Des
