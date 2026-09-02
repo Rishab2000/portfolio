@@ -24,7 +24,7 @@ const PAGE_HOVER = '#fdd4bd'
 
 /* image assets (Figma node 516:12417) */
 const imgDemoSetup = asset('/automated-calendar/overview/demo-setup.png')
-const imgDemoInteraction = asset('/automated-calendar/overview/demo-interaction.jpg')
+const imgDemoInteraction = asset('/automated-calendar/overview/demo-setup2.png')
 
 /* video assets (Figma node 516:12446) */
 const vidDemo = asset('/automated-calendar/video/demo.mp4')
@@ -89,7 +89,7 @@ const inspirationParagraphs: InspirationParagraph[] = [
 const imgInspiration = asset('/automated-calendar/inspiration.png')
 
 /* "Product shots" 2×2 grid (Figma node 610:3911) — no text, just the four
-   photos; filenames match the Figma layer names 1:1 (top-left, top-right,
+   photos; filenames match the Figma layer names 1:1 (top-left, dop-right,
    bottom-left, bottom-right, in that order). */
 const productShots = [
   '2026-07-01_10-30-23.jpg',
