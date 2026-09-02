@@ -28,7 +28,7 @@ export default function App() {
 
   if (path === '/homepage-modernization') return <CaseStudyHomepage />
   if (path === '/human-ai-maas360') return <CaseStudyHumanAI />
-  if (path === '/security-vision') return <CaseStudyAutomatedCalendar />
+  if (path === '/common-ground') return <CaseStudyAutomatedCalendar />
   if (path === '/scroll-test') return <ScrollStackTest />
   return <HomePage />
 }
