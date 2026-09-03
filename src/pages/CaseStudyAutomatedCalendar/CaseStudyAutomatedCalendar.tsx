@@ -69,7 +69,7 @@ const conceptCoreLogicSegments: RetroSegment[] = [
 const interactionGoalHeading = 'Interaction goal'
 const interactionGoalBody: string[] = [
   'Inspired by the behaviour of parent(s) coming to the kitchen or the living room to plan or align on the things they need to do.',
-  'These are artifact that always live in the same place, and helps the viewer quickly get an overview of what needs to be done, it requires very little interaction. Just looking at it.',
+  'These artefacts always live in the same place, and helps the viewer(s) quickly get an overview of what needs to be done, with just a glance. \n \n  It requires very little interaction. Just looking at it.',
 ]
 const imgTargetBehaviour = asset('/automated-calendar/target_behaviour.png')
 

@@ -765,7 +765,16 @@ const activeIndex = useActiveDiagramIndex(contentRef, {
 
 It computes one `activationLine` (fixed header height + this section's own `.stack-head`
 height + `offsetPx` slack) and, every scroll frame, picks the *last* paragraph whose top has
-crossed that line as `activeIndex`. `offsetPx` is extra breathing room past the pinned
+crossed that line as `activeIndex`.
+
+Each matched paragraph is also **click-to-scroll**: the hook sets `cursor: pointer` on every
+paragraph and attaches one delegated `click` listener on the container that smooth-scrolls a
+clicked paragraph up to the `activationLine` (`window.scrollTo` on `window.scrollY + rect.top
+− activationLine + 2`) — the position that naturally makes it `active`, so the previous
+paragraph lands just out of view above the pinned header stack and the synced media/notes
+columns swap to match. Clicks on an interactive control inside a paragraph
+(`button`/`a`/`input`/`label`/`select`/`textarea`) are ignored. This is global to every
+`useActiveDiagramIndex` call site; no per-page wiring. `offsetPx` is extra breathing room past the pinned
 header stack before a paragraph counts as active — tune per-section if the swap feels early
 or late; `130` matched Approach/Design outcomes acceptably but isn't a universal constant.
 

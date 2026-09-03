@@ -135,7 +135,7 @@
 .ai-purpose-paras {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-2);
   width: 100%;
   /* height: natural content height × 1.5 — set by useProportionalHeight (see
      CaseStudyHumanAI.tsx), so the scroll runway below the last paragraph
@@ -146,7 +146,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  padding: var(--space-1);
+  padding: var(--space-0-5);
+  margin-left: calc(var(--space-0-5) * -1);
 }
 
 .ai-purpose-para.active {
@@ -267,7 +268,7 @@
 .ai-principles-paras {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-2);
   width: 100%;
   /* height: natural content height × 1.5 — set by useProportionalHeight,
      see CaseStudyHumanAI.tsx, so the scroll runway below the last

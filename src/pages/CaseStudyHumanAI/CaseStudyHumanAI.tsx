@@ -54,7 +54,7 @@ interface PurposeReveal {
 
 const purposeReveals: PurposeReveal[] = [
   { key: 'SMBs', description: 'MaaS360’s strategy was to acquire the SMB market for mobile device management.' },
-  { key: 'secure their devices', description: 'The global average cost of a data breach is $4.4M, maintaining security is pivotal to ensure business continuity' },
+  { key: 'secure their devices', description: 'The global average cost of a data breach is $4.4M. Maintaining security is pivotal to ensure business continuity.' },
   { key: 'minimal effort', description: 'The market was filled with bloated and complex solutions, creating an opportunity for a simpler option.' },
 ]
 
@@ -68,10 +68,10 @@ interface PurposeParagraph {
 }
 
 const purposeParagraphs: PurposeParagraph[] = [
-  { heading: 'We wanted to...', body: 'Build the first AI offering for MaaS360, we wanted make a mark and set the boat sailing for future features.' },
-  { heading: 'We hoped to...', body: 'We hoped that GenAI would be the core of our functionality, such that it helps with marketability on release.' },
-  { heading: 'We aimed for...', body: 'Finding relevant places where we could use the technology, aimed at finding these workflows.' },
-  { heading: 'Why?', body: 'This lead us down a path were we were focused on implementing the tech rather than delivering value.' },
+  { heading: 'We wanted to...', body: 'Build the first AI offering for MaaS360, make a mark, and set things in motion for future features.' },
+  { heading: 'We hoped to...', body: 'Have GenAI as our core functionality, so that it would help with marketability on release.' },
+  { heading: 'We aimed at...', body: 'Identifying relevant workflows and features where we could implement the technology.' },
+  { heading: 'Why?', body: 'This led us down a path where we were focused on implementing the tech rather than delivering value.' },
 ]
 
 interface AIPrincipleParagraph {
@@ -83,35 +83,35 @@ interface AIPrincipleParagraph {
 
 /* copy + diagram pairing (Figma node 427:410 / 427:843 / 427:890 / 427:916) */
 const aiPrinciplesParagraphs: AIPrincipleParagraph[] = [
-  { heading: 'Why?', body: 'Establish the framework for all AI experiences, that way this effort will have it’s ripples for future offerings.' },
+  { heading: 'Why?', body: 'Establish the framework for all AI experiences. That way, this effort will have ripple effects for future offerings.' },
   {
     heading: 'Proactive',
-    body: 'Anticipate, predict and intervene before the user has resolve the issue or feel friction.',
+    body: 'Anticipate, predict and intervene before the user has to resolve the issue or feels friction.',
     diagram: 'proactive.png',
     captionItems: [
-      'Prioritise designing AI capabilities that avoid deployment problems, over diagnosing them.',
-      'Nudge users only when required, do not introduce noise through false positives or superficial insights.',
+      'Prioritise designing AI capabilities that avoid deployment problems, rather than diagnosing them.',
+      'Nudge users only when required; do not introduce noise through false positives or superficial insights.',
       'Clarify an AI feature’s capabilities and limitations.',
     ],
   },
   {
     heading: 'Integrated',
-    body: 'Compound and enhance established workflows, making existing workflows cumbersome with AI will be a failure on our part.',
+    body: 'Enhance established workflows. Making existing workflows cumbersome with AI will be a failure on our part.',
     diagram: 'integrate.png',
     captionItems: [
-      'Do not re-invent the wheel, make it run smoother.',
+      'Do not reinvent the wheel; make it run smoother.',
       'Minimise the separation between traditional product functionality and AI functionality.',
-      'Do not default to the chat interface, evaluate and establish the need for chat.',
+      'Do not default to the chat interface; evaluate and establish the need for chat.',
     ],
   },
   {
-    heading: 'Contextualized',
-    body: 'Design mouldable experiences, the functionality should adapt to diverse customer needs and contexts.',
+    heading: 'Contextualised',
+    body: 'Design mouldable experiences; the functionality should adapt to diverse customer needs and contexts.',
     diagram: 'contextualize.png',
     captionItems: [
-      'Morph workflows and granularity proportional to the size of the organisation.',
-      'Contextualise organisation strategy for insights and recommendations, avoid generic intervention',
-      'Information shown should always relate to the active page, workflow or surrounding information.'
+      'Morph workflows and granularity in proportion to the size of the organisation.',
+      'Contextualise organisational strategy for insights and recommendations; avoid generic interventions.',
+      'Information shown should always relate to the active page, workflow or surrounding context.'
     ],
   },
 ]
@@ -134,28 +134,28 @@ interface TransparencyParagraph {
 const transparencyParagraphs: TransparencyParagraph[] = [
   {
     label: 'Clarity',
-    heading: 'Reduce the black box feeling',
+    heading: 'Reduce the black-box feeling',
     body: 'Manage expectations by clearly communicating what the system is doing, how, and what information is used.',
     diagram: 'explainability.png',
     captionItems: [
-      'Clear definition of the capability to manage user expectations',
-      'Transparancy of AI model, and ability to learn more details',
-      'Clarifies the process we use to generate insights',
+      'Clear definition of the capability to manage user expectations.',
+      'Transparency of the AI model, and the ability to learn more details.',
+      'Clarity on the process we use to generate insights.',
     ],
     
   },
   {
     label: 'Always beta',
-    heading: 'First ever realtime feedback and telemetry',
-    body: 'Allowed design, product, and development to easily view and access user feedback. Fostered a user centred culture that complemented the existing engineering focus',
+    heading: 'First-ever real-time feedback and telemetry',
+    body: 'Allowed design, product, and development to easily view and access user feedback. Fostered a user-centred culture that complemented the existing engineering focus.',
     tabs: [
       { label: 'Reinforcement', src: 'feedback positive.png' },
       { label: 'Reconsider', src: 'feedback negative.png' },
     ],
      captionItems: [
       'Enabled wider reach while saving time.',
-      'Generated generic and detailed user sentiment metrics.',
-      'Utilized to plan and clarify roadmap for this new business direction'
+      'Generated high-level and detailed user sentiment metrics.',
+      'Utilised to plan and clarify the roadmap for this new business direction.'
 
     ],
   },
@@ -172,20 +172,20 @@ interface PolicyRecParagraph {
 /* copy + diagram pairing (Figma node 453:10105 / 453:26648 / 453:26680 / 453:26711) */
 const policyRecParagraphs: PolicyRecParagraph[] = [
   {
-    heading: 'Reducing the time to value from weeks to minutes.',
-    body: 'Customers can align to security standards (STIGS, HIIPA, GDPR, etc) with a click of a button.\n \n An effort that required weeks of research and implementation.',
+    heading: 'Reducing the time-to-value from weeks to minutes.',
+    body: 'Customers can align with security standards (STIGs, HIPAA, GDPR, etc.) with a click of a button.\n \n An effort that required weeks of research and implementation.',
     diagram: 'Configure.png',
     video:'configure.mp4',
     captionItems: [
-      'Lowers the costs for large organisations to meet compliance requirements',
-      'Faster and more secure out of the box deployments for small and medium businesses',
-      'Allows users focus on the required outcome, not configuration technicalities',
+      'Lowers the costs for large organisations to meet compliance requirements.',
+      'Faster and more secure out-of-the-box deployments for small and medium businesses.',
+      'Allows users to focus on the required outcome, not configuration technicalities.',
 
     ],
   },
   {
-    heading: 'Lowering maintenance costs',
-    body: 'Organisations can reduce operational resources for policy up-keep, as policies are automatically reviewed. \n \n Actionable recommendations point to the exact changes required to stay secure.',
+    heading: 'Lowering maintenance costs.',
+    body: 'Organisations can reduce operational resources for policy upkeep, as policies are automatically reviewed. \n \n Actionable recommendations point to the exact changes required to stay secure.',
     diagram: 'recommendations.png',
     video: 'recommendations.mp4',
     captionItems: [
@@ -194,24 +194,24 @@ const policyRecParagraphs: PolicyRecParagraph[] = [
     ],
   },
   {
-    heading: 'Controlled automation minimizes outages.',
-    body: 'Misconfigured policies are often the reason for outages and productivity loss. \n \n The user experience prioritizes human review over heavy automation, avoiding bulk or hard to trace changes.',
+    heading: 'Controlled automation minimises outages.',
+    body: 'Misconfigured policies are often the reason for outages and productivity loss. \n \n The user experience prioritises human review over heavy automation, avoiding bulk or hard-to-trace changes.',
     diagram: 'apply_recommendations.png',
     video: 'maintenance.mp4',
     captionItems: [
-      'Trust human judgement on final decisions to update and deploy policies',
-      'New language guidelines prioritizes clear cause-and-effect explainability',
-      'A click through experience allows easy review before applying recommended changes.',
+      'Trust human judgement for the final decisions to update and deploy policies.',
+      'New language guidelines prioritise clear cause-and-effect explainability.',
+      'A click-through experience allows easy review before applying recommended changes.',
     ],
   },
   {
-    heading: 'Quicker knowledge transfer',
-    body: 'Our customers experience high IT admin turnover, and are burdened with constant re-onboarding. \n \n Policy summarizations reduce the time it takes for a new admin to contribute',
+    heading: 'Quicker knowledge transfer.',
+    body: 'Our customers experience high IT admin turnover, and are burdened with constant re-onboarding. \n \n Policy summaries reduce the time it takes for a new admin to contribute.',
     diagram: 'summerization.png',
     video:'summerisations.mp4',
     captionItems: [
       'Transfer of basic knowledge is handled in-product, allowing more time for discussing questions, architecture and strategy.',
-      'Benefits compond for organsations with 10-15 complex policies.',
+      'Benefits compound for organisations with 10-15 complex policies.',
     ],
   },
 ]
@@ -237,8 +237,8 @@ function renderPolicyRecCaptions(items?: string[], align: 'center' | 'left' = 'c
 /* Placeholder — update with this project's real time-allocation breakdown. */
 const retroSegments: RetroSegment[] = [
   { label: 'Designing', percent: '~30%', items: ['Creating MaaS360 AI design guidelines', 'User experience workflow mapping', 'UI design'],  },
-  { label: 'Dev support', percent: '~10%', items: ['Structuring figma files for seamless dev transition', 'Regular review and feedback sessions', 'Negotiating UX and technical compromises'], narrow: true, breakoutWidthPct: 220 },
-  { label: 'Collaborating and strategising', percent: '~60%', items: ['Defining business logic along architects and product managers', 'Researching, defining and aligning on MaaS360‘s AI northstar', 'Researching and defining rate based monetisation system', 'Stakeholder meetings and buy-ins'] },
+  { label: 'Dev support', percent: '~10%', items: ['Structuring Figma files for seamless dev transition', 'Regular review and feedback sessions', 'Negotiating UX and technical compromises'], narrow: true, breakoutWidthPct: 220 },
+  { label: 'Collaborating and strategising', percent: '~60%', items: ['Defining business logic alongside architects and product managers', 'Researching, defining and aligning on MaaS360’s AI North Star', 'Researching and defining a rate-based monetisation system', 'Stakeholder meetings and buy-in'] },
 ]
 
 /* image assets (Figma node 40:3904) */
@@ -345,19 +345,19 @@ export default function CaseStudyHumanAI() {
             bgColor={PAGE_BG}
             textColor={PAGE_FG}
             hoverColor={PAGE_HOVER}
-            description="Initiated the design and development the first ever GenAI capability for MaaS360. Along with the product team, I was deeply involved at every step in the product lifecycle from envisioning the offering to its delivery."
+            description="Initiated the design and development of the first-ever GenAI capability for MaaS360. Along with the product team, I was deeply involved at every step in the product lifecycle from envisioning the offering to its delivery."
             responsibilities={[
-              { prefix: 'Along wiht the PM, defined', link: 'monetisation strategy', description: 'Created a new usage based monitisation system to ensure revenue scales with GenAI costs' },
-              { prefix: 'Core member involved in defining the', link: 'business logic', description: 'Worked closely with the engineering team to build a business logic that ensured the desired user experience.' },
-              { prefix: 'Drove the project with a', link: 'mini startup culture', description: 'As I was part of the founding members, I was also responsible for contributing to the culture of the team.' },
-              { prefix: "Defined the product's", link: 'AI design guidelines', description: 'Studied AI, GenAI and LLM design frameworks, systems and examples to define MaaS360 AI design guidelines, that ensured every experience remains aligned' },
-              { prefix: 'Delivered', link: 'dev ready mockups', description: 'Seamlessly transitioned from design to development, supported the dev team in shipping a design accurate output' },
+              { prefix: 'Along with the PM, defined', link: 'monetisation strategy', description: 'Created a new usage-based monetisation system to ensure revenue scales with GenAI costs.' },
+              { prefix: 'Core member involved in defining the', link: 'business logic', description: 'Worked closely with the engineering team to build the business logic that ensured the desired user experience.' },
+              { prefix: 'Drove the project with a', link: 'mini startup culture', description: 'As I was one of the founding members, I was also responsible for contributing to the culture of the team.' },
+              { prefix: "Defined the product's", link: 'AI design guidelines', description: 'Studied AI, GenAI and LLM design frameworks, systems and examples to define MaaS360 AI design guidelines that ensured every experience remained aligned.' },
+              { prefix: 'Delivered', link: 'dev-ready mockups', description: 'Seamlessly transitioned from design to development, and supported the dev team in shipping a design-accurate output.' },
             ]}
             results={[
               { label: 'Engagement rate', stat: '~ 72%' },
-              { label: 'Users adoption', stat: '~ 52%' },
+              { label: 'User adoption', stat: '~ 52%' },
               // { label: 'Best AI infusion in Software products at IBM', stat: 'Ranked 2nd' },
-              { label: 'Customer feedback', stat: 'This should be in CNN and other news channels , it is a killer idea for regulated customers like us. We use it extensively now' },
+              { label: 'Customer feedback', stat: 'This should be on CNN and other news channels. It is a killer idea for regulated customers like us. We use it extensively now.' },
             ]}
             media={{ src: imgIntroMockup, alt: 'IBM MaaS360 policy mockup collage', aspect: '1148 / 1046' }}
           />
@@ -388,15 +388,15 @@ export default function CaseStudyHumanAI() {
               </div>
               <div className="ai-context-col">
                 <p className="ai-context-label type-heading1">What is the issue?</p>
-                <p className="ai-context-body type-body"> As this offers granual control over hundreds of device functionality, creating an information heavy experience. It reaquired users to be proficient in all security standards.</p>
+                <p className="ai-context-body type-body">This offers granular control over hundreds of device functions, creating an information-heavy experience. It requires users to be proficient in all security standards.</p>
               </div>
               <div className="ai-context-col">
                 <p className="ai-context-label type-heading1">Who are our users?</p>
-                <p className="ai-context-body type-body">Small or medium business owners with no background in IT security. Or they're an overstretched IT admin, busy fixing technical issues.</p>
+                <p className="ai-context-body type-body">Small or medium business owners with no background in IT security. Or an overstretched IT admin, busy fixing technical issues.</p>
               </div>
             </div>
             <div className="ai-context-media">
-              <p className="ai-context-label type-caption1">The policy mangement UI</p>
+              <p className="ai-context-label type-caption1">The policy management UI</p>
               <div className="ai-context-images">
                 <div className="ai-context-image"><img src={imgContext} alt="MaaS360 Default iOS MDM Policy configuration screen" /></div>
                 <div className="ai-context-image"><img src={imgContext} alt="MaaS360 Default iOS MDM Policy configuration screen" /></div>
@@ -439,13 +439,13 @@ export default function CaseStudyHumanAI() {
                 <div className="ai-purpose-northstar-heading-group">
                   <p className="ai-purpose-label type-body">NORTH STAR</p>
                   <p className="ai-purpose-heading type-heading2">
-                    Help{' '}
+                    Assist{' '}
                     <span className="ai-purpose-term" onMouseEnter={purposeUnlocked ? () => onPurposeEnter('SMBs') : undefined} onMouseLeave={purposeUnlocked ? onPurposeLeave : undefined}>SMBs</span>{' '}
-                    configure and maintain policies so that they can{' '}
+                    configuring and maintaining policies so that they can{' '}
                     <span className="ai-purpose-term" onMouseEnter={purposeUnlocked ? () => onPurposeEnter('secure their devices') : undefined} onMouseLeave={purposeUnlocked ? onPurposeLeave : undefined}>secure their devices</span>{' '}
                     with{' '}
                     <span className="ai-purpose-term" onMouseEnter={purposeUnlocked ? () => onPurposeEnter('minimal effort') : undefined} onMouseLeave={purposeUnlocked ? onPurposeLeave : undefined}>minimal effort</span>{' '}
-                    to help redirect resources towards growing their business.
+                    freeing resources to grow their business.
                   </p>
                 </div>
                 <div className="ai-purpose-reveal-col">

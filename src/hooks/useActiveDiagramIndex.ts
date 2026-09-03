@@ -52,7 +52,27 @@ export function useActiveDiagramIndex(
       const stackHeadHeight = stackHead instanceof HTMLElement ? stackHead.offsetHeight : 0
       activationLine = fixedHeaderHeight + stackHeadHeight + offsetPx
       paragraphs = Array.from(container!.querySelectorAll<HTMLElement>(paragraphSelector))
+      // Each paragraph is click-to-scroll (see onParagraphClick) — flag it as such.
+      paragraphs.forEach((p) => {
+        p.style.cursor = 'pointer'
+      })
       update()
+    }
+
+    // Clicking a paragraph smooth-scrolls it up to the activation line — the same
+    // position scrolling there naturally would make it `active` — so the previous
+    // paragraph ends just out of view above the pinned header stack, and the
+    // synced media/notes columns swap to match. Delegated so it needs no
+    // per-paragraph bookkeeping across recomputes. Clicks on an interactive
+    // control inside a paragraph are left alone.
+    function onParagraphClick(e: MouseEvent) {
+      const target = e.target as Element | null
+      if (!target) return
+      if (target.closest('button, a, input, label, select, textarea')) return
+      const para = target.closest<HTMLElement>(paragraphSelector)
+      if (!para || !paragraphs.includes(para)) return
+      const delta = para.getBoundingClientRect().top - activationLine
+      window.scrollTo({ top: window.scrollY + delta + 2, behavior: 'smooth' })
     }
 
     computeActivationLine()
@@ -75,10 +95,12 @@ export function useActiveDiagramIndex(
 
     document.addEventListener('scroll', onScroll)
     window.addEventListener('resize', onResize)
+    container.addEventListener('click', onParagraphClick)
 
     return () => {
       document.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onResize)
+      container.removeEventListener('click', onParagraphClick)
       if (resizeTimeout) clearTimeout(resizeTimeout)
     }
   }, [containerRef, paragraphSelector, fixedHeaderSelector, offsetPx])
