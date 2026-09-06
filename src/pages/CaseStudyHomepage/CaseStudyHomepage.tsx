@@ -69,17 +69,17 @@ const retroSegments: RetroSegment[] = [
     percent: '~25%',
     items: [
       'Customer interviews',
-      'NPS surveys & feedback documents',
-      'User testing & co-creation meetings',
+      'NPS surveys and feedback documents',
+      'User testing and co-creation meetings',
     ],
   },
   {
     label: 'Stakeholder management',
     percent: '~15%',
     items: [
-      'Feedback sessions & collaborative brainstorming',
+      'Feedback sessions and collaborative brainstorming',
       'Vision alignment',
-      'Approvals and red tapes',
+      'Approvals and cutting through the red tape',
     ],
     narrow: true,
   },
@@ -88,9 +88,9 @@ const retroSegments: RetroSegment[] = [
     percent: '~35%',
     items: [
       'Design documentation for dev team',
-      'Aligning with technical limitation',
+      'Balancing user experience with technical limitations',
       'Ensuring the shipped product showcased the desired experience',
-      'Adapting design for phase wise implementation',
+      'Adapting design for phase-wise implementation',
     ],
   },
 ]
@@ -99,47 +99,47 @@ const retroSegments: RetroSegment[] = [
 const approachParagraphs: ApproachParagraph[] = [
   {
     heading: 'Articulating the business value',
-    body: 'Through studying the product roadmap, strategy documents, speaking with the leadership, senior technical staff, observing competitor I was able to build a working understanding of the market and our business strategy.\n \n This helped me able to articulate benefits in a way that resonated with the stakeholders’ priorities.',
+    body: 'Through studying the product roadmap, strategy documents, speaking with the leadership, senior technical staff and observing competitors, I was able to build a working understanding of the market and our business strategy.\n \n This helped me articulate benefits in a way that resonated with the stakeholders’ priorities.',
     diagram: 'articulating_the_business_value.svg',
     captionItems: [
-      'It will reduce future maintenance cost',
-      'Designing a simpler and intelligible homepage will make it easier target SMBs our core market',
-      'It can help amplify our security strategy',
+      'It will reduce future maintenance cost.',
+      'Designing a simpler and intelligible homepage will make it easier to target SMBs, our core market.',
+      'It can help amplify our security strategy.',
     ],
   },
   {
     heading: 'Identifying product issues the modernisation can target',
-    body: 'The homepage is the starting point and should help IT admins begin their day easily. This simple understanding guided the research, I focused on understanding the challenges IT admins faced with daily workflows with the complete product.',
+    body: 'The homepage is the starting point and should help IT admins begin their day easily. This simple understanding guided the research; I focused on understanding the challenges IT admins faced with the complete product.',
     diagram: 'indentifying_product_issues.svg',
   },
   {
     heading: 'Co-creating with stakeholders',
-    body: "Without stakeholder support, customer benefits may remain unrealised. For this, I co-created the solution to ensure the project resonated with the stakeholders’ priorities.",
+    body: "Without stakeholder support, customer benefits may remain unrealised. To achieve this, I co-created the solution to ensure the project resonated with the stakeholders’ priorities.",
     diagram: 'cocreating_with_stakeholders.svg',
     captionItems: [
       'Involved key stakeholders from the beginning so that there was a feeling of ownership across the board.',
-      'Communicated across multiple verticals to ensure the design approach covers all bases.',
-      'Co-creating through multiple iterations until we arrived at a solution that we all believed in - one that would benefit users.',
+      'Communicated across multiple verticals to ensure the design approach covered all bases.',
+      'Co-created through multiple iterations until we arrived at a solution that we all believed in — one that would benefit users.',
     ],
   },
   {
     heading: 'Designing a framework',
-    body: 'Without formal guidelines, I was responsible for designing a framework for the homepage. One ensured it can scale elegantly for any future changes or additions.',
+    body: 'Without formal guidelines, I was responsible for designing a framework for the homepage. This framework allowed the homepage to scale elegantly for any future changes or additions.',
     diagram: 'designing_a_framework.svg',
     captionItems: [
       'Designed a scalable framework that can help future teams expand the homepage’s capabilities.',
-      'Defined design principles that was guidelines for a good homepage experience.',
+      'Defined design principles that were guidelines for a good homepage experience.',
       'Clear and explicit documentation so people could understand even without me in the room.',
     ],
   },
   {
     heading: 'Phase-wise deconstruction',
-    body: 'Since this was a mammoth that had no official funding, I transformed the design into smaller, logical phases. These could then be picked up along with existing projects. \n \n Through this we reached a solid foundation, that was used as proof of concept to obtain formal development resources.',
+    body: 'Since this was a mammoth task that had no official funding, I transformed the design into smaller, logical phases. These could then be picked up along with existing projects. \n \n Through this we reached a solid foundation, which was used as proof of concept to obtain formal development resources.',
     diagram: 'phasewise_deconstruction.svg',
     captionItems: [
       'Distilled the homepage into its core capabilities, ones that can be developed individually.',
       'Detailed design specs so that developers could pick it up asynchronously.',
-      'Tested capabilities as they went out to continuously iterate through user feedback.',
+      'Tested capabilities as they went out to continuously iterate on user feedback.',
     ],
   },
 ]
@@ -149,43 +149,43 @@ const outcomeParagraphs: OutcomeParagraph[] = [
   {
     label: 'Flexible architecture',
     heading: 'Maintains composure when faced with different use cases',
-    body: 'The layout allows flexibility for customisation, fluidity for different data types and easy scalability and maintenance.',
+    body: 'The layout allows flexibility for customisation and fluidity for different data types, helping with scalability and maintenance.',
     diagram: {
       video: 'flexibility/Homepage_Sections_Flexibility1.mp4',
     },
     captionItems: [
-      'The fixed-width widgets with content hugging height affords a page structure to accommodate information of varying natures.',
-      'Widgets can be moved around the dashboard without dirupting spacing and harmony',
+      'The fixed-width widgets with content-hugging height afford a page structure to accommodate information of various kinds.',
+      'Widgets can be moved around the dashboard without disrupting spacing and harmony.',
     ],
   },
   {
     label: 'Data widgets',
-    heading: 'Reduced no:of clicks by 72%',
-    body: 'Through user research, surfaced key KPIs that resulted in quicker decisions and more efficient workflows.',
+    heading: 'Reduced no. of clicks by 72%',
+    body: 'User research surfaced key KPIs that resulted in quicker decisions and more efficient workflows.',
     diagram: {
       src: 'widgets.png',
     },
     captionItems: [
-      'Designed a micro layout systems to ensure consistency with future widgets',
-      'The widgets provide an overview for which admins previously had to navigate deep within the product to access.',
+      'Designed a micro layout system to ensure consistency with future widgets.',
+      'The widgets provide an overview of what admins previously had to navigate deep within the product to access.',
     ],
   },
   {
     label: 'Personalisation',
-    heading: 'Homepage caters to the usecases of 35k plus users',
-    body: 'The homepage is completely customisable to the user’s needs, research informed that cookie cutter approach would only cause increase user friction and engineering overhead.',
+    heading: 'Homepage caters to the use cases of 35k+ users',
+    body: 'The homepage is completely customisable to the user’s needs; research informed that a cookie-cutter approach would only increase user friction and engineering overhead.',
     diagram: {
       video: 'customisation/Homepage_Sections_Customization.mp4',
     },
     captionItems: [
-      'User’s can make customise their homepage with the widgets that align workflows or usecases.',
+      'Users can customise their homepage with the widgets that align with their workflows or use cases.',
       'Designed a catalogue of widgets that will grow and scale as the product evolves.',
     ],
   },
   {
     label: 'Beyond this',
     heading: 'More details over a conversation ;)',
-    body: 'If you’re interested I’d love to  walk you through my process and share more design examples for this project.',
+    body: 'If you’re interested, I’d love to walk you through my process and share more design examples for this project.',
   },
 ]
 
@@ -253,7 +253,7 @@ export default function CaseStudyHomepage() {
 
         {/* ── PAGE HEADER (sticky, always visible) ── */}
         <ProjectHeader
-          title="Modernizing IBM MaaS360’s dashboard"
+          title="Modernising IBM MaaS360’s dashboard"
           bgColor={PAGE_BG}
           textColor={PAGE_FG}
         />
@@ -264,18 +264,18 @@ export default function CaseStudyHomepage() {
             bgColor={PAGE_BG}
             textColor={PAGE_FG}
             hoverColor={PAGE_HOVER}
-            description="Starting out as an incubator project this moved to create the face of the product. This involved complete re-architecting and re-designing MaaS360’s homepage dashboard, building a scalable design framework that will sustain any future additions."
+            description="It started out as an incubator project, and I helped grow it into the face of the product. This involved completely re-architecting and re-designing MaaS360’s homepage dashboard, building a scalable design framework that will sustain any future additions."
             responsibilities={[
-              { prefix: 'Defined', link: 'business value', description: 'Simpler management flows makes it an attractive purchase for smaller businesses, expanding our market scope' },
-              { prefix: 'Conducted', link: 'user research', description: 'Initiated MaaS360’s first ever user interviews to initiate a customer focused approach and process' },
-              { prefix: 'Drove', link: 'C-suite consensus', description: 'Advocated the business and user value of modernisation to leadership to ensure development prioritisation.' },
-              { prefix: 'Created', link: 'design framework', description: 'Designed a scalable UI framework that ensured consistency to future developments to the homepage' },
-              { prefix: 'Delivered', link: 'dev ready mockups', description: 'Seamlessly transitioned from design to development, supported the dev team in shipping a design accurate output' },
+              { prefix: 'Defined', link: 'business value', description: 'Simpler management flows make it an attractive purchase for smaller businesses, expanding our market scope.' },
+              { prefix: 'Conducted', link: 'user research', description: 'Initiated MaaS360’s first-ever user interviews, introducing a customer-focused process.' },
+              { prefix: 'Drove', link: 'C-suite consensus', description: 'Articulated the business and user value of modernisation to leadership for development prioritisation.' },
+              { prefix: 'Created', link: 'design framework', description: 'Designed a scalable UI framework that ensured consistency across future additions to the homepage.' },
+              { prefix: 'Delivered', link: 'dev-ready mockups', description: 'Seamlessly transitioned from design to development, and supported the dev team in shipping a design-accurate output.' },
               { prefix: 'Facilitated', link: 'user feedback sessions', description: 'Regularly reviewed designs with customers to ensure quality and alignment with expectations and requirements.' },
             ]}
             results={[
               { label: 'Adoption rate during beta testing', stat: '~ 60%' },
-              { label: 'No:of clicks for key workflows', stat: '↓ 72%' },
+              { label: 'No. of clicks for key workflows', stat: '↓ 72%' },
               { label: 'Time to complete key workflows', stat: '↓ 27%' },
             ]}
             media={{ src: imgIntro, alt: 'IBM MaaS360 product overview collage', aspect: '1024 / 1626' }}
@@ -321,16 +321,16 @@ export default function CaseStudyHomepage() {
                     <div className="cs-challenge-group">
                       <div className="cs-challenge-col">
                         <div className="cs-challenge-item">
-                          <p className="cs-challenge-item-ttl type-heading1">No summarized system status</p>
+                          <p className="cs-challenge-item-ttl type-heading1">No summarised system status</p>
                           <p className="cs-challenge-item-desc type-body">IT admins are required to view multiple pages to gather information, to later piece it together from memory to form a complete understanding.</p>
                         </div>
                         <div className="cs-challenge-item">
                           <p className="cs-challenge-item-ttl type-heading1">Lengthy navigation paths</p>
-                          <p className="cs-challenge-item-desc type-body">Our product offers a rich amount of information, however users need to follow lengthy workflows to find the details they need.</p>
+                          <p className="cs-challenge-item-desc type-body">Our product offers a rich amount of information; however, users need to follow lengthy workflows to find the details they need.</p>
                         </div>
                         <div className="cs-challenge-item">
                           <p className="cs-challenge-item-ttl type-heading1">Lack of flexibility</p>
-                          <p className="cs-challenge-item-desc type-body">Existing capabilities lack contextualization, adding unnecessary noise/information to customers with specific needs.</p>
+                          <p className="cs-challenge-item-desc type-body">Existing capabilities lack contextualisation, adding unnecessary noise/information to customers with specific needs.</p>
                         </div>
                       </div>
                       <div className="cs-challenge-axis-col">
@@ -342,15 +342,15 @@ export default function CaseStudyHomepage() {
                       <div className="cs-challenge-col">
                         <div className="cs-challenge-item">
                           <p className="cs-challenge-item-ttl type-heading1">No business requirements</p>
-                          <p className="cs-challenge-item-desc type-body">Product team was not involved, this was an incubator project run by the engineering and design team, as a result there was no guidance on business direction</p>
+                          <p className="cs-challenge-item-desc type-body">The product team was not involved. This was an incubator project run by the engineering and design team, and, as a result, there was no guidance on business direction.</p>
                         </div>
                         <div className="cs-challenge-item">
                           <p className="cs-challenge-item-ttl type-heading1">Unclear design patterns</p>
-                          <p className="cs-challenge-item-desc type-body">IBM design patterns for analytical homepages was still in its nascent stages, the carbon design team was working on a scaleable framework for homepages</p>
+                          <p className="cs-challenge-item-desc type-body">IBM design patterns for analytical homepages were still in their nascent stages; the Carbon design team was working on a scalable framework for homepages.</p>
                         </div>
                         <div className="cs-challenge-item">
                           <p className="cs-challenge-item-ttl type-heading1">No funding to productise</p>
-                          <p className="cs-challenge-item-desc type-body">As this was an incubator project, means to productise was through volunteers, there was no formal pipeline to deliver the feature to customers.</p>
+                          <p className="cs-challenge-item-desc type-body">As this was an incubator project, productisation relied on volunteers; there was no formal pipeline to deliver the feature to customers.</p>
                         </div>
                       </div>
                       <div className="cs-challenge-axis-col">

@@ -43,7 +43,7 @@ const conceptSegments: ConceptSegment[] = [
   { text: ' busy families ', essence: true },
   { text: 'move beyond', essence: false },
   { text: ' scheduling chaos ', essence: true },
-  { text: 'through a central view, morphing long-term plans into ', essence: false },
+  { text: 'through a central view that morphs long-term plans into ', essence: false },
   { text: 'simple, achievable daily actions.', essence: true },
 ]
 
@@ -57,10 +57,10 @@ const conceptSegments: ConceptSegment[] = [
    groupKey — hovering either tile in a pair highlights both and reveals one
    merged panel spanning both columns, matching the Figma hover states. */
 const conceptCoreLogicSegments: RetroSegment[] = [
-  { label: 'Calendar events', percent: '', items: ['Bound to a specific date and time, they are expected to occur within that time slot'], groupKey: 'time-bound' },
+  { label: 'Calendar events', percent: '', items: ['Bound to a specific date and time, expected to occur only within that window.'], groupKey: 'time-bound' },
   { label: 'Deadlines', percent: '', items: [], groupKey: 'time-bound' },
-  { label: 'Chores', percent: '', items: ['Flexible and not bound to a time slot, can be completed at any time of the day.'], groupKey: 'flexible' },
-  { label: 'Un-bound to-dos', percent: '', items: [], groupKey: 'flexible' },
+  { label: 'Chores', percent: '', items: ['Flexible and not bound to a time slot, they can be completed at any point in the day.'], groupKey: 'flexible' },
+  { label: 'Unbound to-dos', percent: '', items: [], groupKey: 'flexible' },
 ]
 
 /* "Interaction goal" block (Figma node 597:3510, appended below Core logic)
@@ -68,8 +68,8 @@ const conceptCoreLogicSegments: RetroSegment[] = [
    content column, single image, no rail) as the Inspiration section below. */
 const interactionGoalHeading = 'Interaction goal'
 const interactionGoalBody: string[] = [
-  'Inspired by the behaviour of parent(s) coming to the kitchen or the living room to plan or align on the things they need to do.',
-  'These artefacts always live in the same place, and helps the viewer(s) quickly get an overview of what needs to be done, with just a glance. \n \n  It requires very little interaction. Just looking at it.',
+  'Inspired by parent(s) coming to the kitchen or living room to plan for and align on upcoming things.',
+  'Because these artefacts always live in the same place, a glance is often enough to understand what needs to be done. \n \n Requiring very little interaction.',
 ]
 const imgTargetBehaviour = asset('/automated-calendar/target_behaviour.png')
 
@@ -82,8 +82,8 @@ interface InspirationParagraph {
    content column, single collage image), not CaseStudySection's 3-column
    content/rail/media grid — this design has no rail/middle column at all. */
 const inspirationParagraphs: InspirationParagraph[] = [
-  { heading: 'Print references', body: 'Cause I wanted to replicate the feeling of looking at a physical calendar, I hit the library to collect references from typography and graphic design books (Helmut Schmid’s & Rostislav Vaněk’s work, Munich Olympic visual guidelines and more ). \n \n These heavily influenced my type setting and overall layout design' },
-  { heading: 'Signage', body: 'Signage design was a key source of inspiration for creating a readable and scannable interface, pivoting my approach to use a mix of monospaced and proportional typefaces.' },
+  { heading: 'Print references', body: 'Because I wanted to replicate the feeling of looking at a physical calendar, I hit the library to collect references from typography and graphic design books (Helmut Schmid’s and Rostislav Vaněk’s work, Munich Olympic visual guidelines, and more). \n \n These heavily influenced my typesetting and overall layout design.' },
+  { heading: 'Signage', body: 'Signage design was a key source of graphical inspiration for creating a readable and scannable interface, which pivoted my approach to a mix of monospaced and proportional typefaces.' },
 ]
 
 const imgInspiration = asset('/automated-calendar/inspiration.png')
@@ -116,38 +116,38 @@ interface BackendParagraph {
 const backendParagraphs: BackendParagraph[] = [
   {
     heading: 'Data sources',
-    body: 'Pull calendar information from existing calendar platforms, the prototype will not create any calendar events.',
+    body: 'Information from existing calendar platforms, the prototype does not create any events.',
     diagram: '1.png',
     captionItems: [
-      { text: 'Configured only Google and Apple calendar API' },
-      { text: 'Used a fixed but diverse set of events' },
+      { text: 'Google and Apple Calendar APIs.' },
+      { text: 'A static but diverse set of events.' },
     ],
   },
   {
-    heading: 'Clean and organising the data',
-    body: 'Calendar information is parsed and re-organised into a JSON with relevant fields that are required by the prototype.',
+    heading: 'Cleaning and organising the data',
+    body: 'Calendar information is parsed and re-organised into a JSON with the fields the UI needs.',
     diagram: '2.png',
     captionItems: [
       { text: 'Data organised into a JSON containing:', items: ['Date', 'Time', 'Location', 'Person/People', 'Title', 'Description'] },
-      { text: 'Simultaneously an LLM reads calendar title, description or location to add categorisation tags.' },
+      { text: 'Simultaneously, an LLM reads the calendar title, description, or location to add categorisation tags.' },
     ],
   },
   {
     heading: 'Generating LLM responses',
-    body: 'LLM reads the JSON to generates calendar summaries that will can later be displayed on demand.',
+    body: 'An LLM reads the JSON to generate calendar summaries that can later be displayed on demand.',
     diagram: '3.png',
     captionItems: [
-      { text: 'JSON is passed through Gemini to generate a short 1-2 line description of the calendar events' },
-      { text: 'These are stored attached to the calendar events as “narrative blocks”' },
+      { text: 'JSON is passed through Gemini to generate a short 1-2 line description of the calendar events.' },
+      { text: 'These are stored and attached to calendar events as “narrative blocks”.' },
     ],
   },
   {
     heading: 'Match calendar and face data',
-    body: 'On recognition of a face, the name of the face is matched with calendar events of same name, providing a filtered view of the complete calendar database.',
+    body: 'When a face is recognised, its name is matched against events with the same name, giving a filtered view of the full database.',
     diagram: '4.png',
     captionItems: [
-      { text: 'Face scan runs every 5 seconds to save resources' },
-      { text: 'Based on the person detected and time of the day, the backend serves a filtered JSON for the UI' },
+      { text: 'The face scan runs every 5 seconds to save resources.' },
+      { text: 'The backend serves the UI a filtered JSON based on the person detected and the time of day.' },
     ],
   },
 ]
@@ -176,29 +176,29 @@ const uiParagraphs: UiParagraph[] = [
   // },
   {
     heading: 'Auto grouping',
-    body: 'Help users plan their chores around time-bound events, this helps them visualize their and structure their day.',
+    body: 'Planning chores around time-bound events helps users to visualise and structure their day.',
     diagram: '1.png',
     captionItems: [
-      'Chores slot into the time gaps between events',
-      'When possible, out and about chores (ex: grocery shopping) is grouped with an outdoor event',
+      'Chores slot into the time gaps between events.',
+      'When possible, out-and-about chores (e.g. grocery shopping) are grouped with outdoor events.',
     ],
   },
   {
     heading: 'Combined narrative',
-    body: 'When people look at the display, it updates to show a inwoven narrative, helping them plan their day together.',
+    body: 'When people look at the display, it updates to show an interwoven narrative, helping them plan their day together.',
     diagram: '2.png',
     captionItems: [
       'Each user can pick their colour, allowing them to discern their events.',
-      'Creates a space to align, plan and negotiate chores. Avoiding any confusions',
+      'It creates a space to align on, plan, and negotiate chores, avoiding any confusion.',
     ],
   },
   {
     heading: 'Details',
-    body: 'Aglamoration of two calendars, each stripped to their essence helping user act on their plan ',
+    body: 'An amalgamation of two calendars, each stripped to its essence, helping the user act on their plan.',
     diagram: '3.png',
     captionItems: [
-      'Chores do not show a time, but placement indicates recommended time',
-      'Easily identify overlapping events',
+      'Chores show no set hour, but placement indicates their recommended time.',
+      'Overlapping events are easy to identify.',
     ],
   },
 ]
@@ -270,7 +270,7 @@ export default function CaseStudyAutomatedCalendar() {
       <div className="ac-page" ref={pageRef}>
 
         {/* ── PAGE HEADER (sticky, always visible) ── */}
-        <ProjectHeader title="Common ground: An ambient calendar" bgColor={PAGE_BG} textColor={PAGE_FG} />
+        <ProjectHeader title="Common ground: an ambient calendar" bgColor={PAGE_BG} textColor={PAGE_FG} />
 
         {/* ── OVERVIEW (Figma node 516:12417) ── */}
         <StackedSection title="Overview">
@@ -279,19 +279,19 @@ export default function CaseStudyAutomatedCalendar() {
             textColor={PAGE_FG}
             hoverColor={PAGE_HOVER}
             description={[
-              'This project represented a paradigm shift from reactive computing, requiring explicit interaction, to proactive where the system responds based on intent.',
-              'The goal is design an experience and system that does not require explicit interaction, clicks or touches.',
+              'This project represented a paradigm shift from reactive computing, requiring explicit interaction, to proactive computing that responds to intent.',
+              'The goal is to design an experience and a system that do not require explicit interaction, clicks, or touches.',
             ]}
             characteristics={{
               label: 'PROJECT CHARACTERISTICS',
-              items: ['3 months duration', 'Individual effort', 'Developing a working prototype'],
+              items: ['3-months duration', 'Individual effort', 'Functioning prototype development'],
             }}
             listLabel="LEARNINGS"
             responsibilities={[
-              { prefix: 'Identifying behaviours or challenges that present', link: 'product opportunities', description: 'Sensitized capability to identify behaviours, actions or friction points that inform intervention.' },
-              { prefix: 'Plan and presenting a', link: ' convincing demo', description: 'Learnt the challenges of building a convincing demo envirnoment and designing a prototype that required no intervention' },
-              { prefix: 'Coding a', link: 'functional prototype', description: 'Built a full stack project to learn back-end design and its connection to a front-end. Although it was coded with AI assistance, I learnt effective rapid prototyping techniques.' },
-              { prefix: 'Scripting and filming', link: 'product videos', description: 'To pitch and sell out idea, I filmed a product video that conveyed the value prosition in just a few minutes.' },
+              { prefix: 'Identifying', link: 'product opportunities', description: 'Sensitised to behaviours, actions, or friction points that inform intervention.' },
+              { prefix: 'Planning and presenting a', link: ' convincing demo', description: 'Learnt the challenges of building a demo environment and designing a prototype that required no intervention.' },
+              { prefix: 'Coding a', link: 'functional prototype', description: 'Built a full-stack project to learn back-end design and its connection to a front-end, coding it with AI assistance, I picked up effective rapid prototyping techniques.' },
+              { prefix: 'Scripting and filming', link: 'product videos', description: 'To pitch the idea, I filmed a product video that conveyed the value proposition in just a few minutes.' },
             ]}
             media={[
               { src: imgDemoSetup, alt: 'Common ground demo setup', aspect: '3840 / 2160' },
@@ -360,7 +360,7 @@ export default function CaseStudyAutomatedCalendar() {
               </div>
             </div>
             <div className="ac-concept-goal-media">
-                <p className="type-caption1 ac-concept-goal-caption">Yes these are AI generated images, but you get the point.</p>
+                <p className="type-caption1 ac-concept-goal-caption">Yes, these are AI generated images, but you get the point.</p>
               <div className="ac-concept-goal-image">
                 <img src={imgTargetBehaviour} alt="Parents planning together at the kitchen fridge" />
               </div>

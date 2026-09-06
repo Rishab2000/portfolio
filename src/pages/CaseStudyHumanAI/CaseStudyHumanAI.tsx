@@ -441,11 +441,11 @@ export default function CaseStudyHumanAI() {
                   <p className="ai-purpose-heading type-heading2">
                     Assist{' '}
                     <span className="ai-purpose-term" onMouseEnter={purposeUnlocked ? () => onPurposeEnter('SMBs') : undefined} onMouseLeave={purposeUnlocked ? onPurposeLeave : undefined}>SMBs</span>{' '}
-                    configuring and maintaining policies so that they can{' '}
+                    in configuring and maintaining policies so that they can{' '}
                     <span className="ai-purpose-term" onMouseEnter={purposeUnlocked ? () => onPurposeEnter('secure their devices') : undefined} onMouseLeave={purposeUnlocked ? onPurposeLeave : undefined}>secure their devices</span>{' '}
                     with{' '}
                     <span className="ai-purpose-term" onMouseEnter={purposeUnlocked ? () => onPurposeEnter('minimal effort') : undefined} onMouseLeave={purposeUnlocked ? onPurposeLeave : undefined}>minimal effort</span>{' '}
-                    freeing resources to grow their business.
+                    , freeing resources to grow their business.
                   </p>
                 </div>
                 <div className="ai-purpose-reveal-col">
