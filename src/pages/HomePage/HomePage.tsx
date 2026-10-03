@@ -1,9 +1,50 @@
+import { useLayoutEffect, useRef, useState } from 'react'
+import type { MouseEvent as ReactMouseEvent } from 'react'
 import './HomePage.css'
 import ProjectRow from '../../components/ProjectRow'
 import Footer from '../../components/Footer'
 import { asset } from '../../lib/nav'
 
+// Same cursor-following preview mechanism as ProjectRow's showcase image.
+const NAME_VIDEO_OFFSET_X = 16
+const NAME_VIDEO_OFFSET_Y = 16
+const NAME_VIDEO_EDGE_MARGIN = 8
+
 export default function HomePage() {
+  const [showNameVideo, setShowNameVideo] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const videoPosRef = useRef({ x: 0, y: 0 })
+
+  function applyVideoPosition() {
+    const el = videoRef.current
+    if (!el) return
+
+    let left = videoPosRef.current.x + NAME_VIDEO_OFFSET_X
+    let top = videoPosRef.current.y - el.getBoundingClientRect().height - NAME_VIDEO_OFFSET_Y
+    el.style.left = `${left}px`
+    el.style.top = `${top}px`
+
+    // Nudge back on-screen if any edge overflows (the name sits near the top of the page).
+    const rect = el.getBoundingClientRect()
+    const margin = NAME_VIDEO_EDGE_MARGIN
+    if (rect.left < margin) left += margin - rect.left
+    if (rect.right > window.innerWidth - margin) left -= rect.right - (window.innerWidth - margin)
+    if (rect.top < margin) top += margin - rect.top
+    if (rect.bottom > window.innerHeight - margin) top -= rect.bottom - (window.innerHeight - margin)
+    el.style.left = `${left}px`
+    el.style.top = `${top}px`
+  }
+
+  useLayoutEffect(() => {
+    if (!showNameVideo) return
+    applyVideoPosition()
+  }, [showNameVideo])
+
+  const positionVideo = (e: ReactMouseEvent) => {
+    videoPosRef.current = { x: e.clientX, y: e.clientY }
+    applyVideoPosition()
+  }
+
   return (
     <div className="portfolio">
       <div className="layout-inner">
@@ -16,7 +57,27 @@ export default function HomePage() {
             <div className="hero-heading-block">
               <div className="hero-name-col">
                 <div className="hero-name-top">
-                  <p className="type-heading3 hero-heading hero-heading-text">Rishab Sachidanand</p>
+                  <p
+                    className="type-heading3 hero-heading hero-heading-text"
+                    onMouseEnter={(e) => { positionVideo(e); setShowNameVideo(true) }}
+                    onMouseMove={positionVideo}
+                    onMouseLeave={() => setShowNameVideo(false)}
+                  >
+                    Rishab Sachidanand
+                    {showNameVideo && (
+                      <video
+                        ref={videoRef}
+                        src={asset('/myphoto/App Preview.mp4')}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        aria-hidden="true"
+                        className="hero-name-hover-video"
+                        onLoadedMetadata={applyVideoPosition}
+                      />
+                    )}
+                  </p>
                   <div className="type-body hero-years">
                     <span className="hero-degree-term">5 yrs 7 months
                       <span className="hero-degree-tooltip">
@@ -48,6 +109,7 @@ export default function HomePage() {
               <ProjectRow hoverColor="#9a72aa" hoverTextColor="#f5ecc2" title="Common ground: An ambient calendar" path="/common-ground" showcaseImage={asset('/automated-calendar/overview/demo-setup.png')} />
               <ProjectRow hoverColor="#12354e" hoverTextColor="#f99d1b" title="Human + AI at IBM MaaS360" path="/human-ai-maas360" showcaseImage={asset('/human_ai_ibm/overview.mp4')} />
               <ProjectRow hoverColor="#802626" hoverTextColor="#f5ecc2" title="Modernizing IBM MaaS360’s dashboard" path="/homepage-modernization" showcaseImage={asset('/homepage-modernization/overview.mp4')} />
+              <ProjectRow hoverColor="#ffefae" hoverTextColor="#704213" title="Semantic: A dynamic web experience" path="/semantic" showcaseImage={asset('/semantic/intro.mp4')} />
               <p className="type-body project-list-note">In the process of adding more fun projects!</p>
             </div>
           </section>

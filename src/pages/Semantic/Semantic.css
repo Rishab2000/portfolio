@@ -1,0 +1,492 @@
+/* ═══════════════════════════════════════════
+   CASE STUDY — Semantic: A dynamic web experience
+   PLACEHOLDER page — only the Overview section exists so far, built on the
+   shared ProjectHeader/StackedSection/CaseStudyIntro components (themed via
+   --cs-bg/--cs-fg/--cs-hover, see Semantic.tsx). No page-specific section
+   styling yet, this file is just the page wrapper until more sections land.
+   ═══════════════════════════════════════════ */
+
+.sm {
+  background: var(--cs-bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--cs-fg);
+}
+
+.sm-page {
+  width: 100%;
+  max-width: 3024px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sticky stack-heads need their own explicit opaque background to occlude
+   content stacking underneath them as you scroll (see CLAUDE.md's stacking
+   reference pattern), rather than relying on inheritance from `.sm`. */
+.sm-page .stack-head,
+.sm-page .stack {
+  background: var(--cs-bg);
+}
+
+/* ── WHAT IS THIS — two-column CaseStudySection (mediaSpansRail always on,
+   see CLAUDE.md's "Two column" shorthand), same shape as "The details" below.
+   PLACEHOLDER copy/assets, structure is final. */
+
+.sm-whatisthis-paras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+}
+
+.sm-whatisthis-para {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-0-5);
+  margin: -9px;
+}
+
+/* Same --cs-bg invert as .sm-detailed-para.active — see the note there. */
+.sm-whatisthis-para.active {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.sm-whatisthis-heading {
+  margin: 0;
+  max-width: 472px;
+}
+
+.sm-whatisthis-body {
+  margin: 0;
+  max-width: 472px;
+  white-space: pre-wrap;
+}
+
+.sm-whatisthis-diagrams {
+  width: 100%;
+}
+
+.sm-whatisthis-diagram-item {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.sm-whatisthis-diagram-item.active {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.sm-whatisthis-image-trigger {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+}
+
+.sm-whatisthis-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.sm-whatisthis-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* --cs-grid-toggle-h itself is set from JS in Semantic.tsx — see the note
+   above .sm-detailed-notes. */
+
+.sm-whatisthis-notes {
+  width: 100%;
+}
+
+.sm-whatisthis-note-item {
+  display: none;
+  width: 100%;
+}
+
+.sm-whatisthis-note-item.active {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Per-paragraph tab switcher. Same styling and deliberate `nowrap` overflow
+   past rail's track as .sm-detailed-tabs — see the note there. */
+.sm-whatisthis-tabs {
+  display: flex;
+  gap: var(--space-0-5);
+  flex-wrap: nowrap;
+  width: max-content;
+}
+
+.sm-whatisthis-tabs button {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: var(--space-0-5);
+  margin: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.sm-whatisthis-tabs button.active {
+  background: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.sm-whatisthis-caption-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 325px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.sm-whatisthis-caption-list--left {
+  margin: 0;
+  align-self: flex-start;
+}
+
+.sm-whatisthis-caption-item {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.sm-whatisthis-caption-num {
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.sm-whatisthis-caption-text {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+/* ── THE DETAILED — two-column CaseStudySection (mediaSpansRail always on,
+   see CLAUDE.md's "Two column" shorthand). `rail` renders only a per-paragraph
+   tab switcher when a paragraph has `tabs` (e.g. "Display no personality");
+   media renders video, the active tab's diagram, or the plain diagram.
+   PLACEHOLDER copy/assets, structure is final. */
+
+.sm-detailed-paras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  /* height: natural content height × 1.5 — set by useProportionalHeight,
+     see Semantic.tsx, so the scroll runway below the last paragraph scales
+     with how much content there is, not the screen. */
+}
+
+.sm-detailed-para {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-0-5);
+  margin: -9px;
+}
+
+/* --cs-hover (olive) is darker/more saturated than --cs-fg (orange), so the
+   invert uses --cs-bg (cream) for legible text on top of it. */
+.sm-detailed-para.active {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.sm-detailed-heading {
+  margin: 0;
+  max-width: 472px;
+}
+
+.sm-detailed-body {
+  margin: 0;
+  max-width: 472px;
+  white-space: pre-wrap;
+}
+
+.sm-detailed-diagrams {
+  width: 100%;
+}
+
+.sm-detailed-diagram-item {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.sm-detailed-diagram-item.active {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.sm-detailed-image-trigger {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+}
+
+.sm-detailed-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.sm-detailed-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* --cs-grid-toggle-h itself is set from JS in Semantic.tsx (inline style on
+   the wrapper around this section's CaseStudySection), computed from
+   activeDetailedIndex so it's only reserved while the active paragraph
+   actually has tabs — see CaseStudySection.css for what consumes it. */
+
+.sm-detailed-notes {
+  width: 100%;
+}
+
+.sm-detailed-note-item {
+  display: none;
+  width: 100%;
+}
+
+.sm-detailed-note-item.active {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Per-paragraph tab switcher (currently only "Display no personality" — see
+   Semantic.tsx). Same plain-button, solid --cs-hover-fill-on-active styling
+   as every other toggle in this codebase. Deliberately `nowrap`: rail's own
+   grid track (0.60fr, sized for short labels like "Screenshot"/"Video") is
+   narrower than four longer tab labels need, but `.cs-grid`/`.cs-grid-rail`
+   both allow overflow and the widened media has no background in the gap
+   reserved by --cs-grid-toggle-h — so letting this row overflow past rail's
+   track renders correctly with nothing to clip or cover it. Wrapping instead
+   would push a second line below that reserved gap, where it'd get visually
+   swallowed by the media panel underneath. */
+.sm-detailed-tabs {
+  display: flex;
+  gap: var(--space-0-5);
+  flex-wrap: nowrap;
+  width: max-content;
+}
+
+.sm-detailed-tabs button {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: var(--space-0-5);
+  margin: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.sm-detailed-tabs button.active {
+  background: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.sm-detailed-caption-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 325px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.sm-detailed-caption-list--left {
+  margin: 0;
+  align-self: flex-start;
+}
+
+.sm-detailed-caption-item {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.sm-detailed-caption-num {
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.sm-detailed-caption-text {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+/* ── FUNCTIONALITY — two-column CaseStudySection (mediaSpansRail always on,
+   see CLAUDE.md's "Two column" shorthand), same shape as "The details".
+   PLACEHOLDER copy/assets, structure is final. */
+
+.sm-functionality-paras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+}
+
+.sm-functionality-para {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-0-5);
+  margin: -9px;
+}
+
+/* Same --cs-bg invert as .sm-detailed-para.active — see the note there. */
+.sm-functionality-para.active {
+  background-color: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.sm-functionality-heading {
+  margin: 0;
+  max-width: 472px;
+}
+
+.sm-functionality-body {
+  margin: 0;
+  max-width: 472px;
+  white-space: pre-wrap;
+}
+
+.sm-functionality-diagrams {
+  width: 100%;
+}
+
+.sm-functionality-diagram-item {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.sm-functionality-diagram-item.active {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.sm-functionality-image-trigger {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+}
+
+.sm-functionality-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.sm-functionality-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* --cs-grid-toggle-h itself is set from JS in Semantic.tsx — see the note
+   above .sm-detailed-notes. */
+
+.sm-functionality-notes {
+  width: 100%;
+}
+
+.sm-functionality-note-item {
+  display: none;
+  width: 100%;
+}
+
+.sm-functionality-note-item.active {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Per-paragraph tab switcher (currently only "Fluid text"). Same styling and
+   deliberate `nowrap` overflow past rail's track as `.sm-detailed-tabs` —
+   see the note there. */
+.sm-functionality-tabs {
+  display: flex;
+  gap: var(--space-0-5);
+  flex-wrap: nowrap;
+  width: max-content;
+}
+
+.sm-functionality-tabs button {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: var(--space-0-5);
+  margin: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.sm-functionality-tabs button.active {
+  background: var(--cs-hover);
+  color: var(--cs-bg);
+}
+
+.sm-functionality-caption-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 325px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.sm-functionality-caption-list--left {
+  margin: 0;
+  align-self: flex-start;
+}
+
+.sm-functionality-caption-item {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.sm-functionality-caption-num {
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.sm-functionality-caption-text {
+  flex: 1 0 0;
+  min-width: 0;
+}

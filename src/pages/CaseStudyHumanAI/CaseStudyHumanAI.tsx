@@ -39,13 +39,13 @@ const PURPOSE_HOVER = PAGE_HOVER
 
 /* "Tad too sensitive" closing section colour override — same mechanism (passed
    to its StackedSection). */
-const NOTE_BG = '#fdbf68'
-const NOTE_FG = PAGE_BG
+const NOTE_BG = PAGE_BG
+const NOTE_FG = PAGE_FG
 
 /* Footer colour override — `bgColor` fills the (otherwise transparent) footer,
    `textColor` drives its text + borders. */
-const FOOTER_BG = '#fdbf68'
-const FOOTER_FG = PAGE_BG
+const FOOTER_BG = PAGE_BG
+const FOOTER_FG = PAGE_FG
 
 interface PurposeReveal {
   key: string
@@ -122,7 +122,7 @@ interface TransparencyTab {
 }
 
 interface TransparencyParagraph {
-  label: string
+  label?: string
   heading: string
   body: string
   diagram?: string
@@ -133,7 +133,6 @@ interface TransparencyParagraph {
 /* copy + diagram pairing (Figma node 433:1151 / 433:10051 / 433:10070) */
 const transparencyParagraphs: TransparencyParagraph[] = [
   {
-    label: 'Clarity',
     heading: 'Reduce the black-box feeling',
     body: 'Manage expectations by clearly communicating what the system is doing, how, and what information is used.',
     diagram: 'explainability.png',
@@ -145,7 +144,6 @@ const transparencyParagraphs: TransparencyParagraph[] = [
     
   },
   {
-    label: 'Always beta',
     heading: 'First-ever real-time feedback and telemetry',
     body: 'Allowed design, product, and development to easily view and access user feedback. Fostered a user-centred culture that complemented the existing engineering focus.',
     tabs: [
@@ -526,13 +524,13 @@ export default function CaseStudyHumanAI() {
         </StackedSection>
 
         {/* ── TRANSPARENCY AND TRUST (Figma node 433:1151 / 433:10051) ── */}
-        <StackedSection title="Transparency and trust" bgColor={"#fdbf68"} textColor={PAGE_BG}>
+        <StackedSection title="Transparency and trust">
           <CaseStudySection
             rail={
               <div className="ai-transparency-notes">
                 {transparencyParagraphs.map((p, i) => (
                   <div
-                    key={p.label}
+                    key={p.heading}
                     className={`ai-transparency-note-item${i === activeTransparencyIndex ? ' active' : ''}`}
                   >
                     {p.captionItems && (
@@ -554,9 +552,9 @@ export default function CaseStudyHumanAI() {
                 {transparencyParagraphs.map((p, i) => (
                   <div
                     className={`ai-transparency-para${i === activeTransparencyIndex ? ' active' : ''}`}
-                    key={p.label}
+                    key={p.heading}
                   >
-                    <p className="type-body ai-transparency-label">{p.label}</p>
+                    {p.label && <p className="type-body ai-transparency-label">{p.label}</p>}
                     <p className="type-heading1 ai-transparency-heading">{p.heading}</p>
                     <p className="type-body ai-transparency-body">{p.body}</p>
                   </div>
@@ -567,7 +565,7 @@ export default function CaseStudyHumanAI() {
               <div className="ai-transparency-diagrams">
                 {transparencyParagraphs.map((p, i) => (
                   <div
-                    key={p.label}
+                    key={p.heading}
                     className={`ai-transparency-diagram-item${i === activeTransparencyIndex ? ' active' : ''}`}
                   >
                     {p.tabs ? (
@@ -621,7 +619,7 @@ export default function CaseStudyHumanAI() {
         </StackedSection>
 
         {/* ── POLICY RECOMMENDATIONS (Figma node 453:10105 / 453:26648 / 453:26680 / 453:26711) ── */}
-        <StackedSection title="Policy recommendations" bgColor={"#fdbf68"} textColor={PAGE_BG}>
+        <StackedSection title="Policy recommendations">
           <CaseStudySection
             mediaSpansRail={getPolicyRecMode(activePolicyRecIndex) === 'video'}
             rail={

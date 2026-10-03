@@ -488,6 +488,28 @@ unaffected. This is a per-item concern, not per-section — compute the boolean 
 whichever paragraph/diagram is currently active (same `activeIndex` used everywhere else in
 this pattern), since only one item is ever visible in `media` at a time.
 
+**"Two column" shorthand.** When a request asks for a "two column" version of a
+`CaseStudySection` instance, this means `mediaSpansRail` **unconditionally** `true` (the bare
+boolean, e.g. `<CaseStudySection mediaSpansRail ...>` — not a ternary computed from an
+active-video check) — there is no separate flex-row layout anywhere in this codebase; "two
+column" is always this same grid-column-span trick made permanent for the whole section,
+not toggled per state. In the simplest case — one piece of media per item, no Screenshot/
+Video switch — `rail` is omitted entirely (it's an optional prop, see below) and `media`
+just picks whichever asset the item has (e.g. `p.video ? <video .../> : p.diagram &&
+<img .../>`), with captions (`align: 'left'`) rendered next to it either way. **Don't add a
+Screenshot/Video toggle unless the request actually asks to switch between two versions of
+the same media** — reusing Policy recommendations' fuller toggle machinery (rail buttons,
+per-item mode state, `getXMode`) for a plain "replace the image with a video" ask is
+over-building; that pattern is for when both assets need to stay independently selectable,
+not for a straight swap. If a future two-column section does need that switch, `rail`
+renders only the toggle (no captions — rail's track is permanently covered by the widened
+`media`), and `--cs-grid-toggle-h` should only be set once that toggle actually renders for
+at least one item (reserving it up front is dead top padding with nothing in it).
+
+Reference implementation: `Semantic`'s "The detailed" section (`Semantic.tsx`/`.css`) — a
+`CaseStudySection` with `mediaSpansRail`, no `rail` prop at all, and `media` choosing
+`video` over `diagram` per item.
+
 `CaseStudyIntro` is a themed wrapper around one `CaseStudySection` instance (the page's
 single-viewport intro). Its props are generalized past the original single-image/single-list
 shape so it stays the one place this pattern lives rather than forking into bespoke JSX per

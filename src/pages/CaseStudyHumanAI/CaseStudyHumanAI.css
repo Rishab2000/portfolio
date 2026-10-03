@@ -380,13 +380,9 @@
   margin: -9px;
 }
 
-/* This section is themed light (orange bg / navy text) via StackedSection, so
-   the active-item invert wants the section's own text colour (--cs-fg = navy),
-   not --cs-bg — unlike the dark sections (purpose, principles) where --cs-bg is
-   the dark one. Same for the tab/toggle `.active` rules below. */
 .ai-transparency-para.active {
   background-color: var(--cs-hover);
-  color: var(--cs-fg);
+  color: var(--cs-bg);
 }
 
 .ai-transparency-label {
@@ -497,7 +493,7 @@
 
 .ai-transparency-tab.active {
   background: var(--cs-hover);
-  color: var(--cs-fg);
+  color: var(--cs-bg);
 }
 
 /* ── POLICY RECOMMENDATIONS (Figma node 453:10105 / 453:26648 / 453:26680 / 453:26711) ── */
@@ -520,11 +516,9 @@
   margin: -9px;
 }
 
-/* Themed light via StackedSection — invert to --cs-fg (navy), see the note on
-   .ai-transparency-para.active above. */
 .ai-policyrec-para.active {
   background-color: var(--cs-hover);
-  color: var(--cs-fg);
+  color: var(--cs-bg);
 }
 
 .ai-policyrec-heading {
@@ -592,7 +586,7 @@
 
 .ai-policyrec-media-toggle button.active {
   background: var(--cs-hover);
-  color: var(--cs-fg);
+  color: var(--cs-bg);
 }
 
 .ai-policyrec-video {

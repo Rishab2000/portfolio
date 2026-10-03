@@ -5,8 +5,10 @@ import { useHoverReveal } from '../hooks/useHoverReveal'
 
 interface Responsibility {
   prefix: string
-  link: string
-  description: string
+  /** Omit alongside `description` to render `prefix` as a plain, non-hoverable
+   * bullet instead of a hover-reveal term. */
+  link?: string
+  description?: string
 }
 
 interface ResultEntry {
@@ -41,6 +43,10 @@ interface CaseStudyIntroProps {
   results?: ResultEntry[]
   /** One image (existing pages) or several, stacked vertically (e.g. Automated calendar). */
   media: MediaImage | MediaImage[]
+  /** CLAUDE.md's "Two column" shorthand: media spans both its own track and
+   * rail's, rail is omitted entirely, and responsibilities render as plain
+   * text only (no hover-reveal — there's no rail panel left to reveal into). */
+  twoColumn?: boolean
 }
 
 export default function CaseStudyIntro({
@@ -53,6 +59,7 @@ export default function CaseStudyIntro({
   responsibilities,
   results,
   media,
+  twoColumn = false,
 }: CaseStudyIntroProps) {
   const { revealed, hovered: hoveredLink, reveal, onEnter, onLeave } = useHoverReveal<string>()
 
@@ -70,20 +77,25 @@ export default function CaseStudyIntro({
       <CaseStudySection
         bgColor={bgColor}
         textColor={textColor}
+        mediaSpansRail={twoColumn}
         rail={
-          <div className="cs-intro-rail">
-            {responsibilities
-              .filter((r) => revealed.has(r.link))
-              .map((r) => (
-                <div
-                  className={`cs-intro-rail-item type-caption1${r.link === hoveredLink ? ' active' : ''}`}
-                  key={r.link}
-                >
-                  <p className="cs-intro-rail-heading">{r.link}</p>
-                  <p className="cs-intro-rail-desc">{r.description}</p>
-                </div>
-              ))}
-          </div>
+          twoColumn ? undefined : (
+            <div className="cs-intro-rail">
+              {responsibilities
+                .filter((r): r is Responsibility & { link: string; description: string } =>
+                  Boolean(r.link) && Boolean(r.description) && revealed.has(r.link!),
+                )
+                .map((r) => (
+                  <div
+                    className={`cs-intro-rail-item type-caption1${r.link === hoveredLink ? ' active' : ''}`}
+                    key={r.link}
+                  >
+                    <p className="cs-intro-rail-heading">{r.link}</p>
+                    <p className="cs-intro-rail-desc">{r.description}</p>
+                  </div>
+                ))}
+            </div>
+          )
         }
         content={
           <div className="cs-intro-content">
@@ -109,15 +121,19 @@ export default function CaseStudyIntro({
 
             <p className="cs-intro-label type-body">{listLabel}</p>
             <ul className="cs-intro-resp">
-              {responsibilities.map((r) => (
-                <li className="type-body" key={r.link}>
+              {responsibilities.map((r, i) => (
+                <li className="type-body" key={r.link ?? `plain-${i}`}>
                   <span className="dot">⋅</span>
-                  <span>{r.prefix} <span
-                    className="u"
-                    onMouseEnter={() => onEnter(r.link)}
-                    onMouseLeave={onLeave}
-                    onClick={() => reveal(r.link)}
-                  >{r.link}</span></span>
+                  {!twoColumn && r.link && r.description ? (
+                    <span>{r.prefix} <span
+                      className="u"
+                      onMouseEnter={() => onEnter(r.link!)}
+                      onMouseLeave={onLeave}
+                      onClick={() => reveal(r.link!)}
+                    >{r.link}</span></span>
+                  ) : (
+                    <span>{r.prefix}{r.link ? ` ${r.link}` : ''}</span>
+                  )}
                 </li>
               ))}
             </ul>

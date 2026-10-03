@@ -3,6 +3,7 @@ import HomePage from './pages/HomePage/HomePage'
 import CaseStudyHomepage from './pages/CaseStudyHomepage/CaseStudyHomepage'
 import CaseStudyHumanAI from './pages/CaseStudyHumanAI/CaseStudyHumanAI'
 import CaseStudyAutomatedCalendar from './pages/CaseStudyAutomatedCalendar/CaseStudyAutomatedCalendar'
+import Semantic from './pages/Semantic/Semantic'
 import ScrollStackTest from './pages/ScrollStackTest/ScrollStackTest'
 import SmallScreenNotice from './components/SmallScreenNotice'
 import { useViewportBelow } from './hooks/useViewportBelow'
@@ -29,6 +30,7 @@ export default function App() {
   if (path === '/homepage-modernization') return <CaseStudyHomepage />
   if (path === '/human-ai-maas360') return <CaseStudyHumanAI />
   if (path === '/common-ground') return <CaseStudyAutomatedCalendar />
+  if (path === '/semantic') return <Semantic />
   if (path === '/scroll-test') return <ScrollStackTest />
   return <HomePage />
 }

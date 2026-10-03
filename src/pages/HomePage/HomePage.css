@@ -215,6 +215,23 @@
   }
 }
 
+.hero-name-hover-video {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20vw;
+  height: auto;
+  pointer-events: none;
+  z-index: 100;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-name-hover-video {
+    display: block;
+  }
+}
+
 .project-row-text {
   font-family: 'Medway', sans-serif;
   font-style: normal;
