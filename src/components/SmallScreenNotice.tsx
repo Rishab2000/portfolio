@@ -26,12 +26,11 @@ export default function SmallScreenNotice() {
     <div className="ssn">
       <div className="ssn-message">
         <p className="type-heading1">
-          Glad you’re visiting my little space on the internet! Thought I’m
-          inclusive of all devices, I’m smoothening out rough edges of
+          Glad you’re visiting my little space on the internet! I’m smoothening out rough edges of
           responsiveness.
         </p>
         <p className="type-heading1">
-          Till then a laptop (or a wider window) offers the best experience!
+          Till then, the website works on a laptop (or a wider window)!
         </p>
       </div>
 
